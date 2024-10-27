@@ -18,8 +18,7 @@ const ReservaSchema = new EntitySchema({
         email: {  
             type: "varchar",
             length: 255,
-            nullable: false,
-            unique: true,
+            nullable: false, //falta actualizar bd local donde se decia que esto era unico
         },
         motivo: {
             type: "varchar",
@@ -27,14 +26,14 @@ const ReservaSchema = new EntitySchema({
             nullable: false,
         },
         fecha: {
-            type: "date",
+            type: "timestamp with time zone",
             nullable: false,
         },
         hora: {
             type: "varchar",
+            length: 10,
             nullable: false,
         },
-        
         createdAt: {
             type: "timestamp with time zone",
             default: () => "CURRENT_TIMESTAMP",
