@@ -76,8 +76,17 @@ export async function updateProduct(req,res){
 
 export async function deleteProduct(req,res){
     try {
-        
+        const { name } = req.query;
+        const { error } = productBodyValidation.validate({ name });
+        if (error) {
+            return handleErrorClient(res, 400, "Error de validación", error.message);
+        }
+
+
+        const [deletedProduct, errorDeletedProduct] = await deleteProductService({ name });
+        if (errorDeletedProduct) return handleErrorClient(res, 404, errorDeletedProduct);
+        handleSuccess(res, 200, "Producto eliminado con éxito", deletedProduct);
     } catch (error) {
-        
+        handleErrorServer(res, 500, error.message);
     }
 }
