@@ -1,13 +1,18 @@
 "use strict";
 import { Router } from "express";
 import { createReserva,
-         getReservas
+         //delateReserva,
+         getReservas,
+         updateReserva
+         
  } from "../controllers/reservas.controller.js";
 
 const router = Router();
 
 
 router.post("/", createReserva)
-      .get("/", getReservas);
+      .get("/", getReservas)
+      .patch("/detail/", updateReserva);
+//      .delete("/", delateReserva);
 
 export default router;
