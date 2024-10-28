@@ -1,6 +1,5 @@
 "use strict";
 import Joi from "joi";
-//import moment from "moment";
 import moment from "moment";
 import  Reserva  from "../entity/reserva.entity.js";
 import { AppDataSource } from "../config/configDb.js";
@@ -154,11 +153,23 @@ export const reservaBodyValidation = Joi.object({
 
 export const reservaQueryValidation = Joi.object({
     fechaInicio: Joi.date().iso().required().messages({
-      "any.required": "La fecha de inicio es obligatoria",
-      "date.base": "La fecha de inicio debe ser una fecha válida",
-    }),
-    fechaFin: Joi.date().iso().required().messages({
+        "any.required": "La fecha de inicio es obligatoria",
+        "date.base": "La fecha de inicio debe ser una fecha válida",
+      }),
+      fechaFin: Joi.date().iso().required().messages({
       "any.required": "La fecha de fin es obligatoria",
       "date.base": "La fecha de fin debe ser una fecha válida",
     })
   });
+
+export const reservaUpdateQueryValidation = Joi.object({
+    idreserva: Joi.number()
+    .integer()
+    .positive()
+    .required()
+    .messages({
+      "number.base": "El id debe ser un número.",
+      "number.integer": "El id debe ser un número entero.",
+      "number.positive": "El id debe ser un número positivo.",
+    })
+});
