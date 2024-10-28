@@ -67,22 +67,23 @@ export async function getProductsService(){
 
 export async function updateProductService(query,body){
     try {
-        const productRepository = AppDataSource.getRepository(Product);
         const { name } = query;
+        const productRepository = AppDataSource.getRepository(Product);
         const productFound = await productRepository.findOne({
           where:{ name: name }
         });
         if (!productFound) {
           return [null, "Producto no encontrado"];
         }
-        if (!userFound) return [null, "Usuario no encontrado"];
 
-    const existingProduct = await userRepository.findOne({
+    const existingProduct = await productRepository.findOne({
       where: [{ name: body.name }],
     });
     if (existingProduct && existingProduct.id !== productFound.id) {
       return [null, "Ya existe un producto con el mismo nombre"]
     }
+   
+
     
     const dataProductUpdate = {
       name: body.name,

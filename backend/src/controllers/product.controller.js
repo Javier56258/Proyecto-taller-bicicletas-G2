@@ -67,8 +67,10 @@ export async function updateProduct(req,res){
             return handleErrorClient(res, 400, "Error de validación en el cuerpo", bodyError.message);
         }
         const [updatedProduct, errorUpdatedProduct] = await updateProductService({ name }, body);
+        if (errorUpdatedProduct) return handleErrorClient(res, 400, "Error actualizando producto", errorUpdatedProduct);
+        handleSuccess(res, 200, "Producto actualizado con éxito", updatedProduct);
     } catch (error) {
-        
+        handleErrorServer(res, 500, error.message);
     }
 }
 

@@ -44,4 +44,13 @@ export const productBodyValidation = Joi.object({
             "number.integer": "El precio debe ser un número entero.",
             "number.positive": "El precio debe ser un número positivo.",
         }),
-});
+})
+    .or("id", "name")
+    .unknown(false)
+    .messages({
+        "object.unknown": "No se permiten propiedades adicionales.",
+        "object.missing":
+            "Debes proporcionar al menos un parámetro: id o name.",
+    });
+
+    
