@@ -3,11 +3,16 @@
 //import { AppDataSource } from "../config/configDb";
 //import { Reserva } from "../entity/reserva.entity.js";
 //import configDb from "../config/configDb.js";
-import { reservaBodyValidation, reservaQueryValidation } from "../validations/reserva.validation.js";
+import { reservaBodyValidation, 
+        reservaQueryValidation, 
+        reservaUpdateQueryValidation } from "../validations/reserva.validation.js";
 import { createReservaService, 
-        getReservasService } from "../services/reserva.service.js"; 
+        //delateReservaService,
+        getReservasService,
+        updateReservaService 
+         } from "../services/reserva.service.js"; 
 import moment from "moment";
-import { handleErrorReserva, handleErrorServer } from "../handlers/responseHandlers.js";
+import { handleErrorReserva, handleErrorServer, handleSuccess } from "../handlers/responseHandlers.js";
 
 
 export async function createReserva(req, res) {
@@ -74,4 +79,26 @@ export async function getReservas(req, res) {
         handleErrorServer(res, 500, "Error interno del servidor");
     }
   }
+
+export async function updateReserva(req, res) {
+    try{
+        const { idreserva } = req.query;
+        const { body } = req;
+        //No se si poner previamente el buscar a un grupo entre fechas y por filtro
+        const { error: queryError } = reservaUpdateQueryValidation.validate({ idreserva });
+        if (queryError) return handleErrorReserva( res, 400, "Error de validación en la consulta", queryError.message); 
+        
+        console.log("Body recibido en el controlador de actualización de reserva:", body);
+        const { error: bodyError } = reservaBodyValidation.validate(body);
+        if (bodyError) return handleErrorReserva(res, 400, "Error de validación en datos enviados", bodyError.message);
+        
+        const [reserva, reservaError] = await updateReservaService({ idreserva }, body);
+        
+        if (reservaError) return handleErrorReserva(res, 400, "Error al modificar la reserva", reservaError);
+
+        handleSuccess(res, 200, "Reserva modificada correctamente", reserva);
+    } catch (error) {
+        handleErrorServer(res, 500, error.message);
+    }
+}
   
