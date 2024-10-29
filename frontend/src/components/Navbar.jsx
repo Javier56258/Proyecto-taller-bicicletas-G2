@@ -73,7 +73,7 @@ const Navbar = () => {
                     </li>
                     
                     )}
-                    {userRole === 'administrador' && (
+                    {(userRole === 'administrador' || userRole === 'usuario') && (
                     <li>
                         <NavLink 
                             to="/products" 
