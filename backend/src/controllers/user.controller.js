@@ -68,6 +68,7 @@ export async function updateUser(req, res) {
         400,
         "Error de validación en la consulta",
         queryError.message,
+        
       );
     }
 

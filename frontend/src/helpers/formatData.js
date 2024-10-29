@@ -12,6 +12,16 @@ export function formatUserData(user) {
     };
 }
 
+export function formatProductData(product) {
+    return {
+        ...product,
+        name: startCase(product.name),
+        description: startCase(product.description),
+        createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
+        
+    };
+}
+
 export function convertirMinusculas(obj) {
     for (let key in obj) {
         if (typeof obj[key] === 'string') {
@@ -21,12 +31,22 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
-export function formatPostUpdate(user) {
+export function formatPostUpdateUser(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
         rol: startCase(user.rol),
         rut: formatRut(user.rut),
         email: user.email,
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatPostUpdateProduct(product) {
+    return {
+        name: startCase(product.nombre),
+        description: startCase(product.descripcion),
+        price: product.precio,
+        stock: product.stock,
+        createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
     };
 }

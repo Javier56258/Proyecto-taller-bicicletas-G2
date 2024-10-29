@@ -71,7 +71,23 @@ const Navbar = () => {
                             Usuarios
                         </NavLink>
                     </li>
+                    
                     )}
+                    {(userRole === 'administrador' || userRole === 'usuario') && (
+                    <li>
+                        <NavLink 
+                            to="/products" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass("active");
+                            }} 
+                            activeClassName="active"
+                        >
+                            Productos
+                        </NavLink>
+                    </li>
+                        
+                        )}
                     <li>
                         <NavLink 
                             to="/auth" 
@@ -86,6 +102,8 @@ const Navbar = () => {
                     </li>
                 </ul>
             </div>
+
+            
             <div className="hamburger" onClick={toggleMenu}>
                 <span className="bar"></span>
                 <span className="bar"></span>
