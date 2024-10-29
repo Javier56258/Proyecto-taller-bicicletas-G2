@@ -1,7 +1,7 @@
 "use strict";
 import { Router } from "express";
 import { createReserva,
-         //delateReserva,
+         deleteReserva,
          getReservas,
          updateReserva
          
@@ -12,7 +12,7 @@ const router = Router();
 
 router.post("/", createReserva)
       .get("/", getReservas)
-      .patch("/detail/", updateReserva);
-//      .delete("/", delateReserva);
+      .patch("/detail/", updateReserva)
+      .delete("/", deleteReserva);
 
 export default router;

@@ -7,7 +7,7 @@ import { reservaBodyValidation,
         reservaQueryValidation, 
         reservaUpdateQueryValidation } from "../validations/reserva.validation.js";
 import { createReservaService, 
-        //delateReservaService,
+        deleteReservaService,
         getReservasService,
         updateReservaService 
          } from "../services/reserva.service.js"; 
@@ -102,3 +102,22 @@ export async function updateReserva(req, res) {
     }
 }
   
+export async function deleteReserva(req, res) {
+    try {
+      const { idreserva } = req.query;
+  
+      const { error: queryError } = reservaUpdateQueryValidation.validate({ idreserva });
+  
+      if (queryError) {
+        return handleErrorReserva( res, 400, "Error de validación en la consulta", queryError.message );
+      }
+  
+      const [reservaDelete, errorReservaDelete] = await deleteReservaService({ idreserva });
+  
+      if (errorReservaDelete) return handleErrorClient(res, 404, "Error eliminado al usuario", errorReservaDelete);
+  
+      handleSuccess(res, 200, "Usuario eliminado correctamente", reservaDelete);
+    } catch (error) {
+      handleErrorServer(res, 500, error.message);
+    }
+  }

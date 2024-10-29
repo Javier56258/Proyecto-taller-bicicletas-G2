@@ -97,3 +97,25 @@ export async function updateReservaService(query, body) {
         return [null, "Error interno del servidor"];
     }
 }
+
+export async function deleteReservaService(query) {
+    try {
+        const { idreserva } = query;
+    
+        const reservaRepository = AppDataSource.getRepository(Reserva);
+    
+        const reservaFound = await reservaRepository.findOne({
+            where: [{ idreserva: idreserva }],
+        });
+    
+        if (!reservaFound) return [null, "Reserva no encontrada"];
+    
+        const reservaDeleted = await reservaRepository.remove(reservaFound);
+    
+        return [reservaDeleted, null];
+        
+      } catch (error) {
+        console.error("Error al eliminar reserva:", error);
+        return [null, "Error interno del servidor"];
+    }
+}
