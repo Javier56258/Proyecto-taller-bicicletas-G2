@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       {
         path: '/products',
         element: (
-          <ProtectedRoute allowedRoles={['administrador']}>
+          <ProtectedRoute allowedRoles ={['administrador', 'usuario']}  >
             <Products />
           </ProtectedRoute>
         ),
@@ -52,3 +52,4 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 )
+
