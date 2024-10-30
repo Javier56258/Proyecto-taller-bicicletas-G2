@@ -91,7 +91,7 @@ const Navbar = () => {
                     )}
                     {(userRole === 'administrador' || userRole === 'usuario') && (
                     <li>
-                        <Navlink
+                        <NavLink
 
                             to="/products" 
                             onClick={() => { 
