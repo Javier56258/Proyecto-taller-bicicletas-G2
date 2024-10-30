@@ -22,3 +22,10 @@ export function handleErrorServer(res, statusCode, message) {
     message,
   });
 }
+
+export function handleErrorReserva(res, statusCode, message) {
+  return res.status(statusCode).json({
+    status: "Reserva error",
+    message,
+  });
+}

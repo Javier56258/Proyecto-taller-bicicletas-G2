@@ -7,15 +7,16 @@ async function createUsers() {
   try {
     const userRepository = AppDataSource.getRepository(User);
 
+    //CREA USUARIOS POR DEFECTO A BAJO SOLO LA PRIMERA VEZ QUE ESTE VACIA NUESTRA BBDD  
     const count = await userRepository.count();
     if (count > 0) return;
 
     await Promise.all([
       userRepository.save(
         userRepository.create({
-          nombreCompleto: "Diego Alexis Salazar Jara",
-          rut: "21.308.770-3",
-          email: "administrador2024@gmail.cl",
+          nombreCompleto: "Tomas Enrique Saez Aguayo",
+          rut: "21.065.276-0",
+          email: "tomass2942@gmail.cl",
           password: await encryptPassword("admin1234"),
           rol: "administrador",
         }),

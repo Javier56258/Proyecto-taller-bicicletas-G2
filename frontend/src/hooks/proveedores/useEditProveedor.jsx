@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { updateProveedor } from '@services/proveedor.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostUpdate } from '@helpers/formatData.js';
+import { formatPostUpdateProveedor } from '@helpers/formatData.js';
 
 const useEditProveedor = (setProveedores) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -13,13 +13,14 @@ const useEditProveedor = (setProveedores) => {
         }
     };
 
+
     const handleUpdate = async (updatedProveedorData) => {
         if (updatedProveedorData) {
             try {
             const updatedProveedor = await updateProveedor(updatedProveedorData, dataProveedor[0].idProveedor);
             showSuccessAlert('¡Actualizado!','El proveedor ha sido actualizado correctamente.');
             setIsPopupOpen(false);
-            const formattedProveedor = formatPostUpdate(updatedProveedor);
+            const formattedProveedor = formatPostUpdateProveedor(updatedProveedor);
 
             setProveedores(prevProveedores => prevProveedores.map(proveedor => {
                 console.log("Proveedor actual:", proveedor);
