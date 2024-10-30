@@ -25,6 +25,7 @@ const useUsers = () => {
         fetchUsers();
     }, []);
 
+    // Remove the logged user from the list
     const dataLogged = (formattedData) => {
         try {
             const { rut } = JSON.parse(sessionStorage.getItem('usuario'));
