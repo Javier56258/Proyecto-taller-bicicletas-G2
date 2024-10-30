@@ -89,6 +89,9 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
+                    {(userRole === 'administrador' || userRole === 'usuario') && (
+                    <li>
+                        <Navlink
 
                             to="/products" 
                             onClick={() => { 
@@ -100,7 +103,6 @@ const Navbar = () => {
                             Productos
                         </NavLink>
                     </li>
-                        
                         )}
 
                     <li>
