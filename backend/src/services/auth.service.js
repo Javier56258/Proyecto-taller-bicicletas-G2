@@ -84,7 +84,7 @@ export async function registerService(user) {
     });
 
     await userRepository.save(newUser);
-
+    //mostrar solo los datos del usuario sin la contraseña
     const { password, ...dataUser } = newUser;
 
     return [dataUser, null];

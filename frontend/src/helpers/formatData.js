@@ -13,6 +13,7 @@ export function formatUserData(user) {
     };
 }
 
+
 export function formatProveedorData(proveedor) {
     return {
         ...proveedor,
@@ -23,7 +24,20 @@ export function formatProveedorData(proveedor) {
         email: startCase(proveedor.email),
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
+<<<<<<< HEAD
 
+=======
+    };
+}
+
+export function formatProductData(product) {
+    return {
+        ...product,
+        name: startCase(product.name),
+        description: startCase(product.description),
+        createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
+        
+>>>>>>> 807463b1d1a8404db1362c5a17a1a988667bf4a9
     };
 }
 
@@ -36,7 +50,7 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
-export function formatPostUpdate(user) {
+export function formatPostUpdateUser(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
         rol: startCase(user.rol),
@@ -45,6 +59,7 @@ export function formatPostUpdate(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
+
 
 export function formatPostUpdateProveedor(proveedor) {
     return {
@@ -56,6 +71,7 @@ export function formatPostUpdateProveedor(proveedor) {
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
     };
+<<<<<<< HEAD
 }
 
 export function formatServicioData(servicio) {
@@ -65,4 +81,16 @@ export function formatServicioData(servicio) {
       nombre: servicio.nombre,
       // Otros campos que necesites formatear
   };
+=======
+
+}
+export function formatPostUpdateProduct(product) {
+    return {
+        name: startCase(product.nombre),
+        description: startCase(product.descripcion),
+        price: product.precio,
+        stock: product.stock,
+        createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
+    };
+>>>>>>> 807463b1d1a8404db1362c5a17a1a988667bf4a9
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { updateUser } from '@services/user.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostUpdate } from '@helpers/formatData.js';
+import { formatPostUpdateUser } from '../../helpers/formatData';
 
 const useEditUser = (setUsers) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -19,7 +19,7 @@ const useEditUser = (setUsers) => {
             const updatedUser = await updateUser(updatedUserData, dataUser[0].rut);
             showSuccessAlert('¡Actualizado!','El usuario ha sido actualizado correctamente.');
             setIsPopupOpen(false);
-            const formattedUser = formatPostUpdate(updatedUser);
+            const formattedUser = formatPostUpdateUser(updatedUser);
 
             setUsers(prevUsers => prevUsers.map(user => {
                 console.log("Usuario actual:", user);
