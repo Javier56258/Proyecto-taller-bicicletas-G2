@@ -26,6 +26,7 @@ export function formatProveedorData(proveedor) {
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
     };
 }
+
 export function formatProductData(product) {
     return {
         ...product,
@@ -66,8 +67,8 @@ export function formatPostUpdateProveedor(proveedor) {
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
     };
-}
 
+}
 export function formatPostUpdateProduct(product) {
     return {
         name: startCase(product.nombre),

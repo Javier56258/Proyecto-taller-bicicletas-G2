@@ -20,7 +20,7 @@ const useEditProveedor = (setProveedores) => {
             const updatedProveedor = await updateProveedor(updatedProveedorData, dataProveedor[0].idProveedor);
             showSuccessAlert('¡Actualizado!','El proveedor ha sido actualizado correctamente.');
             setIsPopupOpen(false);
-            const formattedProveedor = formatPostUpdate(updatedProveedor);
+            const formattedProveedor = formatPostUpdateProveedor(updatedProveedor);
 
             setProveedores(prevProveedores => prevProveedores.map(proveedor => {
                 console.log("Proveedor actual:", proveedor);
