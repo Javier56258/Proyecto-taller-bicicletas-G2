@@ -13,6 +13,7 @@ const useEditProveedor = (setProveedores) => {
         }
     };
 
+
     const handleUpdate = async (updatedProveedorData) => {
         if (updatedProveedorData) {
             try {
