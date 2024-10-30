@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { updateProveedor } from '@services/proveedor.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostUpdate } from '@helpers/formatData.js';
+import { formatPostUpdateProveedor } from '@helpers/formatData.js';
 
 const useEditProveedor = (setProveedores) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -12,6 +12,7 @@ const useEditProveedor = (setProveedores) => {
             setIsPopupOpen(true);
         }
     };
+
 
     const handleUpdate = async (updatedProveedorData) => {
         if (updatedProveedorData) {
