@@ -24,7 +24,8 @@ export function formatProveedorData(proveedor) {
         email: startCase(proveedor.email),
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
-
+    };
+}
 export function formatProductData(product) {
     return {
         ...product,
