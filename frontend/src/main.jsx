@@ -6,6 +6,7 @@ import Users from '@pages/Users';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
+import Proveedores from '@pages/Proveedores';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Products from './pages/Products';
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: '/proveedores',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'usuario']}>
+            <Proveedores />
+          </ProtectedRoute>
+        ),
+      }
+
         path: '/products',
         element: (
           <ProtectedRoute allowedRoles ={['administrador', 'usuario']}  >
@@ -37,6 +46,7 @@ const router = createBrowserRouter([
         ),
       }
       
+
     ]
   },
   {
