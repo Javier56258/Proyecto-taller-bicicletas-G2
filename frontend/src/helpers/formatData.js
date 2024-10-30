@@ -23,7 +23,7 @@ export function formatProveedorData(proveedor) {
         email: startCase(proveedor.email),
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
-        
+
     };
 }
 
@@ -56,4 +56,13 @@ export function formatPostUpdateProveedor(proveedor) {
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
     };
+}
+
+export function formatServicioData(servicio) {
+  // Implementa la lógica de formateo aquí
+  return {
+      id: servicio.id,
+      nombre: servicio.nombre,
+      // Otros campos que necesites formatear
+  };
 }
