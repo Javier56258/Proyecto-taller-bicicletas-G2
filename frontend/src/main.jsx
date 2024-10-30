@@ -36,8 +36,8 @@ const router = createBrowserRouter([
             <Proveedores />
           </ProtectedRoute>
         ),
-      }
-
+      },
+      {
         path: '/products',
         element: (
           <ProtectedRoute allowedRoles ={['administrador', 'usuario']}  >
@@ -45,7 +45,6 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       }
-      
 
     ]
   },
