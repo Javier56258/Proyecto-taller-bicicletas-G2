@@ -58,6 +58,7 @@ const Navbar = () => {
                             Inicio
                         </NavLink>
                     </li>
+
                     {userRole === 'administrador' && (
                     <li>
                         <NavLink 
@@ -69,6 +70,20 @@ const Navbar = () => {
                             activeClassName="active"
                         >
                             Usuarios
+                        </NavLink>
+                    </li>
+                    )}
+                    {(userRole === 'administrador' || userRole === 'usuario') && (
+                    <li>
+                        <NavLink 
+                            to="/proveedores"
+                            onClick={() => {
+                                setMenuOpen(false);
+                                addActiveClass();
+                            }}
+                            activeClassName="active"
+                        >
+                            Proveedores
                         </NavLink>
                     </li>
                     )}
