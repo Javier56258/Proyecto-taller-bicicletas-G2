@@ -24,6 +24,9 @@ export function formatProveedorData(proveedor) {
         email: startCase(proveedor.email),
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
+<<<<<<< HEAD
+
+=======
     };
 }
 
@@ -34,6 +37,7 @@ export function formatProductData(product) {
         description: startCase(product.description),
         createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
         
+>>>>>>> 807463b1d1a8404db1362c5a17a1a988667bf4a9
     };
 }
 
@@ -67,6 +71,17 @@ export function formatPostUpdateProveedor(proveedor) {
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
     };
+<<<<<<< HEAD
+}
+
+export function formatServicioData(servicio) {
+  // Implementa la lógica de formateo aquí
+  return {
+      id: servicio.id,
+      nombre: servicio.nombre,
+      // Otros campos que necesites formatear
+  };
+=======
 
 }
 export function formatPostUpdateProduct(product) {
@@ -77,4 +92,5 @@ export function formatPostUpdateProduct(product) {
         stock: product.stock,
         createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
     };
+>>>>>>> 807463b1d1a8404db1362c5a17a1a988667bf4a9
 }
