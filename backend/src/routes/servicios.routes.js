@@ -1,17 +1,18 @@
-import express from 'express';
+"use strict";
+import express from "express";
 import {
-  getServicios,
   addServicio,
   editServicio,
+  getServicios,
   removeServicio,
-} from '../controllers/servicios.controller.js';
+} from "../controllers/servicios.controller.js";
 
 const router = express.Router();
 
 // Rutas para los servicios
-router.get('/all', getServicios);
-router.post('/create', addServicio);
-router.patch('/detail', editServicio);
-router.delete('/detail', removeServicio);
+router.get("/all", getServicios);
+router.post("/create", addServicio);
+router.patch("/detail", editServicio);
+router.delete("/detail", removeServicio);
 
 export default router;

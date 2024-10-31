@@ -76,7 +76,7 @@ export async function updateProduct(req,res){
 
 export async function deleteProduct(req,res){
     try {
-        const { name } = req.query;
+        const { name } = req.body;
         const { error } = productBodyValidation.validate({ name });
         if (error) {
             return handleErrorClient(res, 400, "Error de validación", error.message);

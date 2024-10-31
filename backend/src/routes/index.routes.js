@@ -16,9 +16,7 @@ router
     .use("/reservas", reservasRouter)
     .use("/servicios", serviciosRoutes)
     .use("/proveedor", proveedorRoutes)
-    .use("/product",productRoutes)
-    .use("/reservas", reservasRouter);
-
+    .use("/product",productRoutes);
 
 
 export default router;
