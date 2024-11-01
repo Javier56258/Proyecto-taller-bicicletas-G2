@@ -1,0 +1,42 @@
+/* footer.css */
+.site-footer {
+  background-color: #f8f9fa;
+  padding: 20px 0; /* Ajusta el padding según sea necesario */
+  font-size: 14px;
+  color: #6c757d;
+  width: 100%;
+}
+
+.site-footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.site-footer h6 {
+  font-size: 16px;
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+.site-footer p {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.site-footer .footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.site-footer .footer-links li {
+  margin-bottom: 10px;
+}
+
+.site-footer .footer-links a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.site-footer .footer-links a:hover {
+  text-decoration: underline;
+}

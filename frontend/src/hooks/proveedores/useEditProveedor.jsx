@@ -13,7 +13,6 @@ const useEditProveedor = (setProveedores) => {
         }
     };
 
-
     const handleUpdate = async (updatedProveedorData) => {
         if (updatedProveedorData) {
             try {
@@ -30,7 +29,6 @@ const useEditProveedor = (setProveedores) => {
                 return proveedor.email === formattedProveedor.email ? formattedProveedor : proveedor;
             }));
             
-
             setDataProveedor([]);
             } catch (error) {
                 console.error('Error al actualizar el proveedor:', error);
