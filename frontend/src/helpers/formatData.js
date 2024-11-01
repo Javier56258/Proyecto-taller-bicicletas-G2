@@ -2,6 +2,7 @@ import { startCase } from 'lodash';
 import { format as formatRut } from 'rut.js';
 import { format as formatTempo } from "@formkit/tempo";
 
+
 export function formatUserData(user) {
     return {
         ...user,
@@ -12,6 +13,23 @@ export function formatUserData(user) {
     };
 }
 
+
+export function formatProveedorData(proveedor) {
+    return {
+        ...proveedor,
+        nombreProveedor: startCase(proveedor.nombreProveedor),
+        productos_suministrados: startCase(proveedor.productos_suministrados),
+        paginaWeb: startCase(proveedor.paginaWeb),
+        telefono: startCase(proveedor.telefono),
+        email: startCase(proveedor.email),
+        direccion: startCase(proveedor.direccion),
+        createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
+
+
+
+    };
+}
+
 export function formatProductData(product) {
     return {
         ...product,
@@ -19,6 +37,7 @@ export function formatProductData(product) {
         description: startCase(product.description),
         createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
         
+
     };
 }
 
@@ -31,6 +50,18 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
+export function formatServicioData(servicio) {
+    // Implementa la lógica de formateo aquí
+    return {
+        id: servicio.id,
+        nombre: servicio.nombre,
+        // Otros campos que necesites formatear
+    };
+  
+  
+  }
+
+//FORMATEO DE DATOS PARA ACTUALIZAR 
 export function formatPostUpdateUser(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
@@ -41,12 +72,31 @@ export function formatPostUpdateUser(user) {
     };
 }
 
+
+export function formatPostUpdateProveedor(proveedor) {
+    return {
+        nombreProveedor: startCase(proveedor.nombreProveedor),
+        productos_suministrados: startCase(proveedor.productos_suministrados),
+        paginaWeb: startCase(proveedor.paginaWeb),
+        telefono: proveedor.telefono,
+        email:proveedor.email,
+        direccion: startCase(proveedor.direccion),
+        createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
+    };
+
+}
+
+
+
 export function formatPostUpdateProduct(product) {
+    
     return {
         name: startCase(product.nombre),
         description: startCase(product.descripcion),
         price: product.precio,
         stock: product.stock,
         createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
+        
     };
+
 }

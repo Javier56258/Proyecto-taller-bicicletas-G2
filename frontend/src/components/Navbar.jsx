@@ -58,6 +58,7 @@ const Navbar = () => {
                             Inicio
                         </NavLink>
                     </li>
+
                     {userRole === 'administrador' && (
                     <li>
                         <NavLink 
@@ -76,6 +77,22 @@ const Navbar = () => {
                     {(userRole === 'administrador' || userRole === 'usuario') && (
                     <li>
                         <NavLink 
+
+                            to="/proveedores"
+                            onClick={() => {
+                                setMenuOpen(false);
+                                addActiveClass();
+                            }}
+                            activeClassName="active"
+                        >
+                            Proveedores
+                        </NavLink>
+                    </li>
+                    )}
+                    {(userRole === 'administrador' || userRole === 'usuario') && (
+                    <li>
+                        <NavLink
+
                             to="/products" 
                             onClick={() => { 
                                 setMenuOpen(false); 
@@ -86,8 +103,24 @@ const Navbar = () => {
                             Productos
                         </NavLink>
                     </li>
-                        
                         )}
+
+                        {(userRole === 'administrador' || userRole === 'usuario') && (
+                    <li>
+                        <NavLink
+                            
+                                to="/servicios" 
+                                onClick={() => { 
+                                    setMenuOpen(false); 
+                                    addActiveClass("active");
+                                }} 
+                                activeClassName="active"
+                            >
+                                Servicios
+                            </NavLink>
+                        </li>
+                        )}
+                            
                     <li>
                         <NavLink 
                             to="/auth" 

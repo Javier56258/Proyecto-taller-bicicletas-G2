@@ -9,6 +9,8 @@ import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Products from './pages/Products';
+import Proveedores from './pages/Proveedores';
+import ServiciosList from './pages/ServiciosList';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,22 @@ const router = createBrowserRouter([
             <Products />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: '/proveedores',
+        element: (
+          <ProtectedRoute allowedRoles ={['administrador', 'usuario']}  >
+            <Proveedores />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/servicios',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'usuario']}>
+            <ServiciosList />
+          </ProtectedRoute>
+        ),
       }
       
     ]
@@ -52,4 +70,3 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 )
-

@@ -1,38 +1,39 @@
 "use strict";
 import { EntitySchema } from "typeorm";
 
-const ReservaSchema = new EntitySchema({
-    name: "Reserva",
-    tableName: "reservas",
+const ProveedorSchema = new EntitySchema({
+    name: "proveedor",
+    tableName: "proveedores",
     columns: {
-        idreserva: {
+        idProveedor: {
             type: "int",
             primary: true,
-            generated: true,
+            generated: true
         },
-        nombreReservador: {
-            type: "varchar",
-            length: 100,
-            nullable: false,
-        },
-        email: {  
+        nombreProveedor: {
             type: "varchar",
             length: 255,
-            nullable: false, //falta actualizar bd local donde se decia que esto era unico
+            nullable: false,
         },
-        motivo: {
+        productos_suministrados: {
             type: "varchar",
-            length: 100,
-            nullable: false,
+            length: 255,
         },
-        fecha: {
-            type: "timestamp with time zone",
-            nullable: false,
-        },
-        hora: {
+        PaginaWeb: {
             type: "varchar",
-            length: 10,
-            nullable: false,
+            length: 255,
+        },
+        telefono: {
+            type: "varchar",
+            length: 15,
+        },
+        email: {
+            type: "varchar",
+            length: 255,
+        },
+        direccion: {
+            type: "varchar",
+            length: 255,
         },
         createdAt: {
             type: "timestamp with time zone",
@@ -48,16 +49,16 @@ const ReservaSchema = new EntitySchema({
     },
     /*indices: [
         {
-            name: "IDX_RESERVA",
-            columns: ["idreserva"],
+            name: "IDX_PROVEEDOR",
+            columns: ["idProveedor"],
             unique: true,
         },
         {
-            name: "IDX_RESERVA_EMAIL",
+            name: "IDX_PROVEEDOR_EMAIL",
             columns: ["email"],
             unique: true,
         },
     ],*/
 });
   
-  export default ReservaSchema;
+export default ProveedorSchema;
