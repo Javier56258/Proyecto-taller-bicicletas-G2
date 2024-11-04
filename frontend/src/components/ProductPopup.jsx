@@ -14,7 +14,7 @@ function productPopup({show,setShow,data,action}) {
 
     return(
         <div>
-            {show && (
+            { show && (
                 <div className="bg">
                     <div className="popup">
                         <button className='close' onClick={() => setShow(false)}>
@@ -25,7 +25,7 @@ function productPopup({show,setShow,data,action}) {
                             fields={[
                                 {
                                     label: "Nombre",
-                                    name: "nombre",
+                                    name: "name",
                                     defaultValue: productData.name || "",
                                     placeholder: 'Nombre del producto',
                                     fieldType: 'input',
@@ -38,8 +38,7 @@ function productPopup({show,setShow,data,action}) {
                                 },
                                 {
                                     label: "Descripción",
-                                    name: "descripcion",
-                                    
+                                    name: "description",
                                     defaultValue: productData.description || "",
                                     placeholder: 'Descripción del producto',
                                     fieldType: 'input',
@@ -50,7 +49,7 @@ function productPopup({show,setShow,data,action}) {
                                 },
                                 {
                                     label: "Precio",
-                                    name: "precio",
+                                    name: "price",
                                     defaultValue: productData.price || "",
                                     placeholder: 'Precio del producto',
                                     fieldType: 'input',
@@ -67,19 +66,18 @@ function productPopup({show,setShow,data,action}) {
                                     type: "number",
                                     required: true,
                                     min: 0,
-                                },
+                                }
                             
                             ]}
                             onSubmit={handleSubmit}
                             buttonText="Editar producto"
                             backgroundColor={'#fff'}
-
                         />
                     </div>
                 </div>
             )}
         </div>
-    )
+    );
 }
 
 export default productPopup;

@@ -48,7 +48,7 @@ const Products = () => {
                                 <img src={UpdateIcon} alt="edit" />
                             )}
                         </button>
-                        <button onClick={ handleDelete } disabled = {dataProduct.length ===0}>
+                        <button className = 'delete-user-button'  disabled = {dataProduct.length ===0} onClick={()=> handleDelete(dataProduct)}>
                             {dataProduct.length === 0 ? (
                                 <img src={DeleteIconDisable} alt="delete-disabled" />
                             ) : (
@@ -63,15 +63,7 @@ const Products = () => {
                     onSelectionChange={handleSelectionChange}
                 />
             </div>
-            {isPopupOpen && (
-                <ProductPopup
-                    show={isPopupOpen}
-                    setShow={setIsPopupOpen}
-                    data = {dataProduct}
-                    action = {handleUpdate}
-
-                />
-            )}
+            <ProductPopup show= {isPopupOpen} setShow={setIsPopupOpen} data={dataProduct} action = {handleUpdate} />
         </div>
     );  
 };
