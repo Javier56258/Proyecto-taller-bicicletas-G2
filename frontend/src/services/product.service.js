@@ -1,7 +1,7 @@
 import axios from './root.service.js';
 import { formatProductData } from '@helpers/formatData.js';
 
-export async function getProducts() { 
+export async function getProducts() {
     try {
         const { data } = await axios.get('/product/all');
         console.log(data);
@@ -22,7 +22,7 @@ export async function updateProduct(data, id) {
         console.log(error)
         return error.response.data;
     }
-}  
+}
 
 export async function deleteProduct(id) {
     try {

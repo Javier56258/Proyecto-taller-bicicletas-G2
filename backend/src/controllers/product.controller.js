@@ -6,7 +6,7 @@ import {
     getProductsService,
     updateProductService
 } from "../services/product.service.js";
-import { productBodyValidation } from "../validations/product.validation.js";
+import { productBodyValidation,productQueryValidation } from "../validations/product.validation.js";
 import { handleErrorClient, handleErrorServer, handleSuccess } from "../handlers/responseHandlers.js";
 
 export async function createProduct(req,res){
@@ -56,9 +56,9 @@ export async function getProducts(req,res){
 
 export async function updateProduct(req,res){
     try {
+        const { id,name } = req.query;
         const { body } = req;
-        const { name } = req.query;
-        const { error: queryError } = productBodyValidation.validate({ name });
+        const { error: queryError } = productQueryValidation.validate({ id,name });
         if (queryError) {
             return handleErrorClient(res, 400, "Error de validación en la consulta", queryError.message);
         }
@@ -66,7 +66,7 @@ export async function updateProduct(req,res){
         if (bodyError) {
             return handleErrorClient(res, 400, "Error de validación en el cuerpo", bodyError.message);
         }
-        const [updatedProduct, errorUpdatedProduct] = await updateProductService({ name }, body);
+        const [updatedProduct, errorUpdatedProduct] = await updateProductService({ id, name }, body);
         if (errorUpdatedProduct) return handleErrorClient(res, 400, "Error actualizando producto", errorUpdatedProduct);
         handleSuccess(res, 200, "Producto actualizado con éxito", updatedProduct);
     } catch (error) {

@@ -3,7 +3,7 @@ import useProducts from '@hooks/products/useGetProducts.jsx';
 import UpdateIcon from '../assets/updateIcon.svg';
 import useEditProduct from '@hooks/products/useEditProduct.jsx';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
-import Popup from '../components/Popup';
+import ProductPopup from '@components/ProductPopup';
 import { useCallback } from 'react';
 import useDeleteProduct from '@hooks/products/useDeleteProduct.jsx';
 import DeleteIcon from '../assets/deleteIcon.svg';
@@ -40,6 +40,7 @@ const Products = () => {
                 <div className='top-table'>
                     <h1 className='title-table'>Productos</h1>
                     <div className='filter-actions'>
+                    
                         <button onClick={handleClickUpdate} disabled={dataProduct.length ===0} >
                             {dataProduct.length === 0 ? (
                                 <img src={UpdateIconDisable} alt="edit-disabled" />
@@ -47,7 +48,7 @@ const Products = () => {
                                 <img src={UpdateIcon} alt="edit" />
                             )}
                         </button>
-                        <button onClick={ handleDelete } disabled = {dataProduct.length ===0}>
+                        <button className = 'delete-user-button'  disabled = {dataProduct.length ===0} onClick={()=> handleDelete(dataProduct)}>
                             {dataProduct.length === 0 ? (
                                 <img src={DeleteIconDisable} alt="delete-disabled" />
                             ) : (
@@ -62,14 +63,7 @@ const Products = () => {
                     onSelectionChange={handleSelectionChange}
                 />
             </div>
-            {isPopupOpen && (
-                <Popup
-                    data = {dataProduct}
-                    onClose={() => setIsPopupOpen(false)}
-                    onUpdate={handleUpdate}
-
-                />
-            )}
+            <ProductPopup show= {isPopupOpen} setShow={setIsPopupOpen} data={dataProduct} action = {handleUpdate} />
         </div>
     );  
 };
