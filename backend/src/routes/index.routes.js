@@ -10,7 +10,7 @@ const router = Router();
 router
     .use("/auth", authRoutes)
     .use("/user", userRoutes)
-    .use("/product",productRoutes);
+    .use("/product",productRoutes)
     .use("/reservas", reservasRouter);
 
 
