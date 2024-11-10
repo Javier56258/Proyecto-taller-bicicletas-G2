@@ -29,3 +29,10 @@ export function handleErrorReserva(res, statusCode, message) {
     message,
   });
 }
+
+export function handleErrorHorario(res, statusCode, message) {
+  return res.status(statusCode).json({
+    status: "Horario error",
+    message,
+  });
+}
