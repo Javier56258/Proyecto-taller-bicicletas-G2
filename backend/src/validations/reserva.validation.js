@@ -13,8 +13,6 @@ const domainEmailValidator = (value, helper) => {
     return value;
 };
 
-
-
 const horaValidator = (value, helpers) => {
     const { fecha } = helpers.state.ancestors[0];
     const selectedDate = moment(fecha).format("YYYY-MM-DD");
@@ -24,7 +22,6 @@ const horaValidator = (value, helpers) => {
         && selectedTime.isBefore(moment())) {
         return helpers.message("La hora debe ser mayor a la hora actual si la fecha es para el mismo día.");
     }
-    console.log("HORA RECIBIDA EN EL VALIDADOR:", value);
     return value;
 };
 
@@ -33,19 +30,11 @@ const fueReservadaValidator = async (value, helpers) => {
     if (!fecha) {
         return helpers.message("La fecha es obligatoria.");
     }
-    //const aux = value;
-    console.log("Fecha recibida en el validador:", fecha);
-    console.log("Hora recibida en el validador:", value);
 
     const selectedDate = moment(fecha).format("YYYY-MM-DD");
-    //const selectedTime = moment(`${selectedDate}T${value}`, "HH:mm").format("HH:mm");
-
-    console.log("Fecha formateada en el validador:", selectedDate);
-    console.log("Hora value en el validador:", value);
 
     const reservaRepository = AppDataSource.getRepository(Reserva);
 
-    console.log("REPOSITORIO RESERVAS: ", reservaRepository);
 
     const reservaExistente = await reservaRepository.findOne({
         where: {
@@ -54,48 +43,20 @@ const fueReservadaValidator = async (value, helpers) => {
         }
     });
 
-    console.log("Reserva existente en el validador:", reservaExistente);
 
 
     if (reservaExistente) {
         console.log("Reserva duplicada encontrada");
         return { error: "Ya existe una reserva en este horario." };
     }
-    //value.hora = aux;
-    console.log("Value devuelto en el validador final: ", value);
 
     return value;
 };
 
-
-/*
-const fueReservadaValidator = (value, helpers) => {
-    const { fecha } = helpers.state.ancestors[0];
-    const selectedDate = moment(fecha, "YYYY-MM-DD").format("YYYY-MM-DD");
-    const selectedTime = moment(value, "HH:mm").format("HH:mm");
-
-    return Reserva.findOne({
-        where: {
-            fecha: selectedDate,
-            hora: selectedTime
-        }
-    }).then(reservaExistente => {
-        if (reservaExistente) {
-            return helpers.message("La hora seleccionada ya está reservada.");
-        }
-        return value;
-    })
-};
-*/ 
-
-
-//const horariosValidados;
-//const noReservado;
-
 export const reservaBodyValidation = Joi.object({
     nombreReservador: Joi.string()
-        .min(15)
-        .max(50)
+        .min(7)
+        .max(60)
         .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
         .messages({
             "string.empty": "El nombre del reservador no puede estar vacío.",
@@ -117,9 +78,9 @@ export const reservaBodyValidation = Joi.object({
         })
         .custom(domainEmailValidator, "Validación dominio email"),
     motivo: Joi.string()
-        .min(10)
+        .min(5)
         .max(60)
-        .pattern(/^[a-zA-Z0-9\s]+$/)
+        .pattern(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/)
         .messages({
             "string.empty": "El motivo no puede estar vacío.",
             "string.base": "El motivo debe ser de tipo string.",
@@ -128,10 +89,8 @@ export const reservaBodyValidation = Joi.object({
             "string.pattern.base": "El motivo solo puede contener letras y números.",
         }),
     fecha: Joi.date().iso()
-        //.min("now")
         .messages({
             "date.base": "La fecha debe ser de tipo timestamp with time zone.",
-            //"date.min": "La fecha debe ser mayor o igual a la fecha actual."
         })
         .required()
         .messages({
@@ -140,7 +99,6 @@ export const reservaBodyValidation = Joi.object({
     hora: Joi.string()
         .custom(horaValidator, "Validación de hora")
         .custom(async (value, helpers) => await fueReservadaValidator(value, helpers), "Validación de reserva")
-        //.custom(horariosValidados, "Validación de horarios empresa")
         .messages({
             "string.base": "La hora debe ser de tipo string.",
         })
