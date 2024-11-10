@@ -9,10 +9,9 @@ import { createReserva,
  } from "../controllers/reservas.controller.js";
 
 const router = Router();
-
-router.use(authenticateJwt);
 router.post("/", createReserva)
-      .get("/", getReservas)
+router.use(authenticateJwt);
+router.get("/", getReservas)
       .patch("/detail/", updateReserva)
       .delete("/", deleteReserva);
 
