@@ -1,8 +1,5 @@
 "use strict";
 
-//import { AppDataSource } from "../config/configDb";
-//import { Reserva } from "../entity/reserva.entity.js";
-//import configDb from "../config/configDb.js";
 import { reservaBodyValidation, 
         reservaQueryValidation, 
         reservaUpdateQueryValidation } from "../validations/reserva.validation.js";
@@ -18,17 +15,13 @@ import { handleErrorReserva, handleErrorServer, handleSuccess } from "../handler
 export async function createReserva(req, res) {
     try {
         const reserva = req.body;
-        console.log("Reserva recibida en el controlador:", reserva);  //Recuerda borrar
-
+        if (!reserva.hora) {
+          return res.status(400).json({ error: "El campo 'hora' es obligatorio" });
+        }
         if (reserva.fecha) {
             reserva.fecha = moment(reserva.fecha, "DD-MM-YYYY").format("YYYY-MM-DDTHH:mm:ssZ");
-          }
-          if (!reserva.hora) {
-            return res.status(400).json({ error: "El campo 'hora' es obligatorio" });
         }
-
-        console.log("Reserva antes de la validación:", reserva);   //Recuerda borrar
-
+        
 
         const { value, error } = reservaBodyValidation.validate(reserva); 
         //Falta validar que el dueño pueda ingresar horarios posibles de la tienda y agregarlos a validacion
@@ -38,8 +31,7 @@ export async function createReserva(req, res) {
             return res.status(400).json({ message: error.message });
         }
 
-        console.log("Reserva después de la validación:", value);
-
+        console.log("Valor validado:", value);
         const reservaSaved = await createReservaService(value); 
         reservaSaved.fecha = moment(reservaSaved.fecha).format("DD-MM-YYYY");
 
@@ -56,15 +48,10 @@ export async function createReserva(req, res) {
 export async function getReservas(req, res) {
     try {
       const { fechaInicio, fechaFin } = req.query;
-      console.log("Está en el archivo de controlador de reservas, en especifico obtener reservas");
-        console.log("Fecha inicio: ", fechaInicio);
-        console.log("Fecha fin: ", fechaFin);
+      
 
       const formattedFechaInicio = moment(fechaInicio, "DD-MM-YYYY").toDate();
       const formattedFechaFin = moment(fechaFin, "DD-MM-YYYY").toDate();
-
-      console.log("Fecha inicio formateada:", formattedFechaInicio);
-      console.log("Fecha fin formateada:", formattedFechaFin);
 
       const { error } = reservaQueryValidation.validate({ 
         fechaInicio: formattedFechaInicio, fechaFin: formattedFechaFin });
@@ -73,8 +60,11 @@ export async function getReservas(req, res) {
       const [reservas, errorReservas] = await getReservasService(formattedFechaInicio, formattedFechaFin);
   
       if (errorReservas) return handleErrorReserva(res, 404, errorReservas);
-  
-      res.json(reservas);
+      const formattedReservas = reservas.map(reserva => ({
+        ...reserva,
+        fecha: moment(reserva.fecha).format("DD-MM-YYYY")
+    }));
+      res.json(formattedReservas);
     } catch (error) {
         handleErrorServer(res, 500, "Error interno del servidor");
     }
@@ -84,18 +74,24 @@ export async function updateReserva(req, res) {
     try{
         const { idreserva } = req.query;
         const { body } = req;
-        //No se si poner previamente el buscar a un grupo entre fechas y por filtro
+
         const { error: queryError } = reservaUpdateQueryValidation.validate({ idreserva });
         if (queryError) return handleErrorReserva( res, 400, "Error de validación en la consulta", queryError.message); 
-        
-        console.log("Body recibido en el controlador de actualización de reserva:", body);
+        if (body.fecha) {
+            body.fecha = moment(body.fecha, "DD-MM-YYYY").format("YYYY-MM-DDTHH:mm:ssZ");
+        }
+        console.log(body);
         const { error: bodyError } = reservaBodyValidation.validate(body);
-        if (bodyError) return handleErrorReserva(res, 400, "Error de validación en datos enviados", bodyError.message);
+        if (bodyError) {
+          console.error("Error de validación en datos enviados:", bodyError.details);
+          return handleErrorReserva(res, 400, "Error de validación en datos enviados", bodyError.message);
+      }
+        //if (bodyError) return handleErrorReserva(res, 400, "Error de validación en datos enviados", bodyError.message);
         
         const [reserva, reservaError] = await updateReservaService({ idreserva }, body);
         
         if (reservaError) return handleErrorReserva(res, 400, "Error al modificar la reserva", reservaError);
-
+        reserva.fecha = moment(reserva.fecha).format("DD-MM-YYYY");
         handleSuccess(res, 200, "Reserva modificada correctamente", reserva);
     } catch (error) {
         handleErrorServer(res, 500, error.message);
@@ -114,9 +110,13 @@ export async function deleteReserva(req, res) {
   
       const [reservaDelete, errorReservaDelete] = await deleteReservaService({ idreserva });
   
-      if (errorReservaDelete) return handleErrorClient(res, 404, "Error eliminado al usuario", errorReservaDelete);
-  
-      handleSuccess(res, 200, "Usuario eliminado correctamente", reservaDelete);
+      if (errorReservaDelete) return handleErrorReserva(res, 404, "Error eliminado al reserva", errorReservaDelete);
+      
+      if (reservaDelete && reservaDelete.fecha) {
+        reservaDelete.fecha = moment(reservaDelete.fecha).format("DD-MM-YYYY");
+      }
+
+      handleSuccess(res, 200, "Reserva eliminado correctamente", reservaDelete);
     } catch (error) {
       handleErrorServer(res, 500, error.message);
     }
