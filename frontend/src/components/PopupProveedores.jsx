@@ -1,13 +1,15 @@
 import Form from './Form';
-import '@styles/popup.css';
+import '@styles/Popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import QuestionIcon from '@assets/QuestionCircleIcon.svg';
+import { formatPostUpdateProveedor } from '../helpers/formatData';
 
-export default function PopupProveedores({ show, setShow, data, action }) {
+function PopupProveedores({ show, setShow, data, action }) {
     const proveedorData = data && data.length > 0 ? data[0] : {};
 
     const handleSubmit = (formData) => {
-        action(formData);
+        const formattedData = formatPostUpdateProveedor(formData);
+        action(formattedData);
     }
 
     return (
@@ -41,8 +43,6 @@ export default function PopupProveedores({ show, setShow, data, action }) {
                                 placeholder: 'www.ejemplo.com',
                                 fieldType: 'input',
                                 type: "text",
-                                minLength: 9,
-                                maxLength: 12,
                                 pattern: "",
                                 patternMessage: "",
                                 required: false,
@@ -92,3 +92,5 @@ export default function PopupProveedores({ show, setShow, data, action }) {
         </div>
     );
 } 
+
+export default PopupProveedores;

@@ -1,17 +1,19 @@
 import Table from '@components/Table';
 import useProveedores from '@hooks/proveedores/useGetProveedores.jsx';
+import Search from '../components/Search.jsx';
 import PopupProveedores from '../components/PopupProveedores.jsx';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import '@styles/users.css';
 import useEditProveedor from '@hooks/proveedores/useEditProveedor';
 import useDeleteProveedor from '@hooks/proveedores/useDeleteProveedor';
 
 const Proveedores = () => {
     const { proveedores, fetchProveedores, setProveedores } = useProveedores();
+    const [filterNombre, setFilterNombre] = useState('');
 
     const {
         handleClickUpdate,
@@ -22,8 +24,12 @@ const Proveedores = () => {
         setDataProveedor
     } = useEditProveedor(setProveedores);
 
-
+  
     const { handleDelete } = useDeleteProveedor(fetchProveedores, setDataProveedor);
+
+    const handleNombreFilterChange = (e) => {
+        setFilterNombre(e.target.value);
+    };
 
     const handleSelectionChange = useCallback((selectedProveedores) => {
         setDataProveedor(selectedProveedores);
@@ -36,7 +42,7 @@ const Proveedores = () => {
         { title: "Productos Suministrados", field: "productos_suministrados", width: 200, responsive: 2 },
         { title: "Página Web", field: "PaginaWeb", width: 200, responsive: 2 },
         { title: "Teléfono", field: "telefono", width: 100, responsive: 2 },        
-        { title: "Correo electrónico", field: "email", width: 200, responsive: 2 },
+        { title: "Correo electrónico", field: "email", width: 200, responsive: 3 },
         { title: "Dirección", field: "direccion", width: 200, responsive: 2 }
     ];
 
@@ -45,7 +51,8 @@ const Proveedores = () => {
             <div className='table-container'>
                 <div className='top-table'>
                     <h1 className='title-table'>Proveedores</h1>
-                    <div className='filter-actions'>
+                    <div className='filter-actions'> 
+                        <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder={'Filtrar por nombre'} />
                         <button onClick={handleClickUpdate} disabled={dataProveedor.length === 0}>
                             {dataProveedor.length === 0 ? (
                                 <img src={UpdateIconDisable} alt="edit-disabled" />
@@ -65,10 +72,13 @@ const Proveedores = () => {
                 <Table
                     data={proveedores}
                     columns={columns}
+                    filter={filterNombre}
+                    dataToFilter={'nombreProveedor'}
+                    initialSortName={'nombreProveedor'}
                     onSelectionChange={handleSelectionChange}
                 />
             </div>
-            <PopupProveedores show={isPopupOpen} close={setIsPopupOpen} title={'Editar Proveedor'} />
+            <PopupProveedores show={isPopupOpen} setShow={setIsPopupOpen} data={dataProveedor} action={handleUpdate} title={'Editar Proveedor'} />
         </div>
     );
 };

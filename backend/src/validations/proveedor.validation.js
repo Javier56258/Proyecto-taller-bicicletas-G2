@@ -20,13 +20,11 @@ export const proveedorQueryValidation = Joi.object({
             "number.positive": "El id debe ser un número positivo.",
         }),
     nombreProveedor: Joi.string()
-        .optional()
         .messages({
             "string.base": "El nombre del proveedor debe ser de tipo string."
         }),
     email: Joi.string()
         .email()
-        .optional()
         .messages({
             "string.base": "El email debe ser de tipo string.",
             "string.email": "El email debe ser un correo electrónico válido."

@@ -81,7 +81,7 @@ const Navbar = () => {
                             to="/proveedores"
                             onClick={() => {
                                 setMenuOpen(false);
-                                addActiveClass();
+                                addActiveClass("active");
                             }}
                             activeClassName="active"
                         >

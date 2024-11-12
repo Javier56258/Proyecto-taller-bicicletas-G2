@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { updateProveedor } from '@services/proveedor.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostUpdateProveedor } from '@helpers/formatData.js';
+import { formatPostUpdateProveedor } from '../../helpers/formatData.js';
 
 const useEditProveedor = (setProveedores) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -24,10 +24,10 @@ const useEditProveedor = (setProveedores) => {
 
             setProveedores(prevProveedores => prevProveedores.map(proveedor => {
                 console.log("Proveedor actual:", proveedor);
-                if (proveedor.id === formattedProveedor.id) {
+                if (proveedor.nombreProveedor === formattedProveedor.nombreProveedor) {
                     console.log("Reemplazando con:", formattedProveedor);
                 }
-                return proveedor.email === formattedProveedor.email ? formattedProveedor : proveedor;
+                return proveedor.nombreProveedor === formattedProveedor.nombreProveedor ? formattedProveedor : proveedor;
             }));
             
 
