@@ -6,6 +6,7 @@ import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 export default function Popup({ show, setShow, data, action }) {
     const userData = data && data.length > 0 ? data[0] : {};
 
+   
     const handleSubmit = (formData) => {
         action(formData);
     };

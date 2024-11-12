@@ -24,6 +24,9 @@ export function formatProveedorData(proveedor) {
         email: proveedor.email,
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
+
+
+
     };
 }
 
@@ -34,6 +37,7 @@ export function formatProductData(product) {
         description: startCase(product.description),
         createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
         
+
     };
 }
 
@@ -46,6 +50,18 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
+export function formatServicioData(servicio) {
+    // Implementa la lógica de formateo aquí
+    return {
+        id: servicio.id,
+        nombre: servicio.nombre,
+        // Otros campos que necesites formatear
+    };
+  
+  
+  }
+
+//FORMATEO DE DATOS PARA ACTUALIZAR 
 export function formatPostUpdateUser(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
@@ -69,12 +85,18 @@ export function formatPostUpdateProveedor(proveedor) {
     };
 
 }
+
+
+
 export function formatPostUpdateProduct(product) {
+    
     return {
         name: startCase(product.nombre),
         description: startCase(product.descripcion),
         price: product.precio,
         stock: product.stock,
         createdAt: formatTempo(product.createdAt, "DD-MM-YYYY")
+        
     };
+
 }

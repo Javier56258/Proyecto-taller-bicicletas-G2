@@ -4,6 +4,7 @@ import CloseIcon from '@assets/XIcon.svg';
 import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 import { formatPostUpdateProveedor } from '../helpers/formatData';
 
+
 function PopupProveedores({ show, setShow, data, action }) {
     const proveedorData = data && data.length > 0 ? data[0] : {};
 
