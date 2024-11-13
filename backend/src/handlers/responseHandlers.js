@@ -23,16 +23,18 @@ export function handleErrorServer(res, statusCode, message) {
   });
 }
 
-export function handleErrorReserva(res, statusCode, message) {
+export function handleErrorReserva(res, statusCode, message, details={}) {
   return res.status(statusCode).json({
     status: "Reserva error",
     message,
+    details
   });
 }
 
-export function handleErrorHorario(res, statusCode, message) {
+export function handleErrorHorario(res, statusCode, message, details={}) {
   return res.status(statusCode).json({
     status: "Horario error",
     message,
+    details
   });
 }

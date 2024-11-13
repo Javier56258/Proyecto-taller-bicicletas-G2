@@ -15,7 +15,9 @@ export async function createHorario( req, res ){
         if (error) {
             return handleErrorHorario(res, 400, "Error de validación", error.message);
         }
-        const horarioSaved = await createHorarioService(value);
+        const [horarioSaved, errorCreate] = await createHorarioService(value);
+        if (errorCreate) return handleErrorHorario(res, 400, "Error al crear horario", errorCreate);
+        
         handleSuccess(res, 201, "Horario creado con éxito", horarioSaved);
 
     } catch (error) {
@@ -27,7 +29,9 @@ export async function getHorarios( req, res ){
     try {
         const { dia } = req.query;
         const { error } = horarioQueryValidation.validate({ dia: dia });
-        if (error) {return handleErrorHorario(res, 400, error.details[0].context.message);}
+        if (error) {
+            return handleErrorHorario(res, 400, "Error de validacion de ruta", error.details[0].context.message);
+        }
         const [horarios, errorHorarios] = await getHorariosService( dia );
         if (errorHorarios) return handleErrorHorario(res, 404, errorHorarios);
         horarios.length === 0
@@ -44,7 +48,7 @@ export async function updateHorarios( req, res ){
         const { body } = req;
         const { error: queryError } = horarioQueryValidation.validate({ id });
         if (queryError) {
-            return handleErrorHorario(res, 400, "Error de validación en la consulta", queryError.message);
+            return handleErrorHorario(res, 400, "Error de validación en la ruta de consulta", queryError.message);
         }
         const { error: bodyError } = horarioBodyValidation.validate(body);
         if (bodyError) {
@@ -65,10 +69,10 @@ export async function deleteHorario( req, res ){
         if (error) {
             return handleErrorHorario(res, 400, "Error de validación de query", error.message);
         }
-
+        //La impresión (response o res) no muestra el horario borrado como en otros delete. Lo borra pero no lo muestra
         const [deletedHorario, errorDeletedHorario] = await deleteHorarioService({ id });
 
-        if (errorDeletedHorario) return handleErrorHorario(res, 404, errorDeletedHorario);
+        if (errorDeletedHorario) return handleErrorHorario(res, 404, "Error al borrar horario", errorDeletedHorario);
         handleSuccess(res, 200, "Horario eliminado con éxito", deletedHorario);
     } catch (error) {
         handleErrorServer(res, 500, error.message);

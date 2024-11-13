@@ -3,12 +3,15 @@ import Horario from "../entity/horario.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
 export async function createHorarioService(horario) {
-    horario.hora = await horario.hora;
-    if (horario.hora.error) {
-        return { error: horario.hora.error };
-    }
     try {
     const horarioRepository = AppDataSource.getRepository(Horario);
+    
+    const existingHorario = await horarioRepository.findOne({
+      where: [{ dia: horario.dia, hora: horario.hora }],
+    });
+    if (existingHorario) {
+      return [null, "Horario ya existe"];
+    }
     const newHorario = horarioRepository.create({
       dia: horario.dia,
       hora: horario.hora,
@@ -16,7 +19,6 @@ export async function createHorarioService(horario) {
     await horarioRepository.save(newHorario);
     return [newHorario, null];
   } catch (error) {
-    console.error("Error al crear horario:", error);
     return [null, "Error interno del servidor"];
   }
 }
@@ -30,7 +32,6 @@ export async function getHorariosService(dia) {
         if (!horarios || horarios.length === 0) return [null, "No hay horarios en ese dia"];
         return[horarios, null];
     }catch (error) {
-        console.error("Error al obtener las horarios:", error);
         return [null, "Error interno del servidor"];
     }
 }
@@ -40,7 +41,7 @@ export async function updateHorariosService(query, body) {
     const { id } = query;
     const horarioRepository = AppDataSource.getRepository(Horario);
     const horarioFound = await horarioRepository.findOne({  where: [ { id: id } ] });
-    if (!horarioFound) {  return [null, "Horario no encontrado"]; }
+    if (!horarioFound) { return [null, "Horario no encontrado"]; }
 
     const existingHorario = await horarioRepository.findOne({
       where: [{ dia: body.dia, hora: body.hora }],
@@ -77,7 +78,7 @@ export async function deleteHorarioService(query) {
       where: { id: id }
     });
     if (!horarioFound) {  return [null, "Horario no encontrado"]; }
-    const horarioDeleted = await horarioRepository.delete({ id: horarioFound.id });
+    const horarioDeleted = await horarioRepository.remove( horarioFound );
     return [horarioDeleted, null];
   } catch (error) {
     console.error("Error al eliminar horario:", error);

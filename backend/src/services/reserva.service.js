@@ -1,32 +1,56 @@
 "use strict";
 
-//import User from "../entity/user.entity.js";
 import Reserva from "../entity/reserva.entity.js";
 import { AppDataSource } from "../config/configDb.js";
-//import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
-//import { formatToLocalTime } from '../utils/formatDate.js'
+import Horario from "../entity/horario.entity.js";
+import moment from "moment";
 
 export async function createReservaService(dataReserva) {
-    dataReserva.hora = await dataReserva.hora;
-    if (dataReserva.hora.error) {
-        return { error: dataReserva.hora.error };
-    }
     try {
         const reservaRepository = AppDataSource.getRepository(Reserva);   
+        const { nombreReservador, email, motivo, fecha, hora } = dataReserva;
 
-        const newReserva = reservaRepository.create({
-            nombreReservador: dataReserva.nombreReservador,
-            email: dataReserva.email,
-            motivo: dataReserva.motivo,
-            fecha: dataReserva.fecha,
-            hora: dataReserva.hora,
+        let dia = moment(fecha).format("dddd"); 
+        if (dia === "Monday")  dia = "Lunes";
+        if (dia === "Tuesday")  dia = "Martes";
+        if (dia === "Wednesday")  dia = "Miercoles";
+        if (dia === "Thursday")  dia = "Jueves";
+        if (dia === "Friday")  dia = "Viernes";
+        if (dia === "Saturday")  dia = "Sabado";
+        if (dia === "Sunday")  dia = "Domingo";
+
+        const horarioRepository = AppDataSource.getRepository(Horario);
+
+        const horarioExistente = await horarioRepository.findOne({
+            where: {
+                dia: dia,
+                hora: hora
+            }
         });
-
-        const reservaSaved = await reservaRepository.save(newReserva);
-
-        return reservaSaved;
+    
+        if (!horarioExistente) {
+            return [null, "Horario inexistente"];
+        }
+        
+        const reservaExistente = await reservaRepository.findOne({
+            where: { fecha, hora }
+        });
+        if (reservaExistente) {
+            return [null, "Ya existe una reserva en esa fecha y hora"];
+        }
+        const newReserva = reservaRepository.create({
+            nombreReservador: nombreReservador,
+            email: email,
+            motivo: motivo,
+            fecha: fecha,
+            hora: hora,
+            horario: horarioExistente,
+        });
+        await reservaRepository.save(newReserva);
+        return [newReserva, null];
     } catch (error) {
         console.error("Error al crear una reserva: ", error);
+        return [null, "Error interno del servidor"];
     }
 }
 
@@ -53,24 +77,42 @@ export async function updateReservaService(query, body) {
         const { idreserva } = query;
 
         const reservaRepository = AppDataSource.getRepository(Reserva);
+        const horarioRepository = AppDataSource.getRepository(Horario);
+        //Comprobar que el horario en el que se quiere hacer la reserva existe
+        let dia = moment(body.fecha).format("dddd"); 
+        if (dia === "Monday")  dia = "Lunes";
+        if (dia === "Tuesday")  dia = "Martes";
+        if (dia === "Wednesday")  dia = "Miercoles";
+        if (dia === "Thursday")  dia = "Jueves";
+        if (dia === "Friday")  dia = "Viernes";
+        if (dia === "Saturday")  dia = "Sabado";
+        if (dia === "Sunday")  dia = "Domingo";
+
+        const horarioExistente = await horarioRepository.findOne({
+            where: [{
+                dia: dia,
+                hora: body.hora
+            }]
+        });
+        
+        if (!horarioExistente) {
+            console.log("Horario inexistente");
+            return [null, "Horario inexistente, ingrese hora presentada por el local"];
+        }
         
         const reservaFound = await reservaRepository.findOne({
-            where: [{ idreserva: idreserva }],
+            where: { idreserva: idreserva },
         });
 
         if (!reservaFound) return [null, "Reserva no encontrada"];
 
         const reservaAactualizar = await reservaRepository.findOne({
-            where: [{ nombreReservador: body.nombreReservador }, 
-                { email: body.email }, 
-                { motivo: body.motivo },
-                { fecha: body.fecha },
-                { hora: body.hora } ] 
+            where: { fecha: body.fecha  ,  hora: body.hora } , 
         });
 
-        if (reservaAactualizar && reservaAactualizar.idreserva !== reservaFound.idreserva) 
+        if (reservaAactualizar && reservaAactualizar.idreserva !== reservaFound.idreserva) {
             return [null, "Reserva con los mismos datos ya existe"];
-
+        }    
         const dataUpdatedReserva = {
             nombreReservador: body.nombreReservador,
             email: body.email,
@@ -83,7 +125,7 @@ export async function updateReservaService(query, body) {
         await reservaRepository.update({ idreserva: reservaFound.idreserva }, dataUpdatedReserva);
 
         const reservaData = await reservaRepository.findOne({
-            where: { idreserva: reservaFound.idreserva },
+            where: [{ idreserva: reservaFound.idreserva }],
         });
 
         if (!reservaData) {

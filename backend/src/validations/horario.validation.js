@@ -1,7 +1,5 @@
 "use strict";
 import Joi from "joi";
-import  Horario  from "../entity/horario.entity.js";
-import { AppDataSource } from "../config/configDb.js";
 
 //Pense aqui crear una funcion para los horarios pero suena más
 // a una descripcion posible en el frontend que algo usable aquí.
@@ -20,26 +18,11 @@ const domainHorasValidator=(value, helpers) => {
     return value;
 };
 
-const horaInscritaValidator = async (value, helpers) => {
-    const { dia } = helpers.state.ancestors[0];
-    if (!dia) {
-        return helpers.message("El día es obligatorio.");
+const domainDiasValidator=(value, helpers) => {
+    const dias = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
+    if (!dias.includes(value.toLowerCase())) {
+        return helpers.message("Los días deben ser lunes, martes, miercoles, jueves, viernes, sabado o domingo.");
     }
-
-    const horarioRepository = AppDataSource.getRepository(Horario);
-
-    const horarioExistente = await horarioRepository.findOne({
-        where: {
-            dia: dia,
-            hora: value
-        }
-    });
-
-    if (horarioExistente) {
-        console.log("Horario duplicado encontrado");
-        return helpers.message("Ya existe una reserva en este horario para el día especificado.");
-    }
-
     return value;
 };
 
@@ -54,7 +37,8 @@ export const horarioBodyValidation = Joi.object({
             "string.min": "El dia ingresado debe tener como mínimo 5 caracteres.",
             "string.max": "El dia ingresado debe tener como máximo 10 caracteres.",
             "string.pattern.base": "El día ingresado solo puede contener letras.",
-        }),/*
+        })
+        .custom(domainDiasValidator, "Validacion de dias de la semana"),/*
     horasAtencion: Joi.string()
         .min(15)
         .max(35)
@@ -75,7 +59,6 @@ export const horarioBodyValidation = Joi.object({
             "string.pattern.base": "El horario debe ser en formato HH:MM.",
         })
         .custom(domainHorasValidator, "Validación separacion de horas")
-        .custom(horaInscritaValidator, "Validación hora inscrita"),
 });
 
 export const horarioQueryValidation = Joi.object({

@@ -1,8 +1,6 @@
 "use strict";
 import Joi from "joi";
 import moment from "moment";
-import  Reserva  from "../entity/reserva.entity.js";
-import { AppDataSource } from "../config/configDb.js";
 
 const domainEmailValidator = (value, helper) => {
     if (!value.endsWith("@gmail.cl") && !value.endsWith("@gmail.com")) {
@@ -17,39 +15,16 @@ const horaValidator = (value, helpers) => {
     const { fecha } = helpers.state.ancestors[0];
     const selectedDate = moment(fecha).format("YYYY-MM-DD");
     const selectedTime = moment(`${selectedDate}T${value}`, "YYYY-MM-DDTHH:mm:ssZ");
-
+    const fechaMoment = moment(fecha);
+    const fechaActual = moment();
     if (selectedDate === moment().format("YYYY-MM-DD") 
         && selectedTime.isBefore(moment())) {
         return helpers.message("La hora debe ser mayor a la hora actual si la fecha es para el mismo día.");
     }
-    return value;
-};
-
-const fueReservadaValidator = async (value, helpers) => {
-    const { fecha } = helpers.state.ancestors[0];
-    if (!fecha) {
-        return helpers.message("La fecha es obligatoria.");
+    if (fechaMoment.isBefore(fechaActual, "day")) {
+        return helpers.message("La fecha debe ser mayor a la fecha actual.");
     }
-
-    const selectedDate = moment(fecha).format("YYYY-MM-DD");
-
-    const reservaRepository = AppDataSource.getRepository(Reserva);
-
-
-    const reservaExistente = await reservaRepository.findOne({
-        where: {
-            fecha: selectedDate,
-            hora: value
-        }
-    });
-
-
-
-    if (reservaExistente) {
-        console.log("Reserva duplicada encontrada");
-        return { error: "Ya existe una reserva en este horario." };
-    }
-
+    //
     return value;
 };
 
@@ -98,7 +73,6 @@ export const reservaBodyValidation = Joi.object({
         }),
     hora: Joi.string()
         .custom(horaValidator, "Validación de hora")
-        .custom(async (value, helpers) => await fueReservadaValidator(value, helpers), "Validación de reserva")
         .messages({
             "string.base": "La hora debe ser de tipo string.",
         })

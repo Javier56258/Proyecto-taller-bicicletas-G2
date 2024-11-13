@@ -15,33 +15,24 @@ import { handleErrorReserva, handleErrorServer, handleSuccess } from "../handler
 export async function createReserva(req, res) {
     try {
         const reserva = req.body;
-        if (!reserva.hora) {
-          return res.status(400).json({ error: "El campo 'hora' es obligatorio" });
-        }
         if (reserva.fecha) {
             reserva.fecha = moment(reserva.fecha, "DD-MM-YYYY").format("YYYY-MM-DDTHH:mm:ssZ");
         }
-        
 
         const { value, error } = reservaBodyValidation.validate(reserva); 
-        //Falta validar que el dueño pueda ingresar horarios posibles de la tienda y agregarlos a validacion
-
         if (error) {
-            console.log("Error de validación:", error.message);
             return res.status(400).json({ message: error.message });
         }
 
-        console.log("Valor validado:", value);
-        const reservaSaved = await createReservaService(value); 
+        const [reservaSaved, errorReservaSaved] = await createReservaService(value); 
+        if (errorReservaSaved) {
+          return handleErrorReserva(res, 400, "Error al crear reserva", errorReservaSaved);
+        }
         reservaSaved.fecha = moment(reservaSaved.fecha).format("DD-MM-YYYY");
+        handleSuccess(res, 201, "Reserva creada exitosamente", reservaSaved);
 
-
-        res.status(201).json({
-            message: "Reserva creada exitosamente",
-            data: reservaSaved
-        });
     } catch (error) {
-        console.error("Error al crear la reserva, el error es: ", error);
+        handleErrorReserva(res, 500, error.message);
     }
 }
 
@@ -80,7 +71,6 @@ export async function updateReserva(req, res) {
         if (body.fecha) {
             body.fecha = moment(body.fecha, "DD-MM-YYYY").format("YYYY-MM-DDTHH:mm:ssZ");
         }
-        console.log(body);
         const { error: bodyError } = reservaBodyValidation.validate(body);
         if (bodyError) {
           console.error("Error de validación en datos enviados:", bodyError.details);
