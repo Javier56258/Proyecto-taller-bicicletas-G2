@@ -126,6 +126,21 @@ const Navbar = () => {
               </li>
             )}
 
+            {(userRole === "administrador" || userRole === "usuario") && (
+              <li>
+                <NavLink
+                  to="/reservas"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    addActiveClass();
+                  }}
+                >
+                  Reservas
+                </NavLink>
+              </li>
+            )}
+
             <li>
               <NavLink
                 to="/auth"
