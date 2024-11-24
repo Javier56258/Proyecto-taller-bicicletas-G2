@@ -3,7 +3,7 @@ import useProducts from '@hooks/products/useGetProducts.jsx';
 import UpdateIcon from '../assets/updateIcon.svg';
 import useEditProduct from '@hooks/products/useEditProduct.jsx';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
-import ProductPopup from '@components/ProductPopup';
+import ProductPopup from '@components/ProductPopup.jsx';
 import { useCallback } from 'react';
 import useDeleteProduct from '@hooks/products/useDeleteProduct.jsx';
 import DeleteIcon from '../assets/deleteIcon.svg';
@@ -40,7 +40,9 @@ const Products = () => {
                 <div className='top-table'>
                     <h1 className='title-table'>Productos</h1>
                     <div className='filter-actions'>
-                    
+                        <button style={{color:'#003366'}}>
+                            <b>Crear Producto</b>
+                        </button>
                         <button onClick={handleClickUpdate} disabled={dataProduct.length ===0} >
                             {dataProduct.length === 0 ? (
                                 <img src={UpdateIconDisable} alt="edit-disabled" />

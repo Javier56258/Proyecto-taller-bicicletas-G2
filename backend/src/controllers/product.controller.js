@@ -59,6 +59,7 @@ export async function updateProduct(req,res){
         const { id,name } = req.query;
         const { body } = req;
         const { error: queryError } = productQueryValidation.validate({ id,name });
+        
         if (queryError) {
             return handleErrorClient(res, 400, "Error de validación en la consulta", queryError.message);
         }
@@ -76,14 +77,13 @@ export async function updateProduct(req,res){
 
 export async function deleteProduct(req,res){
     try {
-        const { name } = req.body;
-        const { error } = productBodyValidation.validate({ name });
-        if (error) {
+        const { id,name } = req.query;
+        const { error:queryError } = productQueryValidation.validate({ id,name });
+        if (queryError) {
             return handleErrorClient(res, 400, "Error de validación", error.message);
         }
 
-
-        const [deletedProduct, errorDeletedProduct] = await deleteProductService({ name });
+        const [deletedProduct, errorDeletedProduct] = await deleteProductService({ id,name });
         if (errorDeletedProduct) return handleErrorClient(res, 404, errorDeletedProduct);
         handleSuccess(res, 200, "Producto eliminado con éxito", deletedProduct);
     } catch (error) {

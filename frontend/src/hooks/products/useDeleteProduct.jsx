@@ -1,5 +1,5 @@
-import { deleteProduct } from "../../services/product.service";
-import { deleteDataAlert, showErrorAlert, showSuccessAlert } from "../../helpers/sweetAlert";
+import { deleteProduct } from "@services/product.service.js";
+import { deleteDataAlert, showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert.js";
 
 const useDeleteUser = (fetchProducts, setDataProduct) => {
     const handleDelete = async (dataProduct) => {
