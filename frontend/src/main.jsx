@@ -11,7 +11,8 @@ import "@styles/styles.css";
 import Products from "./pages/Products";
 import Proveedores from "./pages/Proveedores";
 import Services from "./pages/Services";
-
+import Reservas from "./pages/Reserva";
+console.log("Pasando por main.jsx");  
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/reservas",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador", "usuario"]}>
+            <Reservas />
+          </ProtectedRoute>
+        )
+      }
     ],
   },
   {
