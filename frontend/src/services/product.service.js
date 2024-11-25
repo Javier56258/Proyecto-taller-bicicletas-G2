@@ -13,7 +13,7 @@ export async function getProducts() {
 
 }
 
-export async function updateProduct(data, id) {
+export async function updateProduct(data,id) {
     try {
         const response = await axios.patch(`/product/detail/?id=${id}`, data);
         console.log(response);

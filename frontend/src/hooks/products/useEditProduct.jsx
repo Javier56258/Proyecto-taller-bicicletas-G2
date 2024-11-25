@@ -18,7 +18,7 @@ const useEditProduct = (setProducts) => {
         if (updatedProductData) {
             try {
 
-                const updatedProduct = await updateProduct(updateProduct, dataProduct[0].id);
+                const updatedProduct = await updateProduct(updatedProductData, dataProduct[0].id);
                 showSuccessAlert('¡Actualizado!', 'El producto ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
                 const formattedProduct = formatPostUpdateProduct(updatedProduct);
