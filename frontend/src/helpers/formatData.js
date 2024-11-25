@@ -12,7 +12,34 @@ export function formatUserData(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
-
+//Revisar
+export function formatReservaData(reserva) {
+    console.log("Pasando por formatReservaData");
+    console.log(reserva);
+    console.log("nombreReservador: ", reserva.nombreReservador);
+    console.log("email: ", reserva.email);
+    console.log("motivo: ", reserva.motivo);
+    console.log("fecha: ", formatTempo(reserva.fecha, "DD-MM-YYYY"));
+    //console.log("hora: ", formatTempo(reserva.hora, "HH:mm"));
+    console.log("createdAt: ", reserva.createdAt);
+    return {
+        ...reserva,
+        nombreReservador: startCase(reserva.nombreReservador),
+        motivo: startCase(reserva.motivo),
+        fecha: formatTempo(reserva.fecha, "DD-MM-YYYY"),
+        hora: startCase(reserva.hora),
+        createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
+    };
+}
+//Revisar
+export function formatHorarioData(horario) {
+    return {
+        ...horario,
+        dia: startCase(horario.dia),
+        hora: formatTempo(horario.hora, "HH:mm"),
+        createdAt: formatTempo(horario.createdAt, "DD-MM-YYYY")
+    };
+}
 
 export function formatProveedorData(proveedor) {
     return {
@@ -98,4 +125,17 @@ export function formatPostUpdateProduct(product) {
         
     };
 
+}
+
+export function formatPostUpdateReserva(reserva) {
+    console.log("Pasando por formatPostUpdateReserva");
+    console.log(reserva);
+    return {
+        nombreReservador: startCase(reserva.nombreReservador),
+        email: startCase(reserva.email),
+        motivo: startCase(reserva.motivo),
+        fecha: formatTempo(reserva.fecha, "DD-MM-YYYY"),
+        hora: formatTempo(reserva.hora, "HH:mm"),
+        createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
+    };
 }

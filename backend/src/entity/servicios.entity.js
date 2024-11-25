@@ -1,24 +1,23 @@
-import { EntitySchema } from 'typeorm';
+import { EntitySchema } from "typeorm";
 
 const ServicioSchema = new EntitySchema({
-  name: 'Servicio',
-  tableName: 'servicios',
+  name: "Servicio",
+  tableName: "servicios",
   columns: {
     idServicio: {
-      type: 'int',
+      type: "int",
       primary: true,
       generated: true,
     },
     nombre: {
-      type: 'varchar',
+      type: "varchar",
       length: 255,
       nullable: false,
     },
     descripcion: {
-      type: 'text',
+      type: "text",
       nullable: true,
     },
-    
   },
 });
 

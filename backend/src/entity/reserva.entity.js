@@ -1,5 +1,6 @@
 "use strict";
 import { EntitySchema } from "typeorm";
+import HorarioSchema from "./horario.entity.js"; // Importa la entidad Horario
 
 const ReservaSchema = new EntitySchema({
     name: "Reserva",
@@ -18,7 +19,7 @@ const ReservaSchema = new EntitySchema({
         email: {  
             type: "varchar",
             length: 255,
-            nullable: false, //falta actualizar bd local donde se decia que esto era unico
+            nullable: false,
         },
         motivo: {
             type: "varchar",
@@ -46,18 +47,14 @@ const ReservaSchema = new EntitySchema({
             nullable: false,
         }
     },
-    /*indices: [
-        {
-            name: "IDX_RESERVA",
-            columns: ["idreserva"],
-            unique: true,
-        },
-        {
-            name: "IDX_RESERVA_EMAIL",
-            columns: ["email"],
-            unique: true,
-        },
-    ],*/
+    relations: {
+        horario: {
+            type: "many-to-one",
+            target: "Horario",
+            joinColumn: true,
+            nullable: false,
+        }
+    }
 });
-  
-  export default ReservaSchema;
+
+export default ReservaSchema;
