@@ -110,6 +110,21 @@ const Navbar = () => {
                 Productos
               </NavLink>
             </li>
+            
+            {(userRole === "administrador") && (
+              <li>
+                <NavLink
+                  to="/proveedores"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    addActiveClass();
+                  }}
+                >
+                  Proveedores
+                </NavLink>
+              </li>
+            )}
 
             {(userRole === "administrador" || userRole === "usuario") && (
               <li>
@@ -125,7 +140,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-
+            
             {(userRole === "administrador" || userRole === "usuario") && (
               <li>
                 <NavLink

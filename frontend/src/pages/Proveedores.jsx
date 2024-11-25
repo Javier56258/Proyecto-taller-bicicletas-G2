@@ -62,7 +62,7 @@ const Proveedores = () => {
                     <h1 className='title-table'>Proveedores</h1>
                     <div className='filter-actions'> 
                         <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder={'Filtrar por nombre'} />
-                        <button onClick={handleCreateClick} className='create-button'>
+                        <button onClick={handleCreateClick} className='create-proveedor-button'>
                             Añadir Proveedor
                         </button>
                         <button className= 'edit-proveedor-button' onClick={handleClickUpdate} disabled={dataProveedor.length === 0}>
