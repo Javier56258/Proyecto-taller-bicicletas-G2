@@ -10,6 +10,7 @@ function CreateProveedor({ show, setShow, data, action }) {
         try {
             await createProveedor(formData);
             action(formData);
+            setShow(false);
         } catch (error) {
             console.error('Error al crear proveedor:', error);
     };

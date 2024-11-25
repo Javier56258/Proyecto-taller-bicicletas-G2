@@ -68,6 +68,8 @@ function PopupProveedores({ show, setShow, data, action }) {
                                 minLength: 8,
                                 maxLength: 8,
                                 required: true,
+                                pattern: /^\d+$/,
+                                patternMessage: "El teléfono debe contener solo números."
                             },
                             
                             {

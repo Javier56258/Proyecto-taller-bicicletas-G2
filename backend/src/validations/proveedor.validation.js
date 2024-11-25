@@ -76,6 +76,7 @@ export const proveedorBodyValidation = Joi.object({
     telefono: Joi.string()
         .min(8)
         .max(15)
+        .pattern(/^\d+$/)
         .messages({
             "string.empty": "El teléfono no puede estar vacío.",
             "string.base": "El teléfono debe ser de tipo string.",
@@ -92,6 +93,7 @@ export const proveedorBodyValidation = Joi.object({
     direccion: Joi.string()
         .min(5)
         .max(50)
+        .allow("")
         .messages({
             "string.base": "La dirección debe ser de tipo string.",
             "string.min": "La dirección debe tener como mínimo 10 caracteres.",
