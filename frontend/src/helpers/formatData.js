@@ -76,7 +76,6 @@ export function formatPostUpdateUser(user) {
 export function formatPostUpdateProveedor(proveedor) {
     return {
         nombreProveedor: proveedor.nombreProveedor,
-        productos_suministrados: proveedor.productos_suministrados,
         paginaWeb: proveedor.paginaWeb,
         telefono: proveedor.telefono,
         email:proveedor.email,

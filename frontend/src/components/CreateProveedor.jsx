@@ -1,14 +1,19 @@
+import React from 'react';
 import Form from './Form';
 import '@styles/Popup.css';
 import CloseIcon from '@assets/XIcon.svg';
+import { createProveedor } from '@services/proveedor.service.js';
 
+function CreateProveedor({ show, setShow, data, action }) {
 
-function PopupProveedores({ show, setShow, data, action }) {
-    const proveedorData = data && data.length > 0 ? data[0] : {};
-
-    const handleSubmit = (formData) => {
-        action(formData);
-    }
+    const handleSubmit = async (formData) => {
+        try {
+            await createProveedor(formData);
+            action(formData);
+        } catch (error) {
+            console.error('Error al crear proveedor:', error);
+    };
+};
 
     return (
         <div>
@@ -19,25 +24,29 @@ function PopupProveedores({ show, setShow, data, action }) {
                         <img src={CloseIcon} />
                     </button>
                     <Form
-                        title="Editar Proveedor"
+                        title="Ingresar Proveedor"
                         fields={[
                             {
                                 label: "Nombre Proveedor",
                                 name: "nombreProveedor",
-                                defaultValue: proveedorData.nombreProveedor || "",
                                 placeholder: 'Ingresar Nombre',
                                 fieldType: 'input',
                                 type: "text",
                                 required: true,
-                                minLength: 5,
-                                maxLength: 50,
                                 pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/,
                                 patternMessage: "",
                             },
                             {
+                                label: "Productos Suministrados",
+                                name: "productos_suministrados",
+                                placeholder: 'Ingresar Productos',
+                                fieldType: 'input',
+                                type: "text",
+                                required: false,
+                            },
+                            {
                                 label: "Pagina Web",
                                 name: "PaginaWeb",
-                                defaultValue: proveedorData.PaginaWeb || "",
                                 placeholder: 'www.ejemplo.com',
                                 fieldType: 'input',
                                 type: "text",
@@ -48,7 +57,6 @@ function PopupProveedores({ show, setShow, data, action }) {
                             {
                                 label: "Correo electrónico",
                                 name: "email",
-                                defaultValue: proveedorData.email || "",
                                 placeholder: 'ejemplo@gmail.cl',
                                 fieldType: 'input',
                                 type: "email",
@@ -59,7 +67,6 @@ function PopupProveedores({ show, setShow, data, action }) {
                             {
                                 label: "Número de teléfono",
                                 name: "telefono",
-                                defaultValue: proveedorData.telefono || "",
                                 placeholder: '+56912345678',
                                 fieldType: 'input',
                                 type: "text",
@@ -71,7 +78,6 @@ function PopupProveedores({ show, setShow, data, action }) {
                             {
                                 label: "Dirección",
                                 name: "direccion",
-                                defaultValue: proveedorData.direccion || "",
                                 placeholder: 'Ingresar Dirección',
                                 fieldType: 'input',
                                 type: "text",
@@ -81,7 +87,7 @@ function PopupProveedores({ show, setShow, data, action }) {
                             },
                         ]}
                         onSubmit={handleSubmit}
-                        buttonText="Editar proveedor"
+                        buttonText="Ingresar proveedor"
                         backgroundColor={'#fff'}
                     />
                 </div>
@@ -91,4 +97,4 @@ function PopupProveedores({ show, setShow, data, action }) {
     );
 } 
 
-export default PopupProveedores;
+export default CreateProveedor;

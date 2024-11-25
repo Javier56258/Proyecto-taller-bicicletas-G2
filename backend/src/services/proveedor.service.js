@@ -64,7 +64,7 @@ export async function updateProveedorService(query, body) {
         const userRepository = AppDataSource.getRepository(Proveedor);
 
         const proveedorFound = await userRepository.findOne({
-            where: [{ idProveedor: idProveedor }, { nombreProveedor: nombreProveedor }],
+            where: [{ idProveedor: idProveedor }],
         });
 
         if (!proveedorFound) return [null, "Proveedor no encontrado"];

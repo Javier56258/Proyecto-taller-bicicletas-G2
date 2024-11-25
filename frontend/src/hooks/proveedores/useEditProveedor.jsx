@@ -17,13 +17,15 @@ const useEditProveedor = (setProveedores) => {
         if (updatedProveedorData) {
             try {
             const updatedProveedor = await updateProveedor(updatedProveedorData, dataProveedor[0].idProveedor);
-            showSuccessAlert('¡Actualizado!','El proveedor ha sido actualizado correctamente.');
             setIsPopupOpen(false);
             const formattedProveedor = formatPostUpdateProveedor(updatedProveedor);
+            console.log("Proveedor formateado:", formattedProveedor);
+            showSuccessAlert('¡Actualizado!','El proveedor ha sido actualizado correctamente.');
+            console.log("Proveedor actualizado:", updatedProveedor);
 
             setProveedores(prevProveedores => prevProveedores.map(proveedor => {
                 console.log("Proveedor actual:", proveedor);
-                if (proveedor.nombreProveedor === formattedProveedor.nombreProveedor) {
+                if (proveedor.idProveedor === formattedProveedor.idProveedor) {
                     console.log("Reemplazando con:", formattedProveedor);
                 }
                 return proveedor.nombreProveedor === formattedProveedor.nombreProveedor ? formattedProveedor : proveedor;
