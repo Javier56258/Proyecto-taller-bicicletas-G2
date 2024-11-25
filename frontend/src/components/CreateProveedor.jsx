@@ -42,7 +42,7 @@ function CreateProveedor({ show, setShow, data, action }) {
                                 placeholder: 'Ingresar Productos',
                                 fieldType: 'input',
                                 type: "text",
-                                required: false,
+                                required: true,
                             },
                             {
                                 label: "Pagina Web",
@@ -60,19 +60,21 @@ function CreateProveedor({ show, setShow, data, action }) {
                                 placeholder: 'ejemplo@gmail.cl',
                                 fieldType: 'input',
                                 type: "email",
-                                minLength: 15,
+                                minLength: 10,
                                 maxLength: 30,
-                                required: false,
+                                required: true,
+                                pattern: /^[a-zA-Z0-9._%+-]+@gmail\.cl$/,
+                                patternMessage: "El correo electrónico debe finalizar en @gmail.cl.",
                             },
                             {
                                 label: "Número de teléfono",
                                 name: "telefono",
-                                placeholder: '+56912345678',
+                                placeholder: '12345678',
                                 fieldType: 'input',
                                 type: "text",
                                 minLength: 8,
                                 maxLength: 8,
-                                required: false,
+                                required: true,
                             },
                             
                             {
@@ -81,9 +83,9 @@ function CreateProveedor({ show, setShow, data, action }) {
                                 placeholder: 'Ingresar Dirección',
                                 fieldType: 'input',
                                 type: "text",
-                                minLength: 10,
+                                minLength: 5,
                                 maxLength: 50,
-                                required: true,
+                                required: false,
                             },
                         ]}
                         onSubmit={handleSubmit}

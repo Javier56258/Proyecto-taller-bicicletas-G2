@@ -4,6 +4,7 @@ import { formatProveedorData } from '@helpers/formatData.js';
 export async function createProveedor(data) {
     try {
         const response = await axios.post('/proveedor', data);
+        console.log(data);
         return response.data;
     } catch (error) {
         console.error('Error al crear proveedor:', error);
@@ -26,7 +27,7 @@ export async function updateProveedor(data, idProveedor) {
     try {
         const response = await axios.patch(`/proveedor/detail/?idProveedor=${idProveedor}`, data);
         console.log(response);
-        return response.data.data;
+        return response.data;
     } catch (error) {
         console.log(error);
         return error.response.data;

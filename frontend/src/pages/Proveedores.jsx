@@ -5,13 +5,11 @@ import PopupProveedores from '../components/PopupProveedores.jsx';
 import CreateProveedor from '../components/CreateProveedor.jsx';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
-import CreateIcon from '../assets/createIcon.svg'; 
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import { useCallback, useState } from 'react';
 import useEditProveedor from '@hooks/proveedores/useEditProveedor';
 import useDeleteProveedor from '@hooks/proveedores/useDeleteProveedor';
-import '@styles/users.css';
 import '@styles/proveedor.css';
 
 
@@ -64,10 +62,10 @@ const Proveedores = () => {
                     <h1 className='title-table'>Proveedores</h1>
                     <div className='filter-actions'> 
                         <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder={'Filtrar por nombre'} />
-                        <button onClick={handleCreateClick} className='create-proveedor-button'>
-                            <img src={UpdateIcon} alt="create" />
+                        <button onClick={handleCreateClick} className='create-button'>
+                            Añadir Proveedor
                         </button>
-                        <button onClick={handleClickUpdate} disabled={dataProveedor.length === 0}>
+                        <button className= 'edit-proveedor-button' onClick={handleClickUpdate} disabled={dataProveedor.length === 0}>
                             {dataProveedor.length === 0 ? (
                                 <img src={UpdateIconDisable} alt="edit-disabled" />
                             ) : (

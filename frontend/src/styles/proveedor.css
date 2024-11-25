@@ -1,0 +1,140 @@
+.create-button,
+.order-button {
+  background-color: white;
+  color: #003366;
+  padding: 10px 20px;
+  border: 3px solid #003366;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.create-button:hover,
+.order-button:hover {
+  background-color: #003366;
+  color: white;
+}
+
+.delete-proveedor-button {
+    margin-right: 70px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+
+}
+
+.delete-proveedor-button:hover,
+.order-button:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+.delete-proveedor-button:hover img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+      contrast(1000%);
+}
+
+.edit-proveedor-button {
+    
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+
+}
+
+.edit-proveedor-button:hover,
+.order-button:hover {
+  background-color: #003366;
+  color: white;
+}
+
+.edit-proveedor-button:hover img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+      contrast(1000%);
+}
+  
+
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.table-container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.top-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title-table {
+    color: #003366;
+    margin-left: 70px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+  
+}
+
+
+
+@media (max-width: 767px) {
+    .title-table {
+        margin: 0;
+    }
+    .top-table {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .delete-proveedor-button {
+        margin-right: 0;
+    }
+
+    .filter-actions {
+        margin-bottom: 10px;
+    }
+    .table-container {
+        margin: 0;
+        width: 352px;
+        height: 500px;
+    }
+    .popup {
+        width: 350px;
+        height: 600px;
+    }
+    .popup .form {
+        padding: 20px;
+    }
+
+    .popup .close {
+        margin-right: 0;
+    }
+
+    .popup .options-class {
+        width: 10px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .title-table {
+        margin-left: 35px;
+    }
+
+    .delete-user-button {
+        margin-right: 35px;
+    }
+}
