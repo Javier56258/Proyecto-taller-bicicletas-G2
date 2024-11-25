@@ -3,7 +3,7 @@ import { updateProveedor } from '@services/proveedor.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { formatPostUpdateProveedor } from '../../helpers/formatData.js';
 
-const useEditProveedor = (setProveedores) => {
+const useEditProveedor = (setProveedores, fetchProveedores) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [dataProveedor, setDataProveedor] = useState([]);
 
@@ -32,6 +32,7 @@ const useEditProveedor = (setProveedores) => {
             }));
             
             setDataProveedor([]);
+            await fetchProveedores();
             } catch (error) {
                 console.error('Error al actualizar el proveedor:', error);
                 showErrorAlert('Cancelado','Ocurrió un error al actualizar el proveedor.');

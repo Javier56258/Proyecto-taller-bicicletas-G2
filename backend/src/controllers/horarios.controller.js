@@ -78,3 +78,15 @@ export async function deleteHorario( req, res ){
         handleErrorServer(res, 500, error.message);
     }
 }
+
+export async function getAllHorarios(req, res) {
+    try {
+        const [horarios, errorHorarios] = await getHorariosService();
+        if (errorHorarios) return handleErrorHorario(res, 404, "Error al obtener horarios", errorHorarios);
+        horarios.length === 0
+            ? handleSuccess(res, 204)
+            : handleSuccess(res, 200, "Horarios encontrados", horarios);
+    } catch (error) {
+        handleErrorServer(res, 500, error.message);
+    }
+}

@@ -27,7 +27,7 @@ const Proveedores = () => {
         setIsPopupOpen,
         dataProveedor,
         setDataProveedor
-    } = useEditProveedor(setProveedores);
+    } = useEditProveedor(setProveedores, fetchProveedores);
 
 
     const { handleDelete } = useDeleteProveedor(fetchProveedores, setDataProveedor);
@@ -91,7 +91,7 @@ const Proveedores = () => {
                     onSelectionChange={handleSelectionChange}
                 />
             </div>
-            <PopupProveedores show={isPopupOpen} setShow={setIsPopupOpen} data={dataProveedor} action={handleUpdate} title={'Editar Proveedor'} />
+            <PopupProveedores show={isPopupOpen} setShow={setIsPopupOpen} data={dataProveedor} action={handleUpdate}  />
             <CreateProveedor show={isCreatePopupOpen} setShow={setIsCreatePopupOpen} action={fetchProveedores} />
        
         </div>
