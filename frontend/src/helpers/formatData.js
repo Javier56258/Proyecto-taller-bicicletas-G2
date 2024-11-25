@@ -44,11 +44,11 @@ export function formatHorarioData(horario) {
 export function formatProveedorData(proveedor) {
     return {
         ...proveedor,
-        nombreProveedor: startCase(proveedor.nombreProveedor),
+        nombreProveedor: proveedor.nombreProveedor,
         productos_suministrados: startCase(proveedor.productos_suministrados),
-        paginaWeb: startCase(proveedor.paginaWeb),
-        telefono: startCase(proveedor.telefono),
-        email: startCase(proveedor.email),
+        paginaWeb: proveedor.paginaWeb,
+        telefono: proveedor.telefono,
+        email: proveedor.email,
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
 
@@ -102,12 +102,11 @@ export function formatPostUpdateUser(user) {
 
 export function formatPostUpdateProveedor(proveedor) {
     return {
-        nombreProveedor: startCase(proveedor.nombreProveedor),
-        productos_suministrados: startCase(proveedor.productos_suministrados),
-        paginaWeb: startCase(proveedor.paginaWeb),
+        nombreProveedor: proveedor.nombreProveedor,
+        paginaWeb: proveedor.paginaWeb,
         telefono: proveedor.telefono,
         email:proveedor.email,
-        direccion: startCase(proveedor.direccion),
+        direccion: proveedor.direccion,
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
     };
 

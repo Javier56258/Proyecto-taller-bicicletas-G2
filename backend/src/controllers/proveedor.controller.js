@@ -86,12 +86,12 @@ export async function getProveedores(req, res) {
 
 export async function updateProveedor(req, res) {
     try {
-        const { idProveedor, nombreProveedor } = req.query;
+        const { idProveedor } = req.query;
         const { body } = req;
 
         const { error: queryError } = proveedorQueryValidation.validate({
             idProveedor,
-            nombreProveedor,
+            
         });
 
         if (queryError) return handleErrorClient(res, 400, queryError.message);
@@ -100,7 +100,7 @@ export async function updateProveedor(req, res) {
 
         if (bodyError) return handleErrorClient(res, 400, bodyError.message);
 
-        const [updatedProveedor, errorUpdate] = await updateProveedorService({ idProveedor, nombreProveedor }, body);
+        const [updatedProveedor, errorUpdate] = await updateProveedorService({ idProveedor }, body);
 
         if (errorUpdate) return handleErrorClient(res, 404, errorUpdate);
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { updateProveedor } from '@services/proveedor.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostUpdateProveedor } from '@helpers/formatData.js';
+import { formatPostUpdateProveedor } from '../../helpers/formatData.js';
 
-const useEditProveedor = (setProveedores) => {
+const useEditProveedor = (setProveedores, fetchProveedores) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [dataProveedor, setDataProveedor] = useState([]);
 
@@ -17,19 +17,22 @@ const useEditProveedor = (setProveedores) => {
         if (updatedProveedorData) {
             try {
             const updatedProveedor = await updateProveedor(updatedProveedorData, dataProveedor[0].idProveedor);
-            showSuccessAlert('¡Actualizado!','El proveedor ha sido actualizado correctamente.');
             setIsPopupOpen(false);
             const formattedProveedor = formatPostUpdateProveedor(updatedProveedor);
+            console.log("Proveedor formateado:", formattedProveedor);
+            showSuccessAlert('¡Actualizado!','El proveedor ha sido actualizado correctamente.');
+            console.log("Proveedor actualizado:", updatedProveedor);
 
             setProveedores(prevProveedores => prevProveedores.map(proveedor => {
                 console.log("Proveedor actual:", proveedor);
-                if (proveedor.id === formattedProveedor.id) {
+                if (proveedor.idProveedor === formattedProveedor.idProveedor) {
                     console.log("Reemplazando con:", formattedProveedor);
                 }
-                return proveedor.email === formattedProveedor.email ? formattedProveedor : proveedor;
+                return proveedor.nombreProveedor === formattedProveedor.nombreProveedor ? formattedProveedor : proveedor;
             }));
             
             setDataProveedor([]);
+            await fetchProveedores();
             } catch (error) {
                 console.error('Error al actualizar el proveedor:', error);
                 showErrorAlert('Cancelado','Ocurrió un error al actualizar el proveedor.');

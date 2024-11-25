@@ -20,13 +20,11 @@ export const proveedorQueryValidation = Joi.object({
             "number.positive": "El id debe ser un número positivo.",
         }),
     nombreProveedor: Joi.string()
-        .optional()
         .messages({
             "string.base": "El nombre del proveedor debe ser de tipo string."
         }),
     email: Joi.string()
         .email()
-        .optional()
         .messages({
             "string.base": "El email debe ser de tipo string.",
             "string.email": "El email debe ser un correo electrónico válido."
@@ -54,14 +52,15 @@ export const proveedorBodyValidation = Joi.object({
             "string.pattern.base": "El nombre debe contener solo letras y numeros.",
         }),
     productos_suministrados: Joi.string()
-    .min(10)
+    .min(1)
     .messages({
+        "string.empty": "Los productos suministrados no pueden estar vacíos.",
         "string.base": "Los productos suministrados deben ser de tipo string.",
         "string.min":
             "Los productos suministrados deben tener como minimo 10 caracteres.",
     }),
     email: Joi.string()
-        .min(15)
+        .min(10)
         .max(35)
         .email()
         .messages({
@@ -75,12 +74,12 @@ export const proveedorBodyValidation = Joi.object({
         })
         .custom(domainEmailValidator, "Validación dominio email"),
     telefono: Joi.string()
-        .min(9)
+        .min(8)
         .max(15)
         .messages({
             "string.empty": "El teléfono no puede estar vacío.",
             "string.base": "El teléfono debe ser de tipo string.",
-            "string.min": "El teléfono debe tener como mínimo 9 caracteres.",
+            "string.min": "El teléfono debe tener como mínimo 8 caracteres.",
             "string.max": "El teléfono debe tener como máximo 15 caracteres.",
         }),
     PaginaWeb: Joi.string()
@@ -91,10 +90,9 @@ export const proveedorBodyValidation = Joi.object({
             "string.max": "La página web debe tener como máximo 50 caracteres.",
         }),
     direccion: Joi.string()
-        .min(10)
+        .min(5)
         .max(50)
         .messages({
-            "string.empty": "La dirección no puede estar vacía.",
             "string.base": "La dirección debe ser de tipo string.",
             "string.min": "La dirección debe tener como mínimo 10 caracteres.",
             "string.max": "La dirección debe tener como máximo 50 caracteres.",
