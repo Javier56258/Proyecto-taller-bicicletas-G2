@@ -27,12 +27,12 @@ const Reservas = () => {
     }, [setDataReserva]);
 
     const columns = [
-        { title: "Usuario", field: "nombreReservador", width: 200, responsive: 2 },
-        { title: "Email", field: "email", width: 350, responsive: 0 },
-        { title: "Fecha", field: "fecha", width: 350, responsive: 0 },
-        { title: "Hora", field: "hora", width: 300, responsive: 3 },
-        { title: "Estado", field: "motivo", width: 150, responsive: 2 },
-        {title: "Creado", field: "createdAt", width: 200, responsive: 2}
+        { title: "Reservador", field: "nombreReservador", width: 250, responsive: 2 },
+        { title: "Email", field: "email", width: 250, responsive: 0 },
+        { title: "Fecha", field: "fecha", width: 150, responsive: 0 },
+        { title: "Hora", field: "hora", width: 100, responsive: 3 },
+        { title: "Estado", field: "motivo", width: 250, responsive: 2 },
+        {title: "Creado", field: "createdAt", width: 150, responsive: 2}
     ];
 
     return (

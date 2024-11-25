@@ -161,3 +161,16 @@ export async function deleteReservaService(query) {
         return [null, "Error interno del servidor"];
     }
 }
+
+export async function getAllReservasService() {
+    try {
+        const reservaRepository = AppDataSource.getRepository(Reserva);
+        const reservas = await reservaRepository.find();
+        if (!reservas || reservas.length === 0) return [null, "No hay reservas"];
+        const reservaData = reservas.map(({ ...reserva }) => reserva);
+        return [reservaData, null];
+    } catch (error) {
+        console.error("Error al obtener las reservas:", error);
+        return [null, "Error interno del servidor"];
+    }
+}

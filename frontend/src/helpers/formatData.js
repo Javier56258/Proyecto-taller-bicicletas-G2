@@ -14,13 +14,20 @@ export function formatUserData(user) {
 }
 //Revisar
 export function formatReservaData(reserva) {
+    console.log("Pasando por formatReservaData");
+    console.log(reserva);
+    console.log("nombreReservador: ", reserva.nombreReservador);
+    console.log("email: ", reserva.email);
+    console.log("motivo: ", reserva.motivo);
+    console.log("fecha: ", formatTempo(reserva.fecha, "DD-MM-YYYY"));
+    //console.log("hora: ", formatTempo(reserva.hora, "HH:mm"));
+    console.log("createdAt: ", reserva.createdAt);
     return {
         ...reserva,
         nombreReservador: startCase(reserva.nombreReservador),
-        email: startCase(reserva.email),
         motivo: startCase(reserva.motivo),
         fecha: formatTempo(reserva.fecha, "DD-MM-YYYY"),
-        hora: formatTempo(reserva.hora, "HH:mm"),
+        hora: startCase(reserva.hora),
         createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
     };
 }
@@ -122,6 +129,8 @@ export function formatPostUpdateProduct(product) {
 }
 
 export function formatPostUpdateReserva(reserva) {
+    console.log("Pasando por formatPostUpdateReserva");
+    console.log(reserva);
     return {
         nombreReservador: startCase(reserva.nombreReservador),
         email: startCase(reserva.email),

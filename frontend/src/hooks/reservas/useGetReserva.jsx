@@ -2,11 +2,15 @@ import { useState,useEffect } from "react";
 import { getReservas } from "@services/reserva.service.js";
 
 const useReservas = () => {
+    console.log("Pasando por useReservas");
     const [reservas, setReservas] = useState([]);
-
+    console.log("Reservas: ");
+    console.log(reservas);
     const fetchReservas = async () => {
         try {
             const response = await getReservas();
+            console.log("Pasando por fetchReservas");
+            console.log(response);
             const formattedData = response.map((reserva) => ({
                 nombreReservador: reserva.nombreReservador,
                 email: reserva.email,
@@ -24,7 +28,7 @@ const useReservas = () => {
 
     useEffect(() => {
         fetchReservas();
-    }, []); 
+    }, []);
 
     return { reservas, fetchReservas, setReservas };
 }

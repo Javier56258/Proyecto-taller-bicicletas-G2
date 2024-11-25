@@ -5,6 +5,7 @@ import { reservaBodyValidation,
         reservaUpdateQueryValidation } from "../validations/reserva.validation.js";
 import { createReservaService, 
         deleteReservaService,
+        getAllReservasService,
         getReservasService,
         updateReservaService 
          } from "../services/reserva.service.js"; 
@@ -109,5 +110,17 @@ export async function deleteReserva(req, res) {
       handleSuccess(res, 200, "Reserva eliminado correctamente", reservaDelete);
     } catch (error) {
       handleErrorServer(res, 500, error.message);
+    }
+  }
+
+  export async function getallReservas(req, res) {
+    try {
+      const [reservas, errorReservas] = await getAllReservasService();
+      if (errorReservas) return handleErrorReserva(res, 404, errorReservas);
+      reservas.length === 0
+          ? handleSuccess(res, 204)
+          : handleSuccess(res, 200, "Reservas encontradas", reservas);
+    } catch (error) {
+        handleErrorServer(res, 500, error.message);
     }
   }
