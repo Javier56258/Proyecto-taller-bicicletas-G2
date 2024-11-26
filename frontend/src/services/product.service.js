@@ -32,3 +32,12 @@ export async function deleteProduct(id) {
         return error.response.data;
     }
 }
+
+export async function createProduct(data) {
+    try {
+        const response = await axios.post('/product/', data);
+        return response.data.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}

@@ -9,8 +9,11 @@ import useDeleteProduct from '@hooks/products/useDeleteProduct.jsx';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import '@styles/users.css';
+import CreateProduct from '@components/CreateProduct.jsx';
+import { useState } from 'react';
 
 const Products = () => {
+    const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
     const { products, fetchProducts, setProducts } = useProducts();
     const {
         handleClickUpdate,
@@ -21,7 +24,11 @@ const Products = () => {
         setDataProduct
     }= useEditProduct(setProducts);
 
+
     const { handleDelete } = useDeleteProduct(fetchProducts, setDataProduct);
+    const handleCreateClick = () => {
+        setIsCreatePopupOpen(true);
+    };
     const handleSelectionChange = useCallback((selectedProducts) => {
         setDataProduct(selectedProducts);
     }, [setDataProduct]);
@@ -40,7 +47,7 @@ const Products = () => {
                 <div className='top-table'>
                     <h1 className='title-table'>Productos</h1>
                     <div className='filter-actions'>
-                        <button style={{color:'#003366'}}>
+                        <button onClick={handleCreateClick} className='create-proveedor-button'>
                             <b>Crear Producto</b>
                         </button>
                         <button onClick={handleClickUpdate} disabled={dataProduct.length ===0} >
@@ -66,6 +73,7 @@ const Products = () => {
                 />
             </div>
             <ProductPopup show= {isPopupOpen} setShow={setIsPopupOpen} data={dataProduct} action = {handleUpdate} />
+            <CreateProduct show={isCreatePopupOpen} setShow={setIsCreatePopupOpen} action={fetchProducts} />
         </div>
     );  
 };
