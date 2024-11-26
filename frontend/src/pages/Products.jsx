@@ -13,8 +13,11 @@ import CreateProduct from '@components/CreateProduct.jsx';
 import { useState } from 'react';
 
 const Products = () => {
+    //crear producto pop up
     const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
+    //obtener productos
     const { products, fetchProducts, setProducts } = useProducts();
+    //editar producto
     const {
         handleClickUpdate,
         handleUpdate,
@@ -23,9 +26,9 @@ const Products = () => {
         dataProduct,
         setDataProduct
     }= useEditProduct(setProducts);
-
-
+    //eliminar producto
     const { handleDelete } = useDeleteProduct(fetchProducts, setDataProduct);
+    
     const handleCreateClick = () => {
         setIsCreatePopupOpen(true);
     };
@@ -48,7 +51,7 @@ const Products = () => {
                     <h1 className='title-table'>Productos</h1>
                     <div className='filter-actions'>
                         <button onClick={handleCreateClick} className='create-proveedor-button'>
-                            <b>Crear Producto</b>
+                            Añadir Producto
                         </button>
                         <button onClick={handleClickUpdate} disabled={dataProduct.length ===0} >
                             {dataProduct.length === 0 ? (

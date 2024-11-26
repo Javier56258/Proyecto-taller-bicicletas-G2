@@ -2,20 +2,21 @@ import Form from './Form';
 import '@styles/Popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import { createProduct } from '@services/product.service.js';
-function CreateProduct({show,setShow,data,action})
-{
+
+
+function CreateProduct({ show, setShow, data, action }) {
     const handleSubmit = async (formData) => {
         try {
             await createProduct(formData);
             action(formData);
         } catch (error) {
             console.error('Error al crear producto:', error);
-        }
+        };
     };
 
     return (
         <div>
-            { show && (
+            {show && (
                 <div className="bg">
                     <div className="popup">
                         <button className='close' onClick={() => setShow(false)}>
@@ -26,7 +27,7 @@ function CreateProduct({show,setShow,data,action})
                             fields={[
                                 {
                                     label: "Nombre Producto",
-                                    name: "nombreProducto",
+                                    name: "name",
                                     placeholder: 'Ingresar Nombre',
                                     fieldType: 'input',
                                     type: "text",
@@ -36,7 +37,7 @@ function CreateProduct({show,setShow,data,action})
                                 },
                                 {
                                     label: "Precio",
-                                    name: "precio",
+                                    name: "price",
                                     placeholder: 'Ingresar Precio',
                                     fieldType: 'input',
                                     type: "number",
@@ -52,7 +53,7 @@ function CreateProduct({show,setShow,data,action})
                                 },
                                 {
                                     label: "Descripción",
-                                    name: "descripcion",
+                                    name: "description",
                                     placeholder: 'Ingresar Descripción',
                                     fieldType: 'input',
                                     type: "text",
@@ -61,7 +62,7 @@ function CreateProduct({show,setShow,data,action})
                             ]}
                             onSubmit={handleSubmit}
                             buttonText={"Ingresar Producto"}
-                            backgroundColor={"#FFF"}
+                            backgroundColor={"#fff"}
                         />
                     </div>
                 </div>
