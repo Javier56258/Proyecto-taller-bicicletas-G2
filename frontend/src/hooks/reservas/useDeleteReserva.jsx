@@ -7,7 +7,7 @@ const useDeleteReserva = (fetchReservas, setDataReserva) => {
             try {
                 const result = await deleteDataAlert();
                 if (result.isConfirmed) {
-                    const response = await deleteReserva(dataReserva[0].id);
+                    const response = await deleteReserva(dataReserva[0].idreserva);
                     if(response.status === 'Reserva error') {
                         return showErrorAlert('Error', response.details);
                     }

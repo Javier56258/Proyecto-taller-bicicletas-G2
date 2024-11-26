@@ -16,9 +16,10 @@ export async function getReservas() {
 
 }
 
-export async function updateReserva(data, id) {
+export async function updateReserva(data, idreserva) {
     try {
-        const response = await axios.patch(`/reservas/detail/?idreserva=${id}`, data);
+        console.log("Pasando por updateReserva en reserva.service.js del front");
+        const response = await axios.patch(`/reservas/detail/?idreserva=${idreserva}`, data);
         console.log(response);
         return response.data.data;
     } catch (error) {
@@ -27,9 +28,9 @@ export async function updateReserva(data, id) {
     }
 }
 
-export async function deleteReserva(id) {
+export async function deleteReserva(idreserva) {
     try {
-        const response = await axios.delete(`/reservas?idreserva=${id}`);
+        const response = await axios.delete(`/reservas?idreserva=${idreserva}`);
         return response.data;
     } catch (error) {
         return error.response.data;

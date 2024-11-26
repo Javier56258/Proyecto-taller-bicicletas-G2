@@ -17,7 +17,7 @@ const useReservas = () => {
                 motivo: reserva.motivo,
                 fecha: reserva.fecha,
                 hora: reserva.hora,
-                id: reserva.id,
+                idreserva: reserva.idreserva,
                 createdAt: reserva.createdAt
             }));
             setReservas(formattedData);

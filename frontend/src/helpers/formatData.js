@@ -25,9 +25,10 @@ export function formatReservaData(reserva) {
     return {
         ...reserva,
         nombreReservador: startCase(reserva.nombreReservador),
+        email: reserva.email,
         motivo: startCase(reserva.motivo),
         fecha: formatTempo(reserva.fecha, "DD-MM-YYYY"),
-        hora: startCase(reserva.hora),
+        hora: reserva.hora,
         createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
     };
 }
@@ -129,14 +130,14 @@ export function formatPostUpdateProduct(product) {
 }
 
 export function formatPostUpdateReserva(reserva) {
-    console.log("Pasando por formatPostUpdateReserva");
+    console.log("Pasando por formatPostUpdateReserva en formatData");
     console.log(reserva);
     return {
         nombreReservador: startCase(reserva.nombreReservador),
-        email: startCase(reserva.email),
+        email: reserva.email,
         motivo: startCase(reserva.motivo),
-        fecha: formatTempo(reserva.fecha, "DD-MM-YYYY"),
-        hora: formatTempo(reserva.hora, "HH:mm"),
+        fecha: reserva.fecha,
+        hora: reserva.hora,
         createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
     };
 }
