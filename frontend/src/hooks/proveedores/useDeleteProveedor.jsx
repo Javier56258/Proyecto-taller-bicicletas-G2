@@ -7,7 +7,7 @@ const useDeleteProveedor = (fetchProveedores, setDataProveedor) => {
             try {
                 const result = await deleteDataAlert();
                 if (result.isConfirmed) {
-                    const response = await deleteProveedor(dataProveedor[0].id);
+                    const response = await deleteProveedor(dataProveedor[0].idProveedor);
                     if (response.status === 'Client error') {
                         return showErrorAlert('Error', response.details);
                     }

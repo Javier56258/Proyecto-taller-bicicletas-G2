@@ -6,6 +6,7 @@ import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import { createHorario,
          deleteHorario,
          getHorarios,
+         getAllHorarios,
          updateHorarios
          
  } from "../controllers/horarios.controller.js";
@@ -18,6 +19,7 @@ router
 router.post("/", createHorario)
       .get("/", getHorarios)
       .patch("/", updateHorarios)
-      .delete("/", deleteHorario);
+      .delete("/", deleteHorario)
+      .get("/all", getAllHorarios);
 
 export default router;
