@@ -19,7 +19,7 @@ const Reservas = () => {
         setIsPopupOpen,
         dataReserva,
         setDataReserva
-    }= useEditReserva(setReservas);
+    }= useEditReserva(fetchReservas, setReservas);
 
     const { handleDelete } = useDeleteReserva(fetchReservas, setDataReserva);
     const handleSelectionChange = useCallback((selectedReservas) => {

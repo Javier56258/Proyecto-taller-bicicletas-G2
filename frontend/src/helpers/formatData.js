@@ -135,7 +135,7 @@ export function formatPostUpdateReserva(reserva) {
     return {
         nombreReservador: startCase(reserva.nombreReservador),
         email: reserva.email,
-        motivo: startCase(reserva.motivo),
+        motivo: reserva.motivo,
         fecha: reserva.fecha,
         hora: reserva.hora,
         createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")

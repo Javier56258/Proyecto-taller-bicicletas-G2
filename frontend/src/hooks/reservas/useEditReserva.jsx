@@ -3,7 +3,7 @@ import { updateReserva } from "@services/reserva.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert.js";
 import { formatPostUpdateReserva } from "../../helpers/formatData";
 
-const useEditReserva = (setReservas) => {
+const useEditReserva = (fetchReservas, setReservas) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [dataReserva, setDataReserva] = useState([]);
     console.log("Pasando por useEditReserva");
@@ -24,12 +24,14 @@ const useEditReserva = (setReservas) => {
                 console.log(formattedDate);
                 updatedReservaData.fecha = formattedDate;
                 const updatedReserva = await updateReserva(updatedReservaData, dataReserva[0].idreserva);  
-                showSuccessAlert('¡Actualizado!', 'La reserva ha sido actualizada correctamente.');
-                setIsPopupOpen(false);
-                console.log("Reserva actualizada:", updatedReserva);
                 if(updatedReserva.status === 'Reserva error') {
                     return showErrorAlert('Error', updatedReserva.details);
                 }
+                
+                showSuccessAlert('¡Actualizado!', 'La reserva ha sido actualizada correctamente.');
+                setIsPopupOpen(false);
+                console.log("Reserva actualizada:", updatedReserva);
+                
                 const formattedReserva = formatPostUpdateReserva(updatedReserva);
                 console.log("formattedReserva: ", formattedReserva);
                 setReservas(prevReservas => prevReservas.map(reserva => {
@@ -39,7 +41,7 @@ const useEditReserva = (setReservas) => {
                     }
                     return reserva.idreserva === formattedReserva.idreserva ? formattedReserva : reserva;
                 }));
-
+                await fetchReservas();
                 setDataReserva([]);
             } catch (error) {
                 console.error('Error al actualizar la reserva:', error);
