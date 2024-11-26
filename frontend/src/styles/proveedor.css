@@ -18,10 +18,9 @@
 }
 
 .delete-proveedor-button {
-    margin-right: 70px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-
+  margin-right: 70px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .delete-proveedor-button:hover,
@@ -31,15 +30,13 @@
 }
 
 .delete-proveedor-button:hover img {
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
-      contrast(1000%);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+    contrast(1000%);
 }
 
 .edit-proveedor-button {
-    
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .edit-proveedor-button:hover,
@@ -49,92 +46,136 @@
 }
 
 .edit-proveedor-button:hover img {
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
-      contrast(1000%);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+    contrast(1000%);
 }
-  
 
+.h1-form {
+  color: #003366;
+  font-size: 30px;
+  padding-left: 35px;
+  padding-right: 35px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.proovedores-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  height: 510px;
+  scrollbar-width: thin;
+}
 
 .main-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
+  display: inherit;
+  height: 100vh;
+  width: 100%;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+}
+
+.tabulator {
+  margin-top: 20px;
+  width: 127%;
+  overflow: auto;
+  background-color: #888;
+  border: 1px solid #999;
+  font-size: 14px;
+  margin-left: 272px;
 }
 
 .table-container {
-    width: 90%;
-    max-width: 1400px;
-    margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 0px;
 }
 
 .top-table {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px;
 }
 
 .title-table {
-    color: #003366;
-    margin-left: 70px;
+  color: #003366;
+  margin-right: 70px;
+  .h1 {
+    font-size: 2.6rem;
+  }
+}
+
+.table {
+  table-layout: fixed;
 }
 
 .filter-actions {
-    display: flex;
-    gap: 10px;
-  
+  display: flex;
+  gap: 10px;
 }
 
-
-
 @media (max-width: 767px) {
-    .title-table {
-        margin: 0;
-    }
-    .top-table {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+  .title-table {
+    font-size: 2.6rem;
+    margin: 0;
+  }
+  .top-table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    .delete-proveedor-button {
-        margin-right: 0;
-    }
+  .delete-proveedor-button {
+    margin-right: 0;
+  }
 
-    .filter-actions {
-        margin-bottom: 10px;
-    }
-    .table-container {
-        margin: 0;
-        width: 352px;
-        height: 500px;
-    }
-    .popup {
-        width: 350px;
-        height: 600px;
-    }
-    .popup .form {
-        padding: 20px;
-    }
+  .filter-actions {
+    margin-bottom: 10px;
+  }
+  .popup {
+    width: 350px;
+    height: 600px;
+  }
+  .popup .form {
+    padding: 20px;
+  }
 
-    .popup .close {
-        margin-right: 0;
-    }
+  .popup .close {
+    margin-right: 0;
+  }
 
-    .popup .options-class {
-        width: 10px;
-    }
+  .popup .options-class {
+    width: 10px;
+  }
+  .table-container {
+    width: 39%;
+    height: auto;
+  }
+  .tabulator {
+    width: 325%;
+    margin-left: 860px;
+  }
+}
+
+@media (max-width: 560px) {
+  .filter-actions {
+    flex-direction: column;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    .title-table {
-        margin-left: 35px;
-    }
-
-    .delete-user-button {
-        margin-right: 35px;
-    }
+  .title-table {
+    margin-left: 35px;
+  }
+  .delete-user-button {
+    margin-right: 35px;
+  }
 }
