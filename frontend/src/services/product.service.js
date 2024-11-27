@@ -13,7 +13,7 @@ export async function getProducts() {
 
 }
 
-export async function updateProduct(data, id) {
+export async function updateProduct(data,id) {
     try {
         const response = await axios.patch(`/product/detail/?id=${id}`, data);
         console.log(response);
@@ -28,6 +28,15 @@ export async function deleteProduct(id) {
     try {
         const response = await axios.delete(`/product/detail/?id=${id}`);
         return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export async function createProduct(data) {
+    try {
+        const response = await axios.post('/product/', data);
+        return response.data.data;
     } catch (error) {
         return error.response.data;
     }

@@ -7,8 +7,8 @@ const useProducts = () => {
     const fetchProducts = async () => {
         try {
             const response = await getProducts();
-            const formattedData = response.map((product) => ({
-                name: product.name,
+            const formattedData = response.map(product => ({
+                name: product.name.toLowerCase(),
                 description: product.description,
                 id: product.id,
                 price: `$${product.price}`,

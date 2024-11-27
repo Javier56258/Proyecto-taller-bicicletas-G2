@@ -56,7 +56,7 @@ export const productBodyValidation = Joi.object({
         }),
     stock: Joi.number()
         .integer()
-        .positive()
+        .min(0)
         .messages({
             "number.base": "El stock debe ser un número.",
             "number.integer": "El stock debe ser un número entero.",
