@@ -1,5 +1,6 @@
 "use strict";
 import User from "../entity/user.entity.js";
+import Horario from "../entity/horario.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -7,7 +8,7 @@ async function createUsers() {
   try {
     const userRepository = AppDataSource.getRepository(User);
 
-    //CREA USUARIOS POR DEFECTO A BAJO SOLO LA PRIMERA VEZ QUE ESTE VACIA NUESTRA BBDD  
+    //CREA USUARIOS POR DEFECTO A BAJO SOLO LA PRIMERA VEZ QUE ESTE VACIA NUESTRA BBDD
     const count = await userRepository.count();
     if (count > 0) return;
 
@@ -23,21 +24,30 @@ async function createUsers() {
       ),
       userRepository.save(
         userRepository.create({
+          nombreCompleto: "Pablo Sanchez",
+          rut: "20.977.978-1",
+          email: "pablo2002@gmail.cl",
+          password: await encryptPassword("admin1234"),
+          rol: "administrador",
+        }),
+      ),
+      userRepository.save(
+        userRepository.create({
           nombreCompleto: "Diego Sebastián Ampuero Belmar",
           rut: "21.151.897-9",
           email: "usuario1.2024@gmail.cl",
           password: await encryptPassword("user1234"),
           rol: "usuario",
-        })
+        }),
       ),
-        userRepository.save(
-          userRepository.create({
-            nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
-            rut: "20.630.735-8",
-            email: "usuario2.2024@gmail.cl",
-            password: await encryptPassword("user1234"),
-            rol: "usuario",
-          }),
+      userRepository.save(
+        userRepository.create({
+          nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
+          rut: "20.630.735-8",
+          email: "usuario2.2024@gmail.cl",
+          password: await encryptPassword("user1234"),
+          rol: "usuario",
+        }),
       ),
       userRepository.save(
         userRepository.create({
@@ -81,5 +91,374 @@ async function createUsers() {
     console.error("Error al crear usuarios:", error);
   }
 }
+//Creacion de horarios por defecto para presentar BD aunque es algo que deberia hacer el administrador
+async function createHorarios() {
+  try{
+    const horarioRepository = AppDataSource.getRepository(Horario);
 
-export { createUsers };
+    const count = await horarioRepository.count();
+    if (count > 0) return;
+
+    await Promise.all([
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "08:00",
+        }),
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "09:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "10:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "11:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "12:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "13:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "14:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "15:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "16:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Lunes",
+          hora: "17:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "08:00",
+        }),
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "09:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "10:00",
+        })
+      ),  
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "11:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "12:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "13:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "14:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "15:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "16:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Martes",
+          hora: "17:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "08:00",
+        }),
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "09:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "10:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "11:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "12:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "13:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "14:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "15:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "16:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Miercoles",
+          hora: "17:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "08:00",
+        }),
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "09:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "10:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "11:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "12:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "13:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "14:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "15:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "16:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Jueves",
+          hora: "17:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "08:00",
+        }),
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "09:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "10:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "11:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "12:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "13:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "14:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "15:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "16:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Viernes",
+          hora: "17:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "08:00",
+        }),
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "09:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "10:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "11:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "12:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "13:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "14:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "15:00",
+        })
+      ),
+      horarioRepository.save(
+        horarioRepository.create({
+          dia: "Sabado",
+          hora: "16:00",
+        })
+      ),
+    ]);
+    console.log("* => Horarios creados exitosamente");
+  }catch(error){
+    console.error("Error al crear horarios:", error);
+  }
+}
+
+export { createUsers, createHorarios };

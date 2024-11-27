@@ -5,6 +5,7 @@ import CloseIcon from '@assets/XIcon.svg';
 
 
 
+
 function productPopup({show,setShow,data,action}) {
     const productData = data && data.length > 0 ? data[0] : {};
 
@@ -27,14 +28,14 @@ function productPopup({show,setShow,data,action}) {
                                     label: "Nombre",
                                     name: "name",
                                     defaultValue: productData.name || "",
-                                    placeholder: 'Nombre del producto',
+                                    placeholder: 'Bicicleta de montaña...',
                                     fieldType: 'input',
                                     type: "text",
                                     required: true,
                                     minLength: 3,
                                     maxLength: 50,
-                                    pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
-                                    patternMessage: "Debe contener solo letras y espacios",
+                                    pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/,
+                                    patternMessage: "Debe contener solo letras, números y espacios",
                                 },
                                 {
                                     label: "Descripción",
@@ -51,21 +52,26 @@ function productPopup({show,setShow,data,action}) {
                                     label: "Precio",
                                     name: "price",
                                     defaultValue: productData.price || "",
+                                    
                                     placeholder: 'Precio del producto',
                                     fieldType: 'input',
                                     type: "number",
                                     required: true,
                                     min: 0,
+                            
                                 },
                                 {
                                     label: "Stock",
                                     name: "stock",
                                     defaultValue: productData.stock || "",
                                     placeholder: 'Stock del producto',
+                                    pattern: /^[0-9]+$/,
                                     fieldType: 'input',
                                     type: "number",
                                     required: true,
                                     min: 0,
+                                    max: 1000,
+                                    patternMessage: "stock invalido",
                                 }
                             
                             ]}

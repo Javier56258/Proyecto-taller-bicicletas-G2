@@ -83,8 +83,6 @@ export async function updateProductService(query, body) {
       return [null, "Ya existe un producto con el mismo nombre"]
     }
 
-
-
     const dataProductUpdate = {
       name: body.name,
       description: body.description,
@@ -107,17 +105,18 @@ export async function updateProductService(query, body) {
   }
 }
 
+
 export async function deleteProductService(query) {
   try {
-    const { name } = query;
+    const { id,name } = query;
     const productRepository = AppDataSource.getRepository(Product);
     const productFound = await productRepository.findOne({
-      where: { name: name }
+      where: [{ id: id }, { name: name }],
     });
     if (!productFound) {
       return [null, "Producto no encontrado"];
     }
-    const productDeleted = await productRepository.delete({ id: productFound.id });
+    const productDeleted = await productRepository.remove(productFound);
     return [productDeleted, null];
   } catch (error) {
     console.error("Error al eliminar producto:", error);

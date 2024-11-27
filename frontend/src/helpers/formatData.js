@@ -12,16 +12,44 @@ export function formatUserData(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
-
+//Revisar
+export function formatReservaData(reserva) {
+    console.log("Pasando por formatReservaData");
+    console.log(reserva);
+    console.log("nombreReservador: ", reserva.nombreReservador);
+    console.log("email: ", reserva.email);
+    console.log("motivo: ", reserva.motivo);
+    console.log("fecha: ", formatTempo(reserva.fecha, "DD-MM-YYYY"));
+    //console.log("hora: ", formatTempo(reserva.hora, "HH:mm"));
+    console.log("createdAt: ", reserva.createdAt);
+    return {
+        ...reserva,
+        nombreReservador: startCase(reserva.nombreReservador),
+        email: reserva.email,
+        motivo: startCase(reserva.motivo),
+        fecha: formatTempo(reserva.fecha, "DD-MM-YYYY"),
+        hora: reserva.hora,
+        createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
+    };
+}
+//Revisar
+export function formatHorarioData(horario) {
+    return {
+        ...horario,
+        dia: startCase(horario.dia),
+        hora: formatTempo(horario.hora, "HH:mm"),
+        createdAt: formatTempo(horario.createdAt, "DD-MM-YYYY")
+    };
+}
 
 export function formatProveedorData(proveedor) {
     return {
         ...proveedor,
-        nombreProveedor: startCase(proveedor.nombreProveedor),
+        nombreProveedor: proveedor.nombreProveedor,
         productos_suministrados: startCase(proveedor.productos_suministrados),
-        paginaWeb: startCase(proveedor.paginaWeb),
-        telefono: startCase(proveedor.telefono),
-        email: startCase(proveedor.email),
+        paginaWeb: proveedor.paginaWeb,
+        telefono: proveedor.telefono,
+        email: proveedor.email,
         direccion: startCase(proveedor.direccion),
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
 
@@ -75,12 +103,11 @@ export function formatPostUpdateUser(user) {
 
 export function formatPostUpdateProveedor(proveedor) {
     return {
-        nombreProveedor: startCase(proveedor.nombreProveedor),
-        productos_suministrados: startCase(proveedor.productos_suministrados),
-        paginaWeb: startCase(proveedor.paginaWeb),
+        nombreProveedor: proveedor.nombreProveedor,
+        paginaWeb: proveedor.paginaWeb,
         telefono: proveedor.telefono,
         email:proveedor.email,
-        direccion: startCase(proveedor.direccion),
+        direccion: proveedor.direccion,
         createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
     };
 
@@ -99,4 +126,17 @@ export function formatPostUpdateProduct(product) {
         
     };
 
+}
+
+export function formatPostUpdateReserva(reserva) {
+    console.log("Pasando por formatPostUpdateReserva en formatData");
+    console.log(reserva);
+    return {
+        nombreReservador: startCase(reserva.nombreReservador),
+        email: reserva.email,
+        motivo: reserva.motivo,
+        fecha: reserva.fecha,
+        hora: reserva.hora,
+        createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
+    };
 }
