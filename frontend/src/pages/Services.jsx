@@ -9,6 +9,11 @@ import ServiceCard from "@components/ServiceCard";
 import PopupService from "@components/PopupService";
 import "@styles/service_form.css";
 import "@styles/services.css";
+import {
+  deleteDataAlert,
+  showErrorAlert,
+  showSuccessAlert,
+} from "@helpers/sweetAlert.js";
 
 const ServiciosList = () => {
   const [servicios, setServicios] = useState([]);
@@ -34,6 +39,10 @@ const ServiciosList = () => {
     try {
       if (editingServicio) {
         await updateServicio(editingServicio.idServicio, servicioData);
+        showSuccessAlert(
+          "¡Actualizado!",
+          "El servicio ha sido actualizado correctamente."
+        );
         const updatedServicios = servicios.map((servicio) =>
           servicio.idServicio === editingServicio.idServicio
             ? servicioData
@@ -41,23 +50,41 @@ const ServiciosList = () => {
         );
         setServicios(updatedServicios);
       } else {
+        showSuccessAlert(
+          "¡Creado!",
+          "El servicio ha sido creado correctamente."
+        );
         const newServicio = await createServicio(servicioData);
         setServicios([newServicio, ...servicios]);
       }
       setEditingServicio(null);
     } catch (error) {
       console.error("Error al guardar el servicio:", error);
+      showErrorAlert(
+        "Cancelado",
+        "Ocurrió un error al actualizar el servicio."
+      );
     }
   };
 
   const handleDelete = async (idServicio) => {
     try {
-      await deleteServicio(idServicio);
-      const data = await getServicios();
-      data.sort((a, b) => b.idServicio - a.idServicio);
-      setServicios(data);
+      const result = await deleteDataAlert();
+      if (result.isConfirmed) {
+        await deleteServicio(idServicio);
+        showSuccessAlert(
+          "¡Eliminado!",
+          "El servicio ha sido eliminado correctamente."
+        );
+        const data = await getServicios();
+        data.sort((a, b) => b.idServicio - a.idServicio);
+        setServicios(data);
+      } else {
+        showErrorAlert("Cancelado", "La operación ha sido cancelada.");
+      }
     } catch (error) {
       console.error("Error al eliminar el servicio:", error);
+      showErrorAlert("Cancelado", "Ocurrió un error al eliminar el servicio.");
     }
   };
 
