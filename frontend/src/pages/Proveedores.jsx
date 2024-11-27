@@ -104,7 +104,7 @@ const Proveedores = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className="prov-tabla-cont">
           <Table
             data={proveedores}
             columns={columns}

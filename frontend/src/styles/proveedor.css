@@ -59,6 +59,10 @@
   margin-top: 30px;
 }
 
+.prov-tabla-cont {
+  overflow: auto;
+}
+
 .proovedores-form-container {
   display: flex;
   flex-direction: column;
@@ -95,6 +99,7 @@
   margin: 0 auto;
   overflow: auto;
   padding: 0px;
+  height: auto;
 }
 
 .top-table {
@@ -155,16 +160,17 @@
   .popup .options-class {
     width: 10px;
   }
-  .table-container {
+}
+/*
+.table-container {
     width: 39%;
     height: auto;
   }
-  .tabulator {
-    width: 325%;
-    margin-left: 860px;
-  }
+.tabulator {
+  width: 325%;
+  margin-left: 860px;
 }
-
+*/
 @media (max-width: 560px) {
   .filter-actions {
     flex-direction: column;
