@@ -12,7 +12,8 @@ import Products from "./pages/Products";
 import Proveedores from "./pages/Proveedores";
 import Services from "./pages/Services";
 import Reservas from "./pages/Reserva";
-console.log("Pasando por main.jsx");  
+import "@styles/tailwind.css";
+console.log("Pasando por main.jsx");
 const router = createBrowserRouter([
   {
     path: "/",
@@ -61,8 +62,8 @@ const router = createBrowserRouter([
           <ProtectedRoute allowedRoles={["administrador", "usuario"]}>
             <Reservas />
           </ProtectedRoute>
-        )
-      }
+        ),
+      },
     ],
   },
   {
