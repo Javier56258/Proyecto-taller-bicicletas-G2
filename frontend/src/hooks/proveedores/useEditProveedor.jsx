@@ -43,10 +43,6 @@ const useEditProveedor = (setProveedores, fetchProveedores) => {
 
           // Cerrar el popup después de la actualización
           setIsPopupOpen(false);
-
-          // Formatear el proveedor actualizado (si es necesario)
-          const formattedProveedor = formatPostUpdateProveedor(response.data);
-
           // Actualizar la lista de proveedores con los nuevos datos
           setProveedores((prev) =>
             prev.map((proveedor) =>

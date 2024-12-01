@@ -227,7 +227,7 @@ const Proveedores = () => {
                   key={proveedor.idProveedor}
                   className={`card bg-white border rounded-lg shadow-lg p-4 ${
                     isSelected
-                      ? "border-blue-500 bg-blue-100"
+                      ? "border-blue-500 bg-blue-200"
                       : "border-gray-300"
                   }`}
                   onClick={() => handleRowSelect(proveedor)}
@@ -236,12 +236,6 @@ const Proveedores = () => {
                     <h2 className="text-lg font-semibold text-gray-800">
                       {proveedor.nombreProveedor}
                     </h2>
-                    <input
-                      type="checkbox"
-                      className="form-checkbox"
-                      checked={isSelected}
-                      onChange={() => handleRowSelect(proveedor)}
-                    />
                   </div>
                   <p className="text-sm text-gray-600">
                     Productos suministrados: {proveedor.productos_suministrados}

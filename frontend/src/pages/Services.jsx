@@ -21,6 +21,31 @@ const ServiciosList = () => {
   const [filter, setFilter] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isReversed, setIsReversed] = useState(false);
+  const [darkMode, setDarkMode] = useState(false); // Estado para modo oscuro
+
+  // Efecto para cargar y almacenar la preferencia de modo oscuro
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode") === "true";
+    setDarkMode(savedMode);
+    if (savedMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      localStorage.setItem("darkMode", newMode);
+      if (newMode) {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+      return newMode;
+    });
+  };
 
   useEffect(() => {
     async function fetchServicios() {
@@ -102,13 +127,14 @@ const ServiciosList = () => {
     : filteredServicios;
 
   return (
-    <div className="main-content">
-      <div className="centered-h1">
-        <h1>Servicios del Taller</h1>
-      </div>
+    <div className="main-content bg-[#F3E8EE] dark:bg-[#171617]">
+      <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
+        Servicios del Taller
+      </h1>
+
       <div className="button-container">
         <button
-          className="create-button"
+          className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
           onClick={() => {
             setEditingServicio(null);
             setIsPopupOpen(true);
@@ -122,22 +148,24 @@ const ServiciosList = () => {
             placeholder="Filtrar por nombre"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="search-input-table"
+            className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert"
           />
           <button
-            className="order-button"
+            className="order-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
             onClick={() => setIsReversed(!isReversed)}
           >
             {isReversed ? "Orden: Más antiguo" : "Orden: Más reciente"}
           </button>
         </div>
       </div>
+
       <PopupService
         show={isPopupOpen}
         setShow={setIsPopupOpen}
         onSave={handleSave}
         servicio={editingServicio}
       />
+
       <div className="services-grid">
         {displayedServicios.map((servicio) => (
           <ServiceCard
