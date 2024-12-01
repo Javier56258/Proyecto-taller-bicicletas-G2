@@ -24,12 +24,12 @@ const ServiceCard = ({ servicio, onEdit, onDelete }) => {
       <div className="flex space-x-4">
         <button
           onClick={() => onEdit(servicio)}
-          className="group p-3 white rounded-md hover:bg-[#bacdb0] transition"
+          className="group p-3 white rounded-md hover:bg-[#bacdb0] transition "
         >
           <img
             src={updateIcon}
             alt="Editar"
-            className="w-4 h-4 group-hover:invert group-hover:brightness-0 group-hover:saturate-100 group-hover:contrast-1000"
+            className="w-4 h-4 fill-white group-hover:invert group-hover:brightness-0 group-hover:saturate-100 group-hover:contrast-1000"
           />
         </button>
         <button

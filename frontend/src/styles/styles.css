@@ -6,38 +6,56 @@ html {
 }
 
 html,
-body {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  min-width: 100%;
-  overflow-x: initial;
-  font-family: "Montserrat", sans-serif;
-  background-color: #f3e8ee;
-  justify-content: flex-start;
-  height: 100%;
+body.dark:not(.login-page) {
+  position: relative;
 }
 
-body {
-  min-height: 100%;
+html.dark:not(.login-page),
+body.dark:not(.login-page) {
+  /* No necesitas estilos adicionales aquí */
 }
 
-body.dark {
-  background-color: #171617; /* Fondo oscuro */
+/* Estilo para el modo oscuro */
+body.dark:not(.login-page)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(to right, #4f4f4f2e 1px, transparent 1px),
+    linear-gradient(to bottom, #4f4f4f2e 1px, transparent 1px);
+  background-size: 14px 24px;
+  background-attachment: fixed; /* Fondo fijo */
+  mask-image: radial-gradient(
+    ellipse 60% 50% at 50% 0%,
+    #000 70%,
+    transparent 100%
+  );
+}
+
+/* Estilo para el modo claro */
+body:not(.dark)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(to right, #c5c5c5c7 1px, transparent 1px),
+    /* color claro para las líneas */
+      linear-gradient(to bottom, #c5c5c5c7 1px, transparent 1px); /* color claro para las líneas */
+  background-size: 14px 24px;
+  background-attachment: fixed; /* Fondo fijo */
+  mask-image: radial-gradient(
+    ellipse 60% 50% at 50% 0%,
+    #fff 70%,
+    transparent 100%
+  ); /* Máscara en modo claro */
+}
+
+html {
+  background-color: #f3e8ee; /* Fondo claro */
 }
 
 html.dark {
   background-color: #171617; /* Fondo oscuro */
-}
-
-/* Remover padding-top solo para la página de login */
-.login-page {
-  padding-top: 65px !important;
-}
-
-.no-padding-top {
-  padding-top: 0px !important;
 }
 
 #root {
@@ -49,6 +67,11 @@ html.dark {
   transition: padding-top;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+#root.login-root {
+  padding-top: 0px;
+  transition: none;
 }
 
 main {

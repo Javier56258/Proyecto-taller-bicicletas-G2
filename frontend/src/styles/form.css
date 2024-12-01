@@ -40,14 +40,14 @@
 }
 
 .form {
-  background-color: #eef7ff;
+  background-color: #fff;
   padding: 35px;
   display: flex;
   flex-direction: column;
   border-radius: 24px;
   align-items: center;
   h1 {
-    color: #003366;
+    color: #475b63;
     font-size: 30px;
     font-weight: bold;
     margin: 0;
@@ -58,21 +58,21 @@
     display: flex;
   }
   label {
-    color: #003366;
+    color: #475b63;
     font-weight: bold;
     margin-bottom: 0.7vh;
   }
   input {
     display: flex;
-    border: 3px solid #003366;
+    border: 3px solid #475b63;
     border-radius: 12px;
     padding: 8px 5px;
     background-repeat: no-repeat;
     margin-bottom: 0.8vh;
-    background-color: #eef7ff;
+    background-color: #fff;
     font-weight: regular;
     font-size: 16px;
-    color: #003366;
+    color: #475b63;
     border-radius: 12px;
     background-position: right 10px center;
     background-size: 25px 25px;
@@ -83,20 +83,20 @@
     font-weight: light;
   }
   input:focus {
-    background-color: rgba(0, 110, 223, 0.14);
+    background-color: #edf3ef;
     font-weight: regular;
   }
   select {
     display: flex;
-    border: 3px solid #003366;
+    border: 3px solid #475b63;
     border-radius: 12px;
     padding: 8px 5px;
     background-repeat: no-repeat;
     margin-bottom: 0.8vh;
-    background-color: #eef7ff;
+    background-color: #fff;
     font-weight: regular;
     font-size: 16px;
-    color: #003366;
+    color: #475b63;
     border-radius: 12px;
     background-position: right 30px center;
     background-size: 25px 25px;
@@ -113,31 +113,31 @@
     font-weight: light;
   }
   select:focus {
-    background-color: rgba(0, 110, 223, 0.14);
+    background-color: #edf3ef;
     font-weight: regular;
   }
   textarea {
     display: flex;
-    border: 3px solid #003366;
+    border: 3px solid #475b63;
     border-radius: 12px;
     padding: 8px 5px;
     background-repeat: no-repeat;
     margin-bottom: 0.8vh;
-    background-color: #eef7ff;
+    background-color: #fff;
     font-weight: regular;
     font-size: 16px;
-    color: #003366;
+    color: #475b63;
     border-radius: 12px;
     background-position: right 10px center;
     background-size: 25px 25px;
     box-sizing: border-box;
   }
   textarea::placeholder {
-    color: rgba(0, 51, 102, 0.3);
+    color: #475b63;
     font-weight: light;
   }
   textarea:focus {
-    background-color: rgba(0, 110, 223, 0.14);
+    background-color: #edf3ef;
     font-weight: regular;
   }
   button {
@@ -148,17 +148,17 @@
     border-radius: 12px;
     border: none;
     width: 100%;
-    background-color: #003366;
+    background-color: #475b63;
     color: #eef7ff;
     font-weight: bold;
     font-size: 16px;
-    border: 3px solid #003366;
+    border: 3px solid #475b63;
     margin-top: 10px;
   }
   button:hover {
-    border: 3px solid #003366;
-    background-color: #eef7ff;
-    color: #003366;
+    border: 3px solid #475b63;
+    background-color: #fff;
+    color: #475b63;
     transition: 0.3s ease-out;
   }
   div {
@@ -247,7 +247,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   margin: 0;
 }
 
@@ -283,4 +282,56 @@ body {
   max-width: 800px;
   padding: 20px;
   box-sizing: border-box;
+}
+
+/* Estilos para el modo oscuro */
+body.dark .form {
+  background-color: #2e2c2f !important; /* Fondo oscuro para el formulario */
+}
+
+body.dark .form h1 {
+  color: #ffffff; /* Color claro para el título */
+}
+
+body.dark .form label {
+  color: #ffffff; /* Color claro para las etiquetas */
+}
+
+body.dark .form input,
+body.dark .form select,
+body.dark .form textarea {
+  background-color: #171617; /* Fondo oscuro para campos */
+  border: 3px solid #666666; /* Borde más claro */
+  color: #ffffff; /* Texto claro */
+}
+
+body.dark .form input::placeholder,
+body.dark .form select::placeholder,
+body.dark .form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5); /* Color claro para los placeholders */
+}
+
+body.dark .form input:focus,
+body.dark .form select:focus,
+body.dark .form textarea:focus {
+  background-color: rgba(0, 152, 223, 0.048); /* Fondo claro para el focus */
+}
+
+body.dark .form button {
+  background-color: #475b63; /* Color de fondo del botón en modo oscuro */
+  color: #eef7ff; /* Color claro para el texto del botón */
+}
+
+body.dark .form button:hover {
+  background-color: #eef7ff;
+  color: #475b63;
+  transition: 0.3s ease-out;
+}
+
+body.dark .container {
+  background: linear-gradient(90deg, #003366, #001a33);
+}
+
+body.dark .form .error-message {
+  color: #ff3333; /* Error mensajes más visibles */
 }

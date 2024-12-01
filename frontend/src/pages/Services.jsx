@@ -127,7 +127,7 @@ const ServiciosList = () => {
     : filteredServicios;
 
   return (
-    <div className="main-content bg-[#F3E8EE] dark:bg-[#171617]">
+    <div className="main-content bg-none">
       <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
         Servicios del Taller
       </h1>

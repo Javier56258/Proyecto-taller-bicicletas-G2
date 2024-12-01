@@ -19,11 +19,11 @@ function CreateProveedor({ show, setShow, data, action }) {
     <div>
       {show && (
         <div className="bg">
-          <div className="prov-popup">
+          <div className="prov-popup dark:bg-[#2e2c2f]">
             <button className="close" onClick={() => setShow(false)}>
               <img src={CloseIcon} />
             </button>
-            <h1 className="h1-form">Ingresar Proveedor</h1>
+            <h1 className="h1-form dark:text-[#fff]">Ingresar Proveedor</h1>
             <div className="proovedores-form-container">
               <Form
                 title=""
