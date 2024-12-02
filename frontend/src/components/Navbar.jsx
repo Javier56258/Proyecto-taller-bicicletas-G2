@@ -2,6 +2,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from "@services/auth.service.js";
 import "@styles/navbar.css";
 import { useState, useEffect, useRef } from "react";
+import { useAuth } from '@context/AuthContext.jsx';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -11,6 +12,12 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navbarRef = useRef(null);
   const rootRef = useRef(null);
+  const { isAuthenticated } = useAuth();
+
+
+  const handleLoginClick = () => {
+    navigate("/auth");
+  };
 
   useEffect(() => {
     const makeNavbarSticky = (entries) => {
@@ -20,8 +27,9 @@ const Navbar = () => {
       } else {
         navbarRef.current.classList.remove("sticky");
       }
-    };
 
+    };
+    
     const observer = new IntersectionObserver(makeNavbarSticky, {
       root: null,
       threshold: 0,
@@ -40,8 +48,12 @@ const Navbar = () => {
 
   const logoutSubmit = () => {
     try {
-      logout();
-      navigate("/auth");
+      const confirmed = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
+      if (confirmed) {
+        logout();
+        navigate("/home");
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
@@ -97,20 +109,20 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-
-            <li>
-              <NavLink
-                to="/products"
-                className={({ isActive }) => (isActive ? "active" : "")}
-                onClick={() => {
-                  setMenuOpen(false);
-                  addActiveClass();
-                }}
-              >
-                Productos
-              </NavLink>
-            </li>
-            
+            {(userRole === "usuario") && (
+              <li>
+                <NavLink
+                  to="/products"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    addActiveClass();
+                  }}
+                >
+                  Productos
+                </NavLink>
+              </li>
+            )}
             {(userRole === "administrador") && (
               <li>
                 <NavLink
@@ -155,19 +167,31 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-
             <li>
-              <NavLink
-                to="/auth"
-                className={({ isActive }) => (isActive ? "active" : "")}
-                onClick={() => {
-                  logoutSubmit();
-                  setMenuOpen(false);
-                }}
-              >
-                Cerrar sesión
-              </NavLink>
-            </li>
+              {isAuthenticated ? (
+                <NavLink
+                  to="/home"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    logoutSubmit();
+                    setMenuOpen(false);
+                  }}
+                >
+                  Cerrar Sesión
+                </NavLink>
+            ) : (
+                <NavLink
+                  to="/auth"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    handleLoginClick();
+                    setMenuOpen(false);
+                  }}
+                >
+                  Iniciar Sesión
+                </NavLink>
+              )}
+        </li>
           </ul>
         </div>
 

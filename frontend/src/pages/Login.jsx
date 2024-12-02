@@ -4,6 +4,7 @@ import { login } from "@services/auth.service.js";
 import Form from "@components/Form";
 import useLogin from "@hooks/auth/useLogin.jsx";
 import "@styles/form.css";
+import "@styles/home.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,8 +36,14 @@ const Login = () => {
     }
   };
 
-  return (
+const handleGoHome = () => {
+    navigate("/home");
+};
+
+  return (  
     <main className="container">
+      <button onClick={handleGoHome} className="home-back-button"><h2>Volver al Home</h2></button>
+
       <Form
         title="Iniciar sesión"
         fields={[
