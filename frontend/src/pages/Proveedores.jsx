@@ -138,7 +138,7 @@ const Proveedores = () => {
         {/* Tabla visible en pantallas medianas y grandes */}
         <div className="overflow-auto rounded-lg shadow hidden md:block">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b-2 border-gray-200">
+            <thead className="bg-gray-50 dark:bg-[#2e2c2f] border-b-2 border-gray-200 dark:border-[#212121] dark:text-[#fff]">
               <tr>
                 <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left"></th>
                 <th className="p-3 text-sm font-semibold tracking-wide text-left">
@@ -161,23 +161,29 @@ const Proveedores = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="bg-white divide-y divide-gray-100 dark:bg-[#2e2c2f] dark:divide-[#1c1c1c] dark:text-[#fff]">
               {proveedores
                 .filter((proveedor) =>
                   proveedor.nombreProveedor
                     .toLowerCase()
                     .includes(filterNombre.toLowerCase())
                 )
-                .map((proveedor) => {
+                .map((proveedor, index) => {
                   const isSelected =
                     selectedProveedor === proveedor.idProveedor;
                   return (
                     <tr
                       key={proveedor.idProveedor}
-                      className={`${isSelected ? "bg-blue-100" : ""}`}
+                      className={`${
+                        index % 2 === 0
+                          ? "bg-white dark:bg-[#353235]"
+                          : "bg-[#f3f7f5] dark:bg-[#2e2c2f]"
+                      }${
+                        isSelected ? " !bg-[#d3e0cb] dark:!bg-[#585358]" : ""
+                      }`}
                       onClick={() => handleRowSelect(proveedor)}
                     >
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff] accent-[#30683e] dark:accent-[#9BCCA3]">
                         <input
                           type="checkbox"
                           className="form-checkbox"
@@ -185,27 +191,27 @@ const Proveedores = () => {
                           onChange={() => handleRowSelect(proveedor)}
                         />
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         {proveedor.nombreProveedor}
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         {proveedor.productos_suministrados}
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         <a
                           href={proveedor.PaginaWeb}
-                          className="text-blue-500 hover:underline"
+                          className="text-[#567048] hover:underline dark:text-[#BACDB0]"
                         >
                           {proveedor.PaginaWeb}
                         </a>
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         {proveedor.telefono}
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         {proveedor.email}
                       </td>
-                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         {proveedor.direccion}
                       </td>
                     </tr>
@@ -216,45 +222,45 @@ const Proveedores = () => {
         </div>
 
         {/* Tarjetas visibles solo en pantallas pequeñas */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:hidden px-4">
           {proveedores
             .filter((proveedor) =>
               proveedor.nombreProveedor
                 .toLowerCase()
                 .includes(filterNombre.toLowerCase())
             )
-            .map((proveedor) => {
+            .map((proveedor, index) => {
               const isSelected = selectedProveedor === proveedor.idProveedor;
               return (
                 <div
                   key={proveedor.idProveedor}
-                  className={`card bg-white border rounded-lg shadow-lg p-4 ${
-                    isSelected
-                      ? "border-blue-500 bg-blue-200"
-                      : "border-gray-300"
-                  }`}
+                  className={`card border dark:border-[#212121] rounded-lg shadow-lg p-4 ${
+                    index % 2 === 0
+                      ? "bg-white dark:bg-[#353235]"
+                      : "bg-[#f3f7f5] dark:bg-[#2e2c2f]"
+                  }${isSelected ? " bg-[#d3e0cb] dark:bg-[#585358]" : ""}`}
                   onClick={() => handleRowSelect(proveedor)}
                 >
                   <div className="flex justify-between items-center">
-                    <h2 className="text-lg font-semibold text-gray-800">
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
                       {proveedor.nombreProveedor}
                     </h2>
                   </div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Productos suministrados: {proveedor.productos_suministrados}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Teléfono: {proveedor.telefono}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Correo electrónico: {proveedor.email}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Dirección: {proveedor.direccion}
                   </p>
                   <a
                     href={proveedor.PaginaWeb}
-                    className="text-blue-500 hover:underline mt-2 block"
+                    className="text-[#567048] hover:underline dark:text-[#BACDB0] mt-2 block"
                   >
                     Página Web
                   </a>
