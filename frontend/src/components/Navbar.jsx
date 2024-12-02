@@ -133,7 +133,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-            {(userRole === "usuario") && (
+            {(userRole === "administrador" || userRole === "usuario") && (
               <li>
                 <NavLink
                   to="/products"
@@ -216,6 +216,16 @@ const Navbar = () => {
                 </NavLink>
               )}
         </li>
+        <button
+              onClick={() => setDarkMode(!darkMode)} // Cambiar entre modo oscuro y claro
+              className="p-3 mr-0 md:mr-6 bg-[#729B79] dark:bg-[#BACDB0] text-[#F3E8EE] dark:text-[#475B63] rounded-md transition"
+            >
+              {darkMode ? (
+                <FaSun className="w-5 h-5" /> // Ícono de sol para modo claro
+              ) : (
+                <FaMoon className="w-5 h-5" /> // Ícono de luna para modo oscuro
+              )}
+            </button>
           </ul>
         </div>
 

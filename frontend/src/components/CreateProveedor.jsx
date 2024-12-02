@@ -3,6 +3,7 @@ import Form from "./Form";
 import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
 import { createProveedor } from "@services/proveedor.service.js";
+import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; // Importar las alertas
 
 function CreateProveedor({ show, setShow, data, action }) {
   const handleSubmit = async (formData) => {
@@ -10,8 +11,9 @@ function CreateProveedor({ show, setShow, data, action }) {
       await createProveedor(formData);
       action(formData);
       setShow(false);
+      showSuccessAlert("Proveedor creado", "El proveedor ha sido creado correctamente.");
     } catch (error) {
-      console.error("Error al crear proveedor:", error);
+      showErrorAlert("Error", "No se pudo crear el proveedor.");
     }
   };
 
