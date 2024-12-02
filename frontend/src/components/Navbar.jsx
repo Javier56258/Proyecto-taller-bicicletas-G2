@@ -74,7 +74,7 @@ const Navbar = () => {
       if (confirmed) {
         logout();
         navigate("/home");
-        window.location.reload();
+        //window.location.reload();
       }
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
@@ -194,7 +194,7 @@ const Navbar = () => {
             <li>
               {isAuthenticated ? (
                 <NavLink
-                  to="/home"
+                  to="/"
                   className={({ isActive }) => (isActive ? "active" : "")}
                   onClick={() => {
                     logoutSubmit();
