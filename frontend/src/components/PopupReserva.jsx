@@ -1,5 +1,5 @@
 import Form from './Form';
-import "@styles/Popup.css";
+import "@styles/popup.css";
 import CloseIcon from '@assets/XIcon.svg';
 
 export default function reservaPopup({show,setShow,data,action}) {
