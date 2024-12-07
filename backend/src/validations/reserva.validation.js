@@ -3,10 +3,9 @@ import Joi from "joi";
 import moment from "moment";
 
 const domainEmailValidator = (value, helper) => {
-    if (!value.endsWith("@gmail.cl") && !value.endsWith("@gmail.com")) {
-      return helper.message(
-        "El correo electrónico debe ser del dominio @gmail.cl o @gmail.com."
-      );
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|cl)$/;
+    if (!emailRegex.test(value)) {
+        return helper.message("El correo electrónico no tiene un formato válido. Debe terminar en .com o .cl");
     }
     return value;
 };
