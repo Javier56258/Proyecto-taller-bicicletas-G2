@@ -13,7 +13,9 @@ import Proveedores from "./pages/Proveedores";
 import Services from "./pages/Services";
 import Reservas from "./pages/Reserva";
 import Horarios from "./pages/Horarios";
+import "@styles/tailwind.css";
 console.log("Pasando por main.jsx");  
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -71,7 +73,7 @@ const router = createBrowserRouter([
             <Horarios />
           </ProtectedRoute>
         )
-      }
+      },
     ],
   },
   {

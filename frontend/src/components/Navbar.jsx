@@ -2,6 +2,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from "@services/auth.service.js";
 import "@styles/navbar.css";
 import { useState, useEffect, useRef } from "react";
+import { FaSun, FaMoon } from "react-icons/fa"; // Importamos los íconos de react-icons
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const Navbar = () => {
   const user = JSON.parse(sessionStorage.getItem("usuario")) || "";
   const userRole = user?.rol;
   const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false); // Estado para el modo oscuro
   const navbarRef = useRef(null);
   const rootRef = useRef(null);
 
@@ -31,12 +33,32 @@ const Navbar = () => {
       observer.observe(rootRef.current);
     }
 
+    // Al cargar, establecemos el modo oscuro en base al estado guardado
+    if (localStorage.getItem("darkMode") === "true") {
+      setDarkMode(true);
+      document.body.classList.add("dark");
+      document.documentElement.classList.add("dark"); // Añadir clase al <html>
+    }
+
     return () => {
       if (rootRef.current) {
         observer.unobserve(rootRef.current);
       }
     };
   }, []);
+
+  useEffect(() => {
+    // Al cambiar el estado de darkMode, actualizamos la clase global
+    if (darkMode) {
+      document.body.classList.add("dark");
+      document.documentElement.classList.add("dark"); // También en el <html>
+      localStorage.setItem("darkMode", "true");
+    } else {
+      document.body.classList.remove("dark");
+      document.documentElement.classList.remove("dark"); // También en el <html>
+      localStorage.setItem("darkMode", "false");
+    }
+  }, [darkMode]);
 
   const logoutSubmit = () => {
     try {
@@ -67,9 +89,11 @@ const Navbar = () => {
 
   return (
     <div ref={rootRef}>
-      <nav className="navbar" ref={navbarRef}>
-        <div className={`nav-menu ${menuOpen ? "activado" : ""}`}>
-          <ul>
+      <nav className="navbar dark:bg-[#2e2c2f]" ref={navbarRef}>
+        <div
+          className={`nav-menu dark:bg-[#2e2c2f] ${menuOpen ? "activado" : ""}`}
+        >
+          <ul className="dark:bg-[#2e2c2f]">
             <li>
               <NavLink
                 to="/home"
@@ -110,8 +134,8 @@ const Navbar = () => {
                 Productos
               </NavLink>
             </li>
-            
-            {(userRole === "administrador") && (
+
+            {userRole === "administrador" && (
               <li>
                 <NavLink
                   to="/proveedores"
@@ -140,7 +164,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-            
+
             {(userRole === "administrador" || userRole === "usuario") && (
               <li>
                 <NavLink
@@ -183,6 +207,16 @@ const Navbar = () => {
                 Cerrar sesión
               </NavLink>
             </li>
+            <button
+              onClick={() => setDarkMode(!darkMode)} // Cambiar entre modo oscuro y claro
+              className="p-3 mr-0 md:mr-6 bg-[#729B79] dark:bg-[#BACDB0] text-[#F3E8EE] dark:text-[#475B63] rounded-md transition"
+            >
+              {darkMode ? (
+                <FaSun className="w-5 h-5" /> // Ícono de sol para modo claro
+              ) : (
+                <FaMoon className="w-5 h-5" /> // Ícono de luna para modo oscuro
+              )}
+            </button>
           </ul>
         </div>
 
