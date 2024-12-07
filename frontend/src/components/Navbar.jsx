@@ -3,6 +3,7 @@ import { logout } from "@services/auth.service.js";
 import "@styles/navbar.css";
 import { useState, useEffect, useRef } from "react";
 import { FaSun, FaMoon } from "react-icons/fa"; // Importamos los íconos de react-icons
+import { useAuth } from '@context/AuthContext.jsx';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,6 +14,12 @@ const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false); // Estado para el modo oscuro
   const navbarRef = useRef(null);
   const rootRef = useRef(null);
+  const { isAuthenticated } = useAuth();
+
+
+  const handleLoginClick = () => {
+    navigate("/auth");
+  };
 
   useEffect(() => {
     const makeNavbarSticky = (entries) => {
@@ -22,8 +29,9 @@ const Navbar = () => {
       } else {
         navbarRef.current.classList.remove("sticky");
       }
-    };
 
+    };
+    
     const observer = new IntersectionObserver(makeNavbarSticky, {
       root: null,
       threshold: 0,
@@ -62,8 +70,12 @@ const Navbar = () => {
 
   const logoutSubmit = () => {
     try {
-      logout();
-      navigate("/auth");
+      const confirmed = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
+      if (confirmed) {
+        logout();
+        navigate("/home");
+        //window.location.reload();
+      }
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
@@ -73,10 +85,13 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
+  /*
   const removeActiveClass = () => {
     const activeLinks = document.querySelectorAll(".nav-menu ul li a.active");
     activeLinks.forEach((link) => link.classList.remove("active"));
   };
+  */
+  
 
   const addActiveClass = () => {
     const links = document.querySelectorAll(".nav-menu ul li a");
@@ -121,21 +136,21 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-
-            <li>
-              <NavLink
-                to="/products"
-                className={({ isActive }) => (isActive ? "active" : "")}
-                onClick={() => {
-                  setMenuOpen(false);
-                  addActiveClass();
-                }}
-              >
-                Productos
-              </NavLink>
-            </li>
-
-            {userRole === "administrador" && (
+            {(userRole === "administrador" || userRole === "usuario") && (
+              <li>
+                <NavLink
+                  to="/products"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    addActiveClass();
+                  }}
+                >
+                  Productos
+                </NavLink>
+              </li>
+            )}
+            {(userRole === "administrador") && (
               <li>
                 <NavLink
                   to="/proveedores"
@@ -196,18 +211,31 @@ const Navbar = () => {
             )}
 
             <li>
-              <NavLink
-                to="/auth"
-                className={({ isActive }) => (isActive ? "active" : "")}
-                onClick={() => {
-                  logoutSubmit();
-                  setMenuOpen(false);
-                }}
-              >
-                Cerrar sesión
-              </NavLink>
-            </li>
-            <button
+              {isAuthenticated ? (
+                <NavLink
+                  to="/"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    logoutSubmit();
+                    setMenuOpen(false);
+                  }}
+                >
+                  Cerrar Sesión
+                </NavLink>
+            ) : (
+                <NavLink
+                  to="/auth"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    handleLoginClick();
+                    setMenuOpen(false);
+                  }}
+                >
+                  Iniciar Sesión
+                </NavLink>
+              )}
+        </li>
+        <button
               onClick={() => setDarkMode(!darkMode)} // Cambiar entre modo oscuro y claro
               className="p-3 mr-0 md:mr-6 bg-[#729B79] dark:bg-[#BACDB0] text-[#F3E8EE] dark:text-[#475B63] rounded-md transition"
             >

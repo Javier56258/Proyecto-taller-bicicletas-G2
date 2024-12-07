@@ -91,11 +91,14 @@ const Proveedores = () => {
   };
 
   return (
+    <div className="slide-down">
     <div className="main-container">
       <div>
         <div className="top-table">
           <div>
-            <h1 className="title-table">Proveedores</h1>
+          <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
+        Proveedores
+          </h1>
           </div>
           <div className="filter-actions">
             <Search
@@ -279,6 +282,7 @@ const Proveedores = () => {
         setShow={setIsCreatePopupOpen}
         action={fetchProveedores}
       />
+    </div>
     </div>
   );
 };

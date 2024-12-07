@@ -56,6 +56,10 @@ const Login = () => {
     }
   };
 
+const handleGoHome = () => {
+    navigate("/home");
+};
+
   return (
     <div className="relative h-screen w-screen bg-black">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#171617_1px,#171617_1px)] bg-[size:14px_24px]"></div>
