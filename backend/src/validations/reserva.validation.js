@@ -56,11 +56,11 @@ export const reservaBodyValidation = Joi.object({
         .max(60)
         .pattern(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/)
         .messages({
-            "string.empty": "El motivo no puede estar vacío.",
-            "string.base": "El motivo debe ser de tipo string.",
-            "string.min": "El motivo debe tener como mínimo 10 caracteres.",
-            "string.max": "El motivo debe tener como máximo 60 caracteres.",
-            "string.pattern.base": "El motivo solo puede contener letras y números.",
+            "string.empty": "El motivo de servicio no puede estar vacío.",
+            "string.base": "El motivo de servicio debe ser de tipo string.",
+            "string.min": "El motivo de servicio debe tener como mínimo 10 caracteres.",
+            "string.max": "El motivo de servicio debe tener como máximo 60 caracteres.",
+            "string.pattern.base": "El motivo de servicio solo puede contener letras y números.",
         }),
     fecha: Joi.date().iso()
         .messages({
