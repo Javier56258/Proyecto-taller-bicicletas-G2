@@ -54,3 +54,11 @@ export async function deleteProveedor(idProveedor) {
       : { status: "Error", details: "Error desconocido" };
   }
 }
+
+export const assignProveedorProduct = async (idProveedor, idProducto) => {
+  const response = await axios.post('/assign-product', {
+    idProveedor,
+    idProducto
+  });
+  return response.data;
+};

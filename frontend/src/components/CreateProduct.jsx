@@ -1,5 +1,5 @@
 import Form from './Form';
-import '@styles/Popup.css';
+import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import { createProduct } from '@services/product.service.js';
 

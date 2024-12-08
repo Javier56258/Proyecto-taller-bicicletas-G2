@@ -8,6 +8,7 @@ import {
     getProveedor,
     getProveedores,
     updateProveedor,
+    assignProductsToProveedor,
 } from "../controllers/proveedor.controller.js";
 
 const router = Router();
@@ -21,6 +22,7 @@ router
     .get("/all", getProveedores)
     .get("/detail/", getProveedor)
     .patch("/detail/", updateProveedor)
+    .post("/assign-product", assignProductsToProveedor)
     .delete("/detail/", deleteProveedor);
 
 export default router;

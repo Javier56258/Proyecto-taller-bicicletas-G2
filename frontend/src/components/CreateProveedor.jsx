@@ -1,9 +1,8 @@
-import React from "react";
 import Form from "./Form";
 import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
-import { createProveedor } from "@services/proveedor.service.js";
-import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; // Importar las alertas
+import { createProveedor  } from "@services/proveedor.service.js";
+import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; 
 
 function CreateProveedor({ show, setShow, data, action }) {
   const handleSubmit = async (formData) => {
@@ -16,6 +15,8 @@ function CreateProveedor({ show, setShow, data, action }) {
       showErrorAlert("Error", "No se pudo crear el proveedor.");
     }
   };
+  
+
 
   return (
     <div>
@@ -39,14 +40,6 @@ function CreateProveedor({ show, setShow, data, action }) {
                     required: true,
                     pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/,
                     patternMessage: "",
-                  },
-                  {
-                    label: "Productos Suministrados",
-                    name: "productos_suministrados",
-                    placeholder: "Ingresar Productos",
-                    fieldType: "input",
-                    type: "text",
-                    required: true,
                   },
                   {
                     label: "Pagina Web",
@@ -81,7 +74,6 @@ function CreateProveedor({ show, setShow, data, action }) {
                     maxLength: 8,
                     required: true,
                   },
-
                   {
                     label: "Dirección",
                     name: "direccion",

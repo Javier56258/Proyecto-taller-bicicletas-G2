@@ -2,6 +2,7 @@ import useProveedores from "@hooks/proveedores/useGetProveedores.jsx";
 import Search from "../components/Search.jsx";
 import PopupProveedores from "../components/PopupProveedores.jsx";
 import CreateProveedor from "../components/CreateProveedor.jsx";
+import AssignProveedorProduct from "../components/AssignProveedorProduct.jsx";
 import DeleteIcon from "../assets/deleteIcon.svg";
 import UpdateIcon from "../assets/updateIcon.svg";
 import UpdateIconDisable from "../assets/updateIconDisabled.svg";
@@ -15,7 +16,8 @@ const Proveedores = () => {
   const { proveedores, fetchProveedores, setProveedores } = useProveedores();
   const [filterNombre, setFilterNombre] = useState("");
   const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
-  const [selectedProveedor, setSelectedProveedor] = useState(null); // Solo un proveedor seleccionado
+  const [isAssignPopupOpen, setIsAssignPopupOpen] = useState(false); 
+  const [selectedProveedor, setSelectedProveedor] = useState(null); 
 
   const {
     handleClickUpdate,
@@ -82,6 +84,14 @@ const Proveedores = () => {
     setIsCreatePopupOpen(true);
   };
 
+  const handleAssignClick = () => {
+    if (selectedProveedor) {
+      setIsAssignPopupOpen(true);
+    } else {
+      alert("Selecciona un proveedor para asignar productos.");
+    }
+  };
+
   const handleRowSelect = (proveedor) => {
     if (selectedProveedor === proveedor.idProveedor) {
       setSelectedProveedor(null);
@@ -106,6 +116,13 @@ const Proveedores = () => {
               onChange={handleNombreFilterChange}
               placeholder={"Filtrar por nombre"}
             />
+            <button
+              className="create-proveedor-button"
+              onClick={handleAssignClick}
+              disabled={!selectedProveedor}
+            >
+              Asignar Productos
+            </button>
             <button
               onClick={handleCreateClick}
               className="create-proveedor-button"
@@ -195,7 +212,7 @@ const Proveedores = () => {
                         {proveedor.nombreProveedor}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
-                        {proveedor.productos_suministrados}
+                        {proveedor.productos?.map((producto) => producto.name).join(', ')}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         <a
@@ -247,7 +264,7 @@ const Proveedores = () => {
                     </h2>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Productos suministrados: {proveedor.productos_suministrados}
+                    Productos suministrados:  
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
                     Teléfono: {proveedor.telefono}
@@ -280,6 +297,13 @@ const Proveedores = () => {
       <CreateProveedor
         show={isCreatePopupOpen}
         setShow={setIsCreatePopupOpen}
+        action={fetchProveedores}
+      />
+
+      <AssignProveedorProduct
+        show={isAssignPopupOpen}
+        setShow={setIsAssignPopupOpen}
+        data={selectedProveedor} // Pasar el proveedor seleccionado
         action={fetchProveedores}
       />
     </div>

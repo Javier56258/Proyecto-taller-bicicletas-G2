@@ -43,6 +43,13 @@ const ProductSchema = new EntitySchema({
             nullable: false,
         }
     },
+    relations: {
+        proveedores: {
+            type: "many-to-one",
+            target: "proveedores",
+            inverseSide: "productos", // Relación inversa
+        },
+    },
     //VER IMPLEMENTACION DE INDICES
 
 });

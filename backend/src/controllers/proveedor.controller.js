@@ -5,6 +5,7 @@ import {
     getProveedoresService,
     updateProveedorService,
     deleteProveedorService,
+    assignProductsToProveedorService,
     } from "../services/proveedor.service.js";
 import {
     proveedorBodyValidation,
@@ -131,6 +132,18 @@ export async function deleteProveedor(req, res) {
         if (errorDelete) return handleErrorClient(res, 404, errorDelete);
 
         handleSuccess(res, 200, "Proveedor eliminado", deletedProveedor);
+    } catch (error) {
+        handleErrorServer(res, 500, error.message);
+    }
+}
+
+export async function assignProductsToProveedor(req, res) {
+    try {
+        const { idProveedor, productIds } = req.body;
+
+        const proveedor = await assignProductsToProveedorService({ idProveedor, productIds });
+
+        handleSuccess(res, 200, "Productos asignados al proveedor exitosamente", proveedor);
     } catch (error) {
         handleErrorServer(res, 500, error.message);
     }
