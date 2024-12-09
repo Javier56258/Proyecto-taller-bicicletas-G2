@@ -60,7 +60,7 @@
   label {
     color: #475b63;
     font-weight: bold;
-    margin-bottom: 0.7vh;
+    margin: 0;
   }
   input {
     display: flex;
@@ -88,15 +88,15 @@
   }
   select {
     display: flex;
-    border: 3px solid #475b63;
+    border: 3px solid #003366;
     border-radius: 12px;
     padding: 8px 5px;
     background-repeat: no-repeat;
     margin-bottom: 0.8vh;
-    background-color: #fff;
+    background-color: #eef7ff;
     font-weight: regular;
     font-size: 16px;
-    color: #475b63;
+    color: #003366;
     border-radius: 12px;
     background-position: right 30px center;
     background-size: 25px 25px;
@@ -208,6 +208,8 @@ input[name="rol"] {
 }
 
 .container_inputs {
+  display: flex;
+  flex-direction: column;
   position: relative;
   margin-bottom: 5px;
 }

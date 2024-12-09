@@ -1,5 +1,5 @@
 import Form from './Form';
-import '@styles/Popup.css';
+import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import { createHorario } from '@services/horarios.service.js';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert.js';
@@ -36,6 +36,7 @@ function CreateHorario({ show, setShow, data, action }) {
                         <button className='close' onClick={() => setShow(false)}>
                             <img src={CloseIcon} />
                         </button>
+
                         <Form
                             title="Ingresar Horario"
                             fields={[

@@ -6,6 +6,9 @@ export default function reservaPopup({show,setShow,data,action}) {
     const reservaData = data && data.length > 0 ? data[0] : {};
 
     const handleSubmit = (formData) => {
+        if (formData.hora instanceof Date || formData.hora.includes(":")) {
+            formData.hora = formData.hora.toString(); 
+        }
         action(formData);
     };
 
@@ -17,11 +20,11 @@ export default function reservaPopup({show,setShow,data,action}) {
                         <button className='close' onClick={() => setShow(false)}>
                             <img src={CloseIcon} />
                         </button>
+                        <div className="proovedores-form-container">        
                         <Form
                             title="Editar Reserva"
                             fields={[
-                                {
-                                    label: "Nombre completo",
+                                {   label: "Nombre completo",
                                     name: "nombreReservador",
                                     defaultValue: reservaData.nombreReservador || "",
                                     placeholder: 'Nombre del reservador',
@@ -33,8 +36,7 @@ export default function reservaPopup({show,setShow,data,action}) {
                                     pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
                                     patternMessage: "Debe contener solo letras y espacios",
                                 },
-                                {
-                                    label: "Correo electrónico",
+                                {   label: "Correo electrónico",
                                     name: "email",
                                     defaultValue: reservaData.email || "",
                                     placeholder: 'reserva1234@gmail.com',
@@ -44,8 +46,7 @@ export default function reservaPopup({show,setShow,data,action}) {
                                     minLength: 15,
                                     maxLength: 35,
                                 },
-                                {
-                                    label: "Fecha de reserva",
+                                {   label: "Fecha de reserva",
                                     name: "fecha",
                                     defaultValue: reservaData.fecha || "",
                                     placeholder: '11/11/2011',
@@ -53,8 +54,7 @@ export default function reservaPopup({show,setShow,data,action}) {
                                     type: "date",
                                     required: true,
                                 },
-                                {
-                                    label: "Hora de reserva",
+                                {   label: "Hora de reserva",
                                     name: "hora",
                                     defaultValue: reservaData.hora || "",
                                     placeholder: '00:00',
@@ -62,8 +62,7 @@ export default function reservaPopup({show,setShow,data,action}) {
                                     type: "time",
                                     required: true,
                                 },
-                                {
-                                    label: "Servicio a pedir",
+                                {   label: "Servicio a pedir",
                                     name: "motivo",
                                     defaultValue: reservaData.motivo || "",
                                     placeholder: 'Limpieza de bicicleta',
@@ -74,8 +73,10 @@ export default function reservaPopup({show,setShow,data,action}) {
                             ]}
                             onSubmit={handleSubmit}
                             buttonText={"Editar Reserva"}
-                            backgroundColor={'#fff'}
+
                         />
+
+                                </div>
                     </div>
                 </div>)}
         </div>

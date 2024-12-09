@@ -40,6 +40,7 @@ export default function horarioPopup({show,setShow,data,action}) {
                                     type: "text",
                                     required: true,
                                     defaultValue: horarioData.dia || "",
+                                    
                                 },
                                 {
                                     label: "Hora de reserva",

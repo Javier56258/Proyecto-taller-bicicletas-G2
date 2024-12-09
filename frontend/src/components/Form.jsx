@@ -120,8 +120,7 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent }) => {
               onChange={field.onChange}
             >
               <option value="">Seleccionar opción</option>
-              {field.options &&
-                field.options.map((option, optIndex) => (
+              {field.options && field.options.map((option, optIndex) => (
                   <option
                     className="options-class"
                     key={optIndex}
@@ -157,7 +156,23 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent }) => {
           </div>
         </div>
       ))}
-      {buttonText && <button type="submit">{buttonText}</button>}
+      {buttonText && <button
+                        type="submit"
+                        className="submit-button" // Clase del botón
+                        style={{
+                          backgroundColor: "#475b63",
+                          color: "white",
+                          border: "none",
+                          padding: "10px 20px",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                          marginTop: "20px",
+                        }}
+                      >
+                      {buttonText}
+                      </button>}
+
+      
       {footerContent && <div className="footerContent">{footerContent}</div>}
     </form>
   );
