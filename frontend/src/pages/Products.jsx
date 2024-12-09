@@ -8,7 +8,7 @@ import { useCallback } from 'react';
 import useDeleteProduct from '@hooks/products/useDeleteProduct.jsx';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import '@styles/users.css';
+import "@styles/proveedor.css";
 import CreateProduct from '@components/CreateProduct.jsx';
 import { useState } from 'react';
 
@@ -46,7 +46,7 @@ const Products = () => {
 
     return (
         <div className='main-container'>
-            <div className='table-container'>
+            <div>
                 <div className='top-table'>
                     <h1 className='title-table'>Productos</h1>
                     <div className='filter-actions'>
@@ -69,6 +69,8 @@ const Products = () => {
                         </button>
                     </div>
                 </div>
+                    
+            
                 <Table
                     columns={columns}
                     data={products}

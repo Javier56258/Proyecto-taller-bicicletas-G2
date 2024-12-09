@@ -9,6 +9,7 @@ function CreateProduct({ show, setShow, data, action }) {
         try {
             await createProduct(formData);
             action(formData);
+            setShow(false);
         } catch (error) {
             console.error('Error al crear producto:', error);
         };
