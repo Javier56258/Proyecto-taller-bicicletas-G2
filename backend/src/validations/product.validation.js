@@ -40,16 +40,14 @@ export const productBodyValidation = Joi.object({
             "string.max": "El nombre debe tener como máximo 50 caracteres.",
         }),
     description: Joi.string()
-        .min(3)
         .max(255)
         .messages({
-            "string.empty": "La descripción no puede estar vacía.",
             "string.base": "La descripción debe ser de tipo string.",
-            "string.min": "La descripción debe tener como mínimo 3 caracteres.",
             "string.max": "La descripción debe tener como máximo 255 caracteres.",
         }),
     price: Joi.number()
-        .positive()
+        .integer()
+        .min(0)
         .messages({
             "number.base": "El precio debe ser un número.",
             "number.positive": "El precio debe ser un número positivo.",

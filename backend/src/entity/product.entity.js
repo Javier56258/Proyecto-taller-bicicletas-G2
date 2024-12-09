@@ -30,6 +30,7 @@ const ProductSchema = new EntitySchema({
         price: {
             type: "int",
             nullable: false,
+            
         },
         createdAt: {
             type: "timestamp with time zone",

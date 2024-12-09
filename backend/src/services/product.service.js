@@ -18,6 +18,9 @@ export async function createProductService(product) {
       return [null, createErrorMessage("name", "El nombre del producto ya existe")];
 
     }
+    if(description == null || description == "") {
+      description = "Sin descripción";
+    }
     //creamos el nuevo producto
     const newProduct = productRepository.create({
       name : name,

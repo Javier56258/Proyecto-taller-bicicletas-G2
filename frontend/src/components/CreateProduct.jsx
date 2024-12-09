@@ -42,6 +42,9 @@ function CreateProduct({ show, setShow, data, action }) {
                                     fieldType: 'input',
                                     type: "number",
                                     required: true,
+                                    min: 0,
+                                    pattern: /^[0-9]+$/,
+                                    patternMessage: "El precio debe ser valido",
                                 },
                                 {
                                     label: "Stock",
@@ -50,6 +53,9 @@ function CreateProduct({ show, setShow, data, action }) {
                                     fieldType: 'input',
                                     type: "number",
                                     required: true,
+                                    min: 0,
+                                    pattern: /^[0-9]+$/,
+                                    patternMessage: "El stock debe ser valido",
                                 },
                                 {
                                     label: "Descripción",
@@ -58,6 +64,7 @@ function CreateProduct({ show, setShow, data, action }) {
                                     fieldType: 'input',
                                     type: "text",
                                     required: true,
+                                    
                                 },
                             ]}
                             onSubmit={handleSubmit}

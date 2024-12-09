@@ -6,7 +6,11 @@ function productPopup({ show, setShow, data, action }) {
   const productData = data && data.length > 0 ? data[0] : {};
 
   const handleSubmit = (formData) => {
-    action(formData);
+    try {
+      action(formData);
+    } catch (error) {
+      console.error("Error al editar producto:", error);
+    }
   };
 
   return (
@@ -48,7 +52,7 @@ function productPopup({ show, setShow, data, action }) {
                 {
                   label: "Precio",
                   name: "price",
-                  defaultValue: productData.price || "",
+                  defaultValue: productData.price || 0,
 
                   placeholder: "Precio del producto",
                   fieldType: "input",
