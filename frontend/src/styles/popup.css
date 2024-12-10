@@ -173,3 +173,7 @@
   justify-content: space-between;
   margin-top: auto;
 }
+
+.no-scroll {
+  overflow: hidden;
+}

@@ -5,7 +5,6 @@ import CloseIcon from "@assets/XIcon.svg";
 function PopupProveedores({ show, setShow, data, action }) {
   // Verificamos que `data` contiene un proveedor válido
   const proveedorData = data || {};
-
   const handleSubmit = (formData) => {
     action(formData); // Llama la acción pasada como prop para actualizar los datos
   };

@@ -27,12 +27,12 @@ export async function createProveedorService(dataProveedor) {
 
 export async function getProveedorService(query) {
     try {
-        const { id, nombreProveedor } = query;
+        const { idProveedor, nombreProveedor } = query;
 
         const proveedorRepository = AppDataSource.getRepository(Proveedor);
 
         const proveedorFound = await proveedorRepository.findOne({
-            where: [{ id: id }, { nombreProveedor: nombreProveedor }],
+            where: [{ idProveedor: idProveedor }, { nombreProveedor: nombreProveedor }],
             relations: ["productos"],
         });
 

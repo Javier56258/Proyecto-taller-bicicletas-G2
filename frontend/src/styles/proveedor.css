@@ -13,7 +13,7 @@
 
 .create-proveedor-button:hover,
 .order-button:hover {
-  background-color: #003366;
+  background-color: #2e2c2f;
   color: white;
 }
 
@@ -198,4 +198,12 @@
 
 .slide-down {
   animation: slideDown 0.5s ease-out;
+}
+
+.mt-4 {
+  margin-top: 1rem; /* Puedes ajustar el valor según sea necesario */
+}
+
+.mt-5 {
+  margin-top: 2rem; /* Puedes ajustar el valor según sea necesario */
 }

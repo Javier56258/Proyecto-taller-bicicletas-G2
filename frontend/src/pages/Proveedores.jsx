@@ -18,6 +18,8 @@ const Proveedores = () => {
   const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
   const [isAssignPopupOpen, setIsAssignPopupOpen] = useState(false); 
   const [selectedProveedor, setSelectedProveedor] = useState(null); 
+  const [proveedorAssign, setProveedorAssign] = useState(null); // Define el estado para proveedorAssign
+ 
 
   const {
     handleClickUpdate,
@@ -86,6 +88,10 @@ const Proveedores = () => {
 
   const handleAssignClick = () => {
     if (selectedProveedor) {
+      const proveedorAssign = proveedores.find(
+        (proveedor) => proveedor.idProveedor === selectedProveedor
+      );
+      setProveedorAssign(proveedorAssign); // Actualiza el estado de proveedorAssign
       setIsAssignPopupOpen(true);
     } else {
       alert("Selecciona un proveedor para asignar productos.");
@@ -102,56 +108,57 @@ const Proveedores = () => {
 
   return (
     <div className="slide-down">
-    <div className="main-container">
+    <div className="main-content bg-none">
       <div>
         <div className="top-table">
-          <div>
           <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
-        Proveedores
+            Proveedores
           </h1>
-          </div>
-          <div className="filter-actions">
-            <Search
-              value={filterNombre}
-              onChange={handleNombreFilterChange}
-              placeholder={"Filtrar por nombre"}
-            />
-            <button
-              className="create-proveedor-button"
-              onClick={handleAssignClick}
-              disabled={!selectedProveedor}
-            >
-              Asignar Productos
-            </button>
-            <button
-              onClick={handleCreateClick}
-              className="create-proveedor-button"
-            >
-              Añadir Proveedor
-            </button>
-            <button
-              className="edit-proveedor-button"
-              onClick={handleEditClick}
-              disabled={!selectedProveedor}
-            >
-              <img
-                src={selectedProveedor ? UpdateIcon : UpdateIconDisable}
-                alt="edit"
-              />
-            </button>
-            <button
-              className="delete-proveedor-button"
-              disabled={!selectedProveedor}
-              onClick={handleDelete}
-            >
-              <img
-                src={selectedProveedor ? DeleteIcon : DeleteIconDisable}
-                alt="delete"
-              />
-            </button>
-          </div>
-        </div>
-
+            <div className="button-container">
+              <div className="right-buttons">
+                  <input
+                    value={filterNombre}
+                    onChange={handleNombreFilterChange}
+                    placeholder={"Filtrar por nombre"}
+                    className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
+                  />
+        
+                  <button
+                    className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f] mt-4"
+                    onClick={handleAssignClick}
+                    disabled={!selectedProveedor}
+                  >
+                  Asignar Productos
+                  </button>
+                  <button
+                    onClick={handleCreateClick}
+                    className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f] mt-4"
+                  >
+                  Añadir Proveedor
+                  </button>
+                  <button
+                    className="group p-3 white rounded-md hover:bg-[#bacdb0] transition mt-4"
+                    onClick={handleEditClick}
+                    disabled={!selectedProveedor}
+                  >
+                  <img
+                    src={selectedProveedor ? UpdateIcon : UpdateIconDisable}
+                    alt="edit"
+                  />
+                  </button>
+                  <button
+                    className="group p-3 white rounded-md hover:bg-red-600 transition mt-4"
+                    disabled={!selectedProveedor}
+                    onClick={handleDelete}
+                  >
+                  <img
+                    src={selectedProveedor ? DeleteIcon : DeleteIconDisable}
+                    alt="delete"
+                  />
+                  </button>
+              </div>
+      </div>
+  </div>
         {/* Tabla visible en pantallas medianas y grandes */}
         <div className="overflow-auto rounded-lg shadow hidden md:block">
           <table className="w-full">
@@ -264,7 +271,8 @@ const Proveedores = () => {
                     </h2>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Productos suministrados:  
+                    Productos suministrados: {proveedor.productos?.map((producto) => producto.name).join(', ')}
+
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
                     Teléfono: {proveedor.telefono}
@@ -303,7 +311,7 @@ const Proveedores = () => {
       <AssignProveedorProduct
         show={isAssignPopupOpen}
         setShow={setIsAssignPopupOpen}
-        data={selectedProveedor} // Pasar el proveedor seleccionado
+        data={proveedorAssign} // Pasar el proveedor seleccionado
         action={fetchProveedores}
       />
     </div>

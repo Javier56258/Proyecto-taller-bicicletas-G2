@@ -3,6 +3,7 @@ import { useState } from "react";
 import "@styles/form.css";
 import HideIcon from "../assets/HideIcon.svg";
 import ViewIcon from "../assets/ViewIcon.svg";
+import Select from "react-select"; 
 
 const Form = ({ title, fields, buttonText, onSubmit, footerContent }) => {
   const {
@@ -147,6 +148,30 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent }) => {
               <img src={showNewPassword ? ViewIcon : HideIcon} />
             </span>
           )}
+          {field.fieldType === 'textField' && (
+            <p className="textField-large text-gray-600 dark:text-gray-300">
+              {field.defaultValue}
+            </p>
+          )}
+          {field.fieldType === "multiSelect" && (
+            <div className="mi-multi-select-container">
+              <Select
+                isMulti
+                name={field.name}
+                options={field.options}
+                className="mi-multi-select-container"
+                classNamePrefix="select"       
+                placeholder="Seleccionar Productos"
+                isSearchable={true}
+                onMouseDown={(e) => e.target.placeholder = ""}
+                onBlur={(e) => e.target.placeholder = "Seleccionar Productos"}
+                onChange={(selectedOptions) => {
+                  field.onChange && field.onChange(selectedOptions);
+                }}
+              />
+            </div>  
+          )}
+
           <div
             className={`error-message ${
               errors[field.name] || field.errorMessageData ? "visible" : ""
