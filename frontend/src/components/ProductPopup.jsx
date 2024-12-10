@@ -22,7 +22,8 @@ function productPopup({ show, setShow, data, action }) {
               <img src={CloseIcon} />
             </button>
             <Form
-              title="Editar producto"
+              className="form"
+              title="Producto"
               fields={[
                 {
                   label: "Nombre",
@@ -75,7 +76,7 @@ function productPopup({ show, setShow, data, action }) {
                 },
               ]}
               onSubmit={handleSubmit}
-              buttonText="Editar producto"
+              buttonText="Crear producto"
               backgroundColor={"#fff"}
             />
           </div>
