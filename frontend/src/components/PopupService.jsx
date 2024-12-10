@@ -151,7 +151,7 @@ export default function PopupService({ show, setShow, onSave, servicio }) {
               />
               {imagenPreview && (
                 <div className="preview-container">
-                  <h3 className="dark:text-[#fff]">Vista previa:</h3>
+                  <h3 className="title dark:text-[#fff]">Vista previa:</h3>
                   <img
                     src={imagenPreview}
                     alt="Vista previa"
