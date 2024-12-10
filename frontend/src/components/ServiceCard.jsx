@@ -3,28 +3,36 @@ import updateIcon from "@assets/updateIcon.svg";
 import deleteIcon from "@assets/deleteIcon.svg";
 
 const ServiceCard = ({ servicio, onEdit, onDelete }) => {
+  const imageUrl = `http://localhost:3000/uploads/${servicio.imagen}`;
   return (
     <div className="flex flex-col items-center bg-[#F3E8EE] border border-[#729B79] rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow max-w-sm dark:bg-[#2e2c2f]">
+      {/* Mostrar la imagen si existe */}
       {servicio.imagen && (
         <img
-          src={servicio.imagen}
+          src={imageUrl}
           alt={servicio.nombre}
           className="w-24 h-24 object-cover rounded-md mb-4"
         />
       )}
+
+      {/* Mostrar el nombre del servicio */}
       <h2 className="text-lg font-bold text-[#475B63] mb-2 text-center dark:text-[#F3E8EE]">
         {servicio.nombre}
       </h2>
+
+      {/* Mostrar la descripción del servicio */}
       <p
         className="text-sm text-[#475B63] text-center mb-4 overflow-hidden whitespace-nowrap text-ellipsis w-full max-w-full dark:text-[#F3E8EE]"
         title={servicio.descripcion}
       >
         {servicio.descripcion}
       </p>
+
+      {/* Botones de editar y eliminar */}
       <div className="flex space-x-4">
         <button
           onClick={() => onEdit(servicio)}
-          className="group p-3 white rounded-md hover:bg-[#bacdb0] transition "
+          className="group p-3 white rounded-md hover:bg-[#bacdb0] transition"
         >
           <img
             src={updateIcon}
