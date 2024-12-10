@@ -1,6 +1,6 @@
 import useProveedores from "@hooks/proveedores/useGetProveedores.jsx";
-import Search from "../components/Search.jsx";
 import PopupProveedores from "../components/PopupProveedores.jsx";
+import PopupProductsDetail from '../components/PopupProductsDetail.jsx';
 import CreateProveedor from "../components/CreateProveedor.jsx";
 import AssignProveedorProduct from "../components/AssignProveedorProduct.jsx";
 import DeleteIcon from "../assets/deleteIcon.svg";
@@ -18,8 +18,11 @@ const Proveedores = () => {
   const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
   const [isAssignPopupOpen, setIsAssignPopupOpen] = useState(false); 
   const [selectedProveedor, setSelectedProveedor] = useState(null); 
-  const [proveedorAssign, setProveedorAssign] = useState(null); // Define el estado para proveedorAssign
- 
+  const [proveedorAssign, setProveedorAssign] = useState(null); 
+  const [isPopupProductsDetailOpen, setIsPopupProductsDetailOpen] = useState(false);
+  const [productosProveedor, setProductosProveedor] = useState([]);
+  const [nombreProveedor, setNombreProveedor] = useState("");
+
 
   const {
     handleClickUpdate,
@@ -82,6 +85,16 @@ const Proveedores = () => {
     }
   };
 
+  const handleDetailClick = (productos, nombreProveedor) => {
+    if (productos) {
+      setProductosProveedor(productos);
+      setNombreProveedor(nombreProveedor);
+      setIsPopupProductsDetailOpen(true);
+    } else {
+      alert("El proveedor seleccionado no existe.");
+    }
+  };
+
   const handleCreateClick = () => {
     setIsCreatePopupOpen(true);
   };
@@ -124,7 +137,7 @@ const Proveedores = () => {
                   />
         
                   <button
-                    className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f] mt-4"
+                    className={`create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f] mt-4 ${!selectedProveedor ? 'disabled-button hover-off' : ''}`}
                     onClick={handleAssignClick}
                     disabled={!selectedProveedor}
                   >
@@ -137,7 +150,7 @@ const Proveedores = () => {
                   Añadir Proveedor
                   </button>
                   <button
-                    className="group p-3 white rounded-md hover:bg-[#bacdb0] transition mt-4"
+                    className={`group p-3 white rounded-md hover:bg-[#bacdb0] transition mt-4 ${!selectedProveedor ? 'hover-off' : ''}`}
                     onClick={handleEditClick}
                     disabled={!selectedProveedor}
                   >
@@ -147,7 +160,7 @@ const Proveedores = () => {
                   />
                   </button>
                   <button
-                    className="group p-3 white rounded-md hover:bg-red-600 transition mt-4"
+                    className={`group p-3 white rounded-md hover:bg-[#bacdb0] transition mt-4 ${!selectedProveedor ? 'hover-off' : ''}`}
                     disabled={!selectedProveedor}
                     onClick={handleDelete}
                   >
@@ -219,7 +232,14 @@ const Proveedores = () => {
                         {proveedor.nombreProveedor}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
-                        {proveedor.productos?.map((producto) => producto.name).join(', ')}
+                        {proveedor.productos.length > 0 && (
+                          <button
+                            className="text-blue-500 hover:underline"
+                            onClick={() => handleDetailClick(proveedor.productos, proveedor.nombreProveedor)}
+                          >
+                            Ver detalle
+                          </button>
+                          )}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                         <a
@@ -314,6 +334,12 @@ const Proveedores = () => {
         data={proveedorAssign} // Pasar el proveedor seleccionado
         action={fetchProveedores}
       />
+      <PopupProductsDetail
+          show={isPopupProductsDetailOpen}
+          setShow={setIsPopupProductsDetailOpen}
+          productos={productosProveedor}
+          nombreProveedor={nombreProveedor}
+        />
     </div>
     </div>
   );

@@ -10,7 +10,6 @@ export async function createProveedorService(dataProveedor) {
 
         const newProveedor = proveedorRepository.create({
             nombreProveedor: dataProveedor.nombreProveedor,
-            productos_suministrados: dataProveedor.productos_suministrados,
             email: dataProveedor.email,
             telefono: dataProveedor.telefono,
             PaginaWeb: dataProveedor.PaginaWeb,
@@ -82,16 +81,15 @@ export async function updateProveedorService(query, body) {
             return [null, "Ya existe un proveedor con el mismo nombre o email"];
         }
 
-        const dataUserUpdated = {
+        const dataProveedorUpdated = {
             nombreProveedor: body.nombreProveedor,
-            productos_suministrados: body.productos_suministrados, 
             PaginaWeb: body.PaginaWeb,
             telefono: body.telefono,
             email: body.email,
             direccion: body.direccion,
         };
 
-        await userRepository.update(proveedorFound.idProveedor, dataUserUpdated);
+        await userRepository.update(proveedorFound.idProveedor, dataProveedorUpdated);
         
         const proveedorData = await userRepository.findOne({
             where: {idProveedor: proveedorFound.idProveedor},

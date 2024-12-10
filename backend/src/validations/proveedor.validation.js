@@ -41,24 +41,16 @@ export const proveedorQueryValidation = Joi.object({
 
 export const proveedorBodyValidation = Joi.object({
     nombreProveedor: Joi.string()
-        .min(5)
-        .max(50)
+        .min(1)
+        .max(100)
         .pattern(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/)
         .messages({
             "string.empty": "El nombre no puede estar vacío.",
             "string.base": "El nombre debe ser de tipo string.",
-            "string.min": "El nombre debe tener como mínimo 5 caracteres.",
-            "string.max": "El nombre debe tener como máximo 50 caracteres.",
+            "string.min": "El nombre debe tener como mínimo 1 caracter.",
+            "string.max": "El nombre debe tener como máximo 100 caracteres.",
             "string.pattern.base": "El nombre debe contener solo letras y numeros.",
         }),
-    productos_suministrados: Joi.string()
-    .min(1)
-    .messages({
-        "string.empty": "Los productos suministrados no pueden estar vacíos.",
-        "string.base": "Los productos suministrados deben ser de tipo string.",
-        "string.min":
-            "Los productos suministrados deben tener como minimo 10 caracteres.",
-    }),
     email: Joi.string()
         .min(10)
         .max(35)
@@ -74,14 +66,14 @@ export const proveedorBodyValidation = Joi.object({
         })
         .custom(domainEmailValidator, "Validación dominio email"),
     telefono: Joi.string()
-        .min(8)
-        .max(15)
+        .min(6)
+        .max(8)
         .pattern(/^\d+$/)
         .messages({
             "string.empty": "El teléfono no puede estar vacío.",
             "string.base": "El teléfono debe ser de tipo string.",
-            "string.min": "El teléfono debe tener como mínimo 8 caracteres.",
-            "string.max": "El teléfono debe tener como máximo 15 caracteres.",
+            "string.min": "El teléfono debe tener como mínimo 6 caracteres.",
+            "string.max": "El teléfono debe tener como máximo 8 caracteres.",
         }),
     PaginaWeb: Joi.string()
         .max(50)

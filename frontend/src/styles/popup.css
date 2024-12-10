@@ -8,6 +8,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000; /* Asegúrate de que este valor sea mayor que el z-index del navbar */
+
 }
 .popup {
   top: 30px;
@@ -33,6 +35,11 @@
   font-weight: 700;
 }
 
+.popup-container {
+  margin: 20px auto;
+  padding: 20px; 
+}
+
 .container_inputs textarea {
   width: 100%;
   max-width: 100%;
@@ -44,7 +51,7 @@
 
 .prov-popup {
   display: flex;
-  padding: 0px;
+  padding: 10px;
   width: 600px;
   margin-left: 10px;
   margin-right: 10px;
@@ -122,6 +129,7 @@
   .h1 {
     margin-bottom: 30px;
   }
+  
   .container_inputs {
     margin-top: 0px;
     margin-bottom: auto;

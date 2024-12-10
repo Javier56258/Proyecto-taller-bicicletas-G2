@@ -25,11 +25,13 @@ const useEditProveedor = (setProveedores, fetchProveedores) => {
 
   // Función para manejar la actualización de los datos del proveedor
   const handleUpdate = async (updatedData) => {
-    if (dataProveedor && dataProveedor.idProveedor) {
+    if (dataProveedor) {
       try {
         // Llamar al servicio para actualizar el proveedor
+        console.log("Proveedor seleccionado para actualizar:", dataProveedor);
+        const formattedProveedorData = formatPostUpdateProveedor(updatedData);
         const response = await updateProveedor(
-          updatedData,
+          formattedProveedorData,
           dataProveedor.idProveedor
         );
 
