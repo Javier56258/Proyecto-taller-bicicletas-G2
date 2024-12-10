@@ -21,6 +21,8 @@
   }
   
   .horario-card {
+    width: 100px;
+    height: 100px;
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -120,4 +122,19 @@
   .centered-h1 {
     color: #003366;
     font-size: 1.6rem;
+  }
+
+  .schedule {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5px; /* Espacio entre las tarjetas */
+    padding: 5px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Crear columnas automáticas */
+    gap: 2px; /* Espacio entre las tarjetas */
+    padding: 5px;
   }

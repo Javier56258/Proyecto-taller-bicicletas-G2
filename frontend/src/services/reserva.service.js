@@ -2,6 +2,21 @@ import axios from './root.service.js';
 import { formatReservaData } from '@helpers/formatData.js';
 console.log("Pasando por reserva.service.js");  
 
+export async function createReserva(reservaData) {
+    console.log("Pasando por createHorario reserva.service.js");
+    console.log(reservaData);
+    try {
+      const response = await axios.post("/reservas", reservaData);
+      console.log("Response ", response);
+      //const formattedData = response.data.map(formatHorarioData);
+      //console.log("formattedData ", formattedData);
+      return response;
+    } catch (error) {
+      console.error("Error al crear la reserva:", error);
+      return error.response.data;
+    }
+  }
+
 export async function getReservas() {
     try {
         const { data } = await axios.get('/reservas/all');
