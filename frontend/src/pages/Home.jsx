@@ -2,19 +2,17 @@
 import "@styles/home.css";
 import Navbar from "../components/Navbar";
 import ReservaHora from "../components/ReservaHora";
-//import "../styles/home.css";
 import HorarioCardPublic from "../components/HorarioCardPublic.jsx";
-import useHorarios from "@hooks/horarios/useGetHorario.jsx"
-import {  useState } from "react";
+import useHorarios from "@hooks/horarios/useGetHorario.jsx";
+import { useState } from "react";
 
 const Home = () => {
     const { horarios } = useHorarios(); 
-    const [ filter ] = useState("");
+    const [filter] = useState("");
 
     const filteredHorarios = horarios.filter(horario => 
       horario.dia.toLowerCase().includes(filter.toLowerCase())
-  );
-
+    );
 
     const groupedHorarios = filteredHorarios.reduce((acc, horario) => {
         if (!acc[horario.dia]) {
@@ -38,11 +36,11 @@ const Home = () => {
             <h1>Bienvenido a la Página de Inicio</h1>
             <div id="home-content">
                 <h2>Reservas</h2>
-                <li className="vector">
-                    <a href="#Reservas" className="vector">
-                        <div className="vector">
-                            <span className="vector">1.1</span>
-                            <span className="vector">Reservas</span>
+                <li className="home-vector">
+                    <a href="#Reservas" className="home-vector">
+                        <div className="home-vector">
+                            <span className="home-vector">1.1</span>
+                            <span className="home-vector">Reservas</span>
                         </div>
                     </a>
                 </li>
@@ -50,12 +48,12 @@ const Home = () => {
                   Horarios
                 </h1>
 
-                <div className="schedule">
+                <div className="home-schedule">
                   {diasOrdenados.map((dia) => (
                   groupedHorarios[dia] && (
-                    <div key={dia} className="day-group">
-                    <h2 className="day-title">{dia}</h2>
-                      <div className="services-grid">
+                    <div key={dia} className="home-day-group">
+                    <h2 className="home-day-title">{dia}</h2>
+                      <div className="home-services-grid">
                         {groupedHorarios[dia].map((horario) => (
                             <HorarioCardPublic
                               key={horario.id}
@@ -69,15 +67,15 @@ const Home = () => {
 
                 </div>
 
-                <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
+                <h1 className="text-5xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
                   Servicios
                 </h1>
                 {/* Renderizar el componente ReservaTuHora */}
                 <ReservaHora />
-
             </div>
         </div>
     );
 };
 
 export default Home;
+

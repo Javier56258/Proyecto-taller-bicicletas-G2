@@ -1,4 +1,3 @@
-//import React from "react";
 import { createReserva } from "@services/reserva.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert";
 
@@ -32,85 +31,81 @@ function ReservaHora({ data }) {
     };
 
     return (
-        <div className="reserva-body">
-            <div className="reserva-card">
-                <h1 className="reserva-title">Reserva tu hora</h1>
+        <div className="home-reserva-body">
+            <div className="home-reserva-card">
+                <h1 className="home-reserva-title">Reserva tu hora</h1>
                 <form onSubmit={handleSubmit}>
-                    {/* Contenedor de las dos columnas */}
-                    <div className="form-columns">
+                    <div className="home-form-columns">
                         {/* Primera columna */}
-                        <div className="form-column">
-                            <div className="form-group">
-                                <label htmlFor="nombre" className="label">Nombre</label>
+                        <div className="home-form-column">
+                            <div className="home-form-group">
+                                <label htmlFor="nombre" className="home-label">Nombre</label>
                                 <input
                                     type="text"
                                     id="nombre"
                                     name="nombre"
                                     placeholder="Ingresa tu nombre"
                                     required
-                                    className="input"
+                                    className="home-input"
                                     defaultValue={reservaData.nombre || ""}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="email" className="label">Email</label>
+                            <div className="home-form-group">
+                                <label htmlFor="email" className="home-label">Email</label>
                                 <input
                                     type="text"
                                     id="email"
                                     name="email"
                                     placeholder="Ingresa tu email"
                                     required
-                                    className="input"
+                                    className="home-input"
                                     defaultValue={reservaData.email || ""}
                                 />
                             </div>
                         </div>
                         {/* Segunda columna */}
-                        <div className="form-column">
-                            <div className="form-group">
-                                <label htmlFor="motivo" className="label">Motivo</label>
+                        <div className="home-form-column">
+                            <div className="home-form-group">
+                                <label htmlFor="motivo" className="home-label">Motivo</label>
                                 <input
                                     type="text"
                                     id="motivo"
                                     name="motivo"
                                     placeholder="Motivo de la reserva"
                                     required
-                                    className="input"
+                                    className="home-input"
                                     defaultValue={reservaData.motivo || ""}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="fecha" className="label">Fecha</label>
+                            <div className="home-form-group">
+                                <label htmlFor="fecha" className="home-label">Fecha</label>
                                 <input
                                     type="date"
                                     id="fecha"
                                     name="fecha"
                                     required
-                                    className="input"
+                                    className="home-input"
                                     defaultValue={reservaData.fecha || ""}
                                 />
                             </div>
                         </div>
                         {/* Tercera columna */}
-                        <div className="form-column">
-                            <div className="form-group">
-                                <label htmlFor="hora" className="label">Hora</label>
+                        <div className="home-form-column">
+                            <div className="home-form-group">
+                                <label htmlFor="hora" className="home-label">Hora</label>
                                 <input
                                     type="time"
                                     id="hora"
                                     name="hora"
-                                    placeholder="Ingresa la hora"
                                     required
-                                    className="input"
+                                    className="home-input"
                                     defaultValue={reservaData.hora || ""}
                                 />
                             </div>
-                            
                         </div>
-                        
                     </div>
                     {/* Botón para enviar */}
-                    <button type="submit" className="button">Reservar</button>
+                    <button type="submit" className="home-button">Reservar</button>
                 </form>
             </div>
         </div>
@@ -118,3 +113,4 @@ function ReservaHora({ data }) {
 }
 
 export default ReservaHora;
+
