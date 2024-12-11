@@ -41,3 +41,4 @@ export async function createProduct(data) {
         return error.response.data;
     }
 }
+

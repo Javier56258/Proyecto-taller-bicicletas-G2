@@ -10,7 +10,7 @@ const useProveedores = () => {
             const formattedData = response.map(proveedor => ({
                 "idProveedor": proveedor.idProveedor,
                 "nombreProveedor": proveedor.nombreProveedor,
-                "productos_suministrados": proveedor.productos_suministrados,
+                "productos": proveedor.productos,
                 "PaginaWeb": proveedor.PaginaWeb,
                 "telefono": proveedor.telefono,
                 "email": proveedor.email,
