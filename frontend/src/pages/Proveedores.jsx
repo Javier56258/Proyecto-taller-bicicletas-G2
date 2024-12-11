@@ -122,20 +122,20 @@ const Proveedores = () => {
   return (
     <div className="slide-down">
     <div className="main-content bg-none">
+      <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
+        Proveedores
+      </h1>
       <div>
         <div className="top-table">
-          <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
-            Proveedores
-          </h1>
+          
             <div className="button-container">
+              <input
+                value={filterNombre}
+                onChange={handleNombreFilterChange}
+                placeholder={"Filtrar por nombre"}
+                className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
+              />
               <div className="right-buttons">
-                  <input
-                    value={filterNombre}
-                    onChange={handleNombreFilterChange}
-                    placeholder={"Filtrar por nombre"}
-                    className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
-                  />
-        
                   <button
                     className={`create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f] mt-4 ${!selectedProveedor ? 'disabled-button hover-off' : ''}`}
                     onClick={handleAssignClick}
@@ -290,10 +290,17 @@ const Proveedores = () => {
                       {proveedor.nombreProveedor}
                     </h2>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Productos suministrados: {proveedor.productos?.map((producto) => producto.name).join(', ')}
-
-                  </p>
+                  {proveedor.productos.length > 0 && (
+                    <button
+                      className="text-blue-500 hover:underline mt-2"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Evita que el click en el botón seleccione la tarjeta
+                        handleDetailClick(proveedor.productos, proveedor.nombreProveedor);
+                      }}
+                    >
+                      Ver detalle de productos
+                    </button>
+                  )}
                   <p className="text-sm text-gray-600 dark:text-gray-300">
                     Teléfono: {proveedor.telefono}
                   </p>

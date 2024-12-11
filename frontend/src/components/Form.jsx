@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import "@styles/form.css";
+import "@styles/multi_select.css";
 import HideIcon from "../assets/HideIcon.svg";
 import ViewIcon from "../assets/ViewIcon.svg";
 import Select from "react-select"; 
@@ -161,7 +162,7 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent }) => {
                 options={field.options}
                 className="mi-multi-select-container"
                 classNamePrefix="select"       
-                placeholder="Seleccionar Productos"
+                placeholder=""
                 isSearchable={true}
                 onMouseDown={(e) => e.target.placeholder = ""}
                 onBlur={(e) => e.target.placeholder = "Seleccionar Productos"}

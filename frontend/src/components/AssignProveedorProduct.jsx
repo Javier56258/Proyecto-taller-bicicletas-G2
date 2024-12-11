@@ -68,7 +68,7 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
 
     const productOptions = productos.map(producto => ({
       value: producto.id,
-      label: producto.name,
+      label: producto.proveedor ? `${producto.name} - ${producto.proveedor.name}` : producto.name,    
     }));
 
 
@@ -80,12 +80,11 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
             <button className="close" onClick={() => setShow(false)}>
               <img src={CloseIcon} alt="Cerrar" />
             </button>
-            <h1 className="h1-form dark:text-[#fff]">Asignar Productos</h1>
             <div className="form-container">
               <div className="form-group">
               </div>
               <Form
-                title=""
+                title="Asignar Productos"
                 fields={[
                   {
                     label: "Proveedor Seleccionado: ",

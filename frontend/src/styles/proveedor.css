@@ -74,6 +74,11 @@
   scrollbar-width: thin;
 }
 
+.page-title {
+  text-align: center;
+  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+
 .main-container {
   display: inherit;
   height: 100vh;
