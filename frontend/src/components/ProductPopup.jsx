@@ -8,6 +8,8 @@ function productPopup({ show, setShow, data, action }) {
   const handleSubmit = (formData) => {
     try {
       action(formData);
+      setShow(false);
+
     } catch (error) {
       console.error("Error al editar producto:", error);
     }
@@ -60,6 +62,8 @@ function productPopup({ show, setShow, data, action }) {
                   type: "number",
                   required: true,
                   min: 0,
+                  pattern: /^[0-9]+$/,
+                  patternMessage: "Precio invalido",
                 },
                 {
                   label: "Stock",
@@ -74,6 +78,10 @@ function productPopup({ show, setShow, data, action }) {
                   max: 1000,
                   patternMessage: "stock invalido",
                 },
+                {
+                  label: "Proveedor",
+                  name: "provider",
+                }
               ]}
               onSubmit={handleSubmit}
               buttonText="Crear producto"
