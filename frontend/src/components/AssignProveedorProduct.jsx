@@ -6,12 +6,31 @@ import { assignProveedorProduct } from "@services/proveedor.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; 
 import { getProducts } from '@services/product.service.js';
 
+
 function AssignProveedorProduct({ show, setShow, data, action }) {
 
     const proveedorData = data || {};
+    console.log("Proveedor seleccionado para asignar: ", proveedorData);
 
-    const [productos, setProductos] = useState([]);
-    const [setSelectedProduct] = useState(null);
+    const [productos, setProductos] = useState([]);    
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+    const handleChange = (selectedOptions) => {
+      setSelectedOptions(selectedOptions);
+    };
+    
+    useEffect(() => {
+      if (show) {
+        document.body.classList.add('no-scroll');
+      } else {
+        document.body.classList.remove('no-scroll');
+      }
+      return () => {
+        document.body.classList.remove('no-scroll');
+      };
+    }, [show]);
+    
+      
   
     useEffect(() => {
       const fetchProductos = async () => {
@@ -25,10 +44,20 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
   
       fetchProductos();
     }, []);  
+    console.log("Productos disponibles para asignar: ", productos);
     
     const handleAssignProduct = async (formData) => {
         try {
-          await assignProveedorProduct(proveedorData.idProveedor, formData.idProducto);
+
+          const idProveedor = proveedorData.idProveedor;
+          const productIds = selectedOptions.map(option => option.value);
+
+          const data = {
+            idProveedor,
+            productIds, 
+          };
+
+          await assignProveedorProduct(data);
           action();
           setShow(false);
           showSuccessAlert("Producto asignado", "El producto ha sido asignado correctamente.");
@@ -37,37 +66,41 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
         }
       };
 
+    const productOptions = productos.map(producto => ({
+      value: producto.id,
+      label: producto.proveedor ? `${producto.name} - ${producto.proveedor.name}` : producto.name,    
+    }));
+
+
       return (
         <div>
         {show && (
         <div className="bg">
-          <div className="prov-popup dark:bg-[#2e2c2f]">
+          <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
             <button className="close" onClick={() => setShow(false)}>
               <img src={CloseIcon} alt="Cerrar" />
             </button>
-            <h1 className="h1-form dark:text-[#fff]">Asignar Producto</h1>
             <div className="form-container">
+              <div className="form-group">
+              </div>
               <Form
-                title=""
+                title="Asignar Productos"
                 fields={[
                   {
-                    label: "Proveedor Seleccionado",
+                    label: "Proveedor Seleccionado: ",
                     name: "nombreProveedor",
-                    fieldType: "input",
-                    defaultValue: proveedorData.nombreProveedor,
+                    fieldType: "textField",
+                    defaultValue: proveedorData.nombreProveedor || "Nombre del proveedor no disponible",
                     required: true,
                     disabled: true,
-                  },
+                  },                
                   {
-                    label: "Producto",
+                    label: "Productos",
                     name: "name",
-                    fieldType: "select",
-                    options: productos.map((product) => ({
-                      value: product.id,
-                      text: product.name,
-                    })),
+                    fieldType: "multiSelect",
+                    options: productOptions,
                     required: true,
-                    onChange: (e) => setSelectedProduct(e.target.value),
+                    onChange: handleChange,
                   },
                 ]}
                 buttonText="Asignar"

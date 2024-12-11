@@ -59,28 +59,40 @@ const ServiciosList = () => {
     }
     fetchServicios();
   }, []);
-
-  const handleSave = async (servicioData) => {
+  const handleSave = async (formData) => {
     try {
+      let newServicio;
+
       if (editingServicio) {
-        await updateServicio(editingServicio.idServicio, servicioData);
+        // Actualización del servicio con imagen
+        await updateServicio(editingServicio.idServicio, formData);
         showSuccessAlert(
           "¡Actualizado!",
           "El servicio ha sido actualizado correctamente."
         );
         const updatedServicios = servicios.map((servicio) =>
           servicio.idServicio === editingServicio.idServicio
-            ? servicioData
+            ? { ...servicio, ...formData }
             : servicio
         );
         setServicios(updatedServicios);
+
+        const data = await getServicios();
+        data.sort((a, b) => b.idServicio - a.idServicio);
+        setServicios(data);
       } else {
+        // Creación de un nuevo servicio con imagen
         showSuccessAlert(
           "¡Creado!",
           "El servicio ha sido creado correctamente."
         );
-        const newServicio = await createServicio(servicioData);
+        newServicio = await createServicio(formData);
+        console.log("Nuevo servicio creado Services:", newServicio); // Verifica los datos del nuevo servicio
         setServicios([newServicio, ...servicios]);
+
+        const data = await getServicios();
+        data.sort((a, b) => b.idServicio - a.idServicio);
+        setServicios(data);
       }
       setEditingServicio(null);
     } catch (error) {
@@ -119,7 +131,7 @@ const ServiciosList = () => {
   };
 
   const filteredServicios = servicios.filter((servicio) =>
-    servicio.nombre.toLowerCase().includes(filter.toLowerCase())
+    servicio?.nombre?.toLowerCase().includes(filter.toLowerCase())
   );
 
   const displayedServicios = isReversed
@@ -166,15 +178,19 @@ const ServiciosList = () => {
         servicio={editingServicio}
       />
 
-      <div className="services-grid">
-        {displayedServicios.map((servicio) => (
-          <ServiceCard
-            key={servicio.idServicio}
-            servicio={servicio}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
-        ))}
+      <div className="services-grid dark:text-white">
+        {displayedServicios.length > 0 ? (
+          displayedServicios.map((servicio) => (
+            <ServiceCard
+              key={servicio.idServicio}
+              servicio={servicio}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p>No hay servicios disponibles.</p>
+        )}
       </div>
     </div>
   );

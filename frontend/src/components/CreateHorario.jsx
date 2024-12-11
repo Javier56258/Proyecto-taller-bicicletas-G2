@@ -1,27 +1,44 @@
 import Form from './Form';
-import "@styles/popup.css";
+import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
+import { createHorario } from '@services/horarios.service.js';
+import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert.js';
 
-export default function horarioPopup({show,setShow,data,action}) {
+
+function CreateHorario({ show, setShow, data, action }) {
+    console.log("Pasando por CreateHorario de CreateHorario.jsx");
     const horarioData = data && data.length > 0 ? data[0] : {};
-
-    const handleSubmit = (formData) => {
-        if (formData.hora instanceof Date || formData.hora.includes(":")) {
-            formData.hora = formData.hora.toString(); 
-        }
-        action(formData);
+   // const [isReversed, setIsReversed] = useState(false);
+    const handleSubmit = async (formData) => {
+        try {
+            if (formData.hora instanceof Date || formData.hora.includes(":")) {
+                formData.hora = formData.hora.toString(); 
+            }
+            const validatorError = await createHorario(formData);
+            if (validatorError.status === 'Horario error'){
+                setShow(false);
+                return showErrorAlert("Error", validatorError.details);
+            }
+            showSuccessAlert("¡Creado!", "El horario ha sido creado correctamente.");
+            setShow(false);
+            action(formData);
+        } catch (error) {
+            showErrorAlert("Error", "Ocurrió un error al crear el horario.");
+            console.error('Error al crear horario:', error);
+        };
     };
 
-    return(
+    return (
         <div>
-            { show && (
-                <div className="bg"> 
+            {show && (
+                <div className="bg">
                     <div className="popup">
                         <button className='close' onClick={() => setShow(false)}>
                             <img src={CloseIcon} />
                         </button>
+
                         <Form
-                            title="Editar horario"
+                            title="Ingresar Horario"
                             fields={[
                                 {
                                     label: "Dia",
@@ -40,7 +57,6 @@ export default function horarioPopup({show,setShow,data,action}) {
                                     type: "text",
                                     required: true,
                                     defaultValue: horarioData.dia || "",
-                                    
                                 },
                                 {
                                     label: "Hora de reserva",
@@ -53,11 +69,14 @@ export default function horarioPopup({show,setShow,data,action}) {
                                 },
                             ]}
                             onSubmit={handleSubmit}
-                            buttonText={"Editar Horario"}
-                            backgroundColor={'#fff'}
+                            buttonText={"Ingresar Horario"}
+                            backgroundColor={"#fff"}
                         />
                     </div>
-                </div>)}
+                </div>
+            )}
         </div>
     );
 }
+
+export default CreateHorario;

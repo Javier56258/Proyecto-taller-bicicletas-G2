@@ -3,12 +3,18 @@ import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
 import { createProveedor  } from "@services/proveedor.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; 
+import {formatProveedorData} from "@helpers/formatData.js";
 
 function CreateProveedor({ show, setShow, data, action }) {
+  
+
   const handleSubmit = async (formData) => {
     try {
-      await createProveedor(formData);
-      action(formData);
+      const formattedData = formatProveedorData(formData);
+      
+      await createProveedor(formattedData);
+      action(formattedData);
+      setShow(false);
       setShow(false);
       showSuccessAlert("Proveedor creado", "El proveedor ha sido creado correctamente.");
     } catch (error) {
@@ -22,7 +28,7 @@ function CreateProveedor({ show, setShow, data, action }) {
     <div>
       {show && (
         <div className="bg">
-          <div className="prov-popup dark:bg-[#2e2c2f]">
+          <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
             <button className="close" onClick={() => setShow(false)}>
               <img src={CloseIcon} />
             </button>

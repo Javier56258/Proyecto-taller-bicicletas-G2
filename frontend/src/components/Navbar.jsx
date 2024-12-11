@@ -85,10 +85,13 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
+  /*
   const removeActiveClass = () => {
     const activeLinks = document.querySelectorAll(".nav-menu ul li a.active");
     activeLinks.forEach((link) => link.classList.remove("active"));
   };
+  */
+  
 
   const addActiveClass = () => {
     const links = document.querySelectorAll(".nav-menu ul li a");
@@ -191,6 +194,22 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
+
+            {(userRole === "administrador") && (
+              <li>
+                <NavLink
+                  to="/horarios"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    addActiveClass();
+                  }}
+                >
+                  Horarios
+                </NavLink>
+              </li>
+            )}
+
             <li>
               {isAuthenticated ? (
                 <NavLink
