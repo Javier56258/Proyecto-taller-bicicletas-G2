@@ -43,8 +43,8 @@ export function formatReservaData(reserva) {
 export function formatHorarioData(horario) {
     return {
         ...horario,
-        dia: startCase(horario.dia),
-        hora: formatTempo(horario.hora, "HH:mm"),
+        dia: horario.dia,
+        hora: horario.hora,
         createdAt: formatTempo(horario.createdAt, "DD-MM-YYYY")
     };
 }
@@ -144,5 +144,13 @@ export function formatPostUpdateReserva(reserva) {
         fecha: reserva.fecha,
         hora: reserva.hora,
         createdAt: formatTempo(reserva.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatPostUpdateHorario(horario) {
+    return {
+        dia: horario.dia,
+        hora: horario.hora,
+        createdAt: formatTempo(horario.createdAt, "DD-MM-YYYY")
     };
 }

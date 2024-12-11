@@ -53,8 +53,15 @@ const ReservaSchema = new EntitySchema({
             target: "Horario",
             joinColumn: true,
             nullable: false,
-        }
-    }
+        },
+        servicio: {
+            type: "many-to-one",
+            target: "Servicio",
+            joinColumn: true,
+            nullable: false,
+        },
+    },
+
 });
 
 export default ReservaSchema;
