@@ -1,51 +1,49 @@
-.create-proveedor-button,
-.order-button {
-  background-color: white;
-  color: #003366;
-  padding: 10px 20px;
-  border: 3px solid #003366;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
+.filter-reserva-button {
+    margin-right: 70px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filter-reserva-button:hover,
+  .order-button:hover {
+    background-color: #ff0000;
+    color: white;
+  }
+  
+  .filter-reserva-button:hover img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+      contrast(1000%);
+    }
 
-.create-proveedor-button:hover,
-.order-button:hover {
-  background-color: #2e2c2f;
-  color: white;
-}
-
-.delete-proveedor-button {
+.delete-reserva-button {
   margin-right: 70px;
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 
-.delete-proveedor-button:hover,
+.delete-reserva-button:hover,
 .order-button:hover {
   background-color: #ff0000;
   color: white;
 }
 
-.delete-proveedor-button:hover img {
+.delete-reserva-button:hover img {
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
     contrast(1000%);
 }
 
-.edit-proveedor-button {
+.edit-reserva-button {
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 
-.edit-proveedor-button:hover,
+.edit-reserva-button:hover,
 .order-button:hover {
   background-color: #003366;
   color: white;
 }
 
-.edit-proveedor-button:hover img {
+.edit-reserva-button:hover img {
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
     contrast(1000%);
 }
@@ -59,11 +57,11 @@
   margin-top: 30px;
 }
 
-.prov-tabla-cont {
+.res-tabla-cont {
   overflow: auto;
 }
 
-.proovedores-form-container {
+.reservas-form-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -72,11 +70,6 @@
   overflow-y: auto;
   height: 510px;
   scrollbar-width: thin;
-}
-
-.page-title {
-  text-align: center;
-  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
 }
 
 .main-container {
@@ -143,7 +136,7 @@
     gap: 10px;
   }
 
-  .delete-proveedor-button {
+  .delete-reserva-button {
     margin-right: 0;
   }
 
@@ -186,7 +179,7 @@
   .title-table {
     margin-left: 35px;
   }
-  .delete-user-button {
+  .delete-reserva-button {
     margin-right: 35px;
   }
 }
@@ -203,36 +196,4 @@
 
 .slide-down {
   animation: slideDown 0.5s ease-out;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-}
-
-.slide-up {
-  animation: slideUp 0.5s ease-out;
-}
-
-.mt-4 {
-  margin-top: 1rem; /* Puedes ajustar el valor según sea necesario */
-}
-
-.mt-5 {
-  margin-top: 2rem; /* Puedes ajustar el valor según sea necesario */
-}
-
-.disabled-button {
-  opacity: 0.8;
-  cursor: not-allowed;
-}
-
-.hover-off {
-  pointer-events: none;
 }

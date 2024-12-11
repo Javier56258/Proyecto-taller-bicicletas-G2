@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
 const ProveedorSchema = new EntitySchema({
     name: "proveedor",
@@ -14,10 +14,6 @@ const ProveedorSchema = new EntitySchema({
             type: "varchar",
             length: 255,
             nullable: false,
-        },
-        productos_suministrados: {
-            type: "varchar",
-            length: 255,
         },
         PaginaWeb: {
             type: "varchar",
@@ -47,6 +43,14 @@ const ProveedorSchema = new EntitySchema({
             nullable: false,
         }
     },
+    relations: {
+        productos: {
+            type: "one-to-many",
+            target: "products",
+            inverseSide: "proveedores",
+        },
+    },
+    
     /*indices: [
         {
             name: "IDX_PROVEEDOR",

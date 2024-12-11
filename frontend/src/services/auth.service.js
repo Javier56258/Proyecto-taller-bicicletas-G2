@@ -41,7 +41,7 @@ export async function register(data) {
 
 export async function logout() {
     try {
-        await axios.post('/auth/logout');
+        await axios.post('auth/logout');
         sessionStorage.removeItem('usuario');
         cookies.remove('jwt');
         cookies.remove('jwt-auth');

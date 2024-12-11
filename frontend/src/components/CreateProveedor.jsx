@@ -1,25 +1,34 @@
-import React from "react";
 import Form from "./Form";
 import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
-import { createProveedor } from "@services/proveedor.service.js";
+import { createProveedor  } from "@services/proveedor.service.js";
+import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; 
+import {formatProveedorData} from "@helpers/formatData.js";
 
 function CreateProveedor({ show, setShow, data, action }) {
+  
+
   const handleSubmit = async (formData) => {
     try {
-      await createProveedor(formData);
-      action(formData);
+      const formattedData = formatProveedorData(formData);
+      
+      await createProveedor(formattedData);
+      action(formattedData);
       setShow(false);
+      setShow(false);
+      showSuccessAlert("Proveedor creado", "El proveedor ha sido creado correctamente.");
     } catch (error) {
-      console.error("Error al crear proveedor:", error);
+      showErrorAlert("Error", "No se pudo crear el proveedor.");
     }
   };
+  
+
 
   return (
     <div>
       {show && (
         <div className="bg">
-          <div className="prov-popup dark:bg-[#2e2c2f]">
+          <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
             <button className="close" onClick={() => setShow(false)}>
               <img src={CloseIcon} />
             </button>
@@ -37,14 +46,6 @@ function CreateProveedor({ show, setShow, data, action }) {
                     required: true,
                     pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/,
                     patternMessage: "",
-                  },
-                  {
-                    label: "Productos Suministrados",
-                    name: "productos_suministrados",
-                    placeholder: "Ingresar Productos",
-                    fieldType: "input",
-                    type: "text",
-                    required: true,
                   },
                   {
                     label: "Pagina Web",
@@ -79,7 +80,6 @@ function CreateProveedor({ show, setShow, data, action }) {
                     maxLength: 8,
                     required: true,
                   },
-
                   {
                     label: "Dirección",
                     name: "direccion",
