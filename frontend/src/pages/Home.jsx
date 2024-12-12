@@ -3,11 +3,11 @@ import "@styles/home.css";
 import Navbar from "../components/Navbar";
 import ReservaHora from "../components/ReservaHora";
 import HorarioCardPublic from "../components/HorarioCardPublic.jsx";
-import useHorarios from "@hooks/horarios/useGetHorario.jsx";
+import useHorario from "@hooks/horarios/useGetHorario.jsx";
 import { useState } from "react";
 
 const Home = () => {
-    const { horarios } = useHorarios(); 
+    const { horarios } = useHorario(); 
     const [filter] = useState("");
 
     const filteredHorarios = horarios.filter(horario => 
