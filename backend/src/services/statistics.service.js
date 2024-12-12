@@ -37,11 +37,15 @@ export async function getProveedoresWithMostProducts(limit = 3) {
     const proveedorRepository = AppDataSource.getRepository(Proveedor);
     const proveedores = await proveedorRepository
         .createQueryBuilder("proveedor")
-        .leftJoinAndSelect("proveedor.productos", "producto")
+        .leftJoin("proveedor.productos", "producto")
+        .select("proveedor.idProveedor", "idProveedor")
+        .addSelect("proveedor.nombreProveedor", "nombreProveedor")
+        .addSelect("COUNT(producto.id) AS Cantidad_de_productos")
         .groupBy("proveedor.idProveedor")
-        .orderBy("COUNT(producto.id)", "DESC")
-        .take(limit) 
-        .getMany();
+        .addGroupBy("proveedor.nombreProveedor")
+        .orderBy("Cantidad_de_productos", "DESC")
+        .limit(limit) // Utiliza take en lugar de limit
+        .getRawMany();
     return proveedores;
 }
 
@@ -49,15 +53,15 @@ export async function getProveedoresWithOutOfStockProducts(limit = 3) {
     const proveedorRepository = AppDataSource.getRepository(Proveedor);
     const proveedores = await proveedorRepository
         .createQueryBuilder("proveedor")
-        .leftJoinAndSelect("proveedor.productos", "producto")
-        .addSelect("COUNT(producto.id) AS productCount")
+        .leftJoin("proveedor.productos", "producto")
+        .select("proveedor.idProveedor", "idProveedor")
+        .addSelect("proveedor.nombreProveedor", "nombreProveedor")
+        .addSelect("COUNT(producto.id) AS Cantidad_de_productos_agotados")
         .where("producto.stock = 0")
         .groupBy("proveedor.idProveedor")
         .addGroupBy("proveedor.nombreProveedor")
-        .addGroupBy("producto.id") // Asegúrate de agrupar por todas las columnas seleccionadas
-        .addGroupBy("producto.name") // Asegúrate de agrupar por todas las columnas seleccionadas
-        .orderBy("productCount", "DESC")
-        .take(limit)
-        .getRawMany();
+        .orderBy("Cantidad_de_productos_agotados", "DESC")
+        .limit(limit) 
+    .getRawMany();
     return proveedores;
 }
