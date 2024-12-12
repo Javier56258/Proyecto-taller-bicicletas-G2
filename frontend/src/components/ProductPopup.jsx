@@ -81,6 +81,14 @@ function productPopup({ show, setShow, data, action }) {
                 {
                   label: "Proveedor",
                   name: "provider",
+                  type: "select",
+                  defaultValue: productData.provider,
+                  options: [
+                    { value: "1", label: "Proveedor 1" },
+                    { value: "2", label: "Proveedor 2" },
+                    { value: "3", label: "Proveedor 3" },
+                  ],
+                  required: true,
                 }
               ]}
               onSubmit={handleSubmit}
