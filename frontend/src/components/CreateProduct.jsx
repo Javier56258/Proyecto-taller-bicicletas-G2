@@ -1,5 +1,5 @@
 import Form from './Form';
-import '@styles/Popup.css';
+import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import { createProduct } from '@services/product.service.js';
 
@@ -9,6 +9,7 @@ function CreateProduct({ show, setShow, data, action }) {
         try {
             await createProduct(formData);
             action(formData);
+            setShow(false);
         } catch (error) {
             console.error('Error al crear producto:', error);
         };

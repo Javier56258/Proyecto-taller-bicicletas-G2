@@ -14,7 +14,36 @@ export async function getServicios() {
 // Crear un nuevo servicio
 export async function createServicio(servicioData) {
   try {
-    const response = await axios.post("/servicios/create", servicioData);
+    console.log("Servicio Data en Frontend:", servicioData);
+
+    let formData;
+
+    // Si servicioData es un FormData, lo usamos directamente
+    if (servicioData instanceof FormData) {
+      formData = servicioData;
+    } else {
+      // Si no, creamos uno nuevo
+      formData = new FormData();
+      formData.append("nombre", servicioData.nombre);
+      formData.append("descripcion", servicioData.descripcion);
+      if (servicioData.imagen) {
+        formData.append("imagen", servicioData.imagen);
+      } else {
+        formData.append("imagen", null);
+      }
+    }
+
+    // Verificar FormData
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    const response = await axios.post("/servicios/create", servicioData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Importante para enviar archivos
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Error al crear el servicio:", error);
@@ -25,9 +54,26 @@ export async function createServicio(servicioData) {
 // Actualizar un servicio existente
 export async function updateServicio(idServicio, servicioData) {
   try {
-    const response = await axios.patch(`/servicios/detail`, {
-      idServicio,
-      ...servicioData,
+    let formData;
+
+    // Si servicioData es un FormData, lo usamos directamente
+    if (servicioData instanceof FormData) {
+      formData = servicioData;
+      formData.append("idServicio", idServicio);
+    } else {
+      // Si no, creamos uno nuevo
+      formData = new FormData();
+      formData.append("nombre", servicioData.nombre);
+      formData.append("descripcion", servicioData.descripcion);
+      if (servicioData.imagen) {
+        formData.append("imagen", servicioData.imagen);
+      }
+    }
+
+    const response = await axios.patch("/servicios/detail", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Importante para manejar archivos
+      },
     });
     return response.data;
   } catch (error) {

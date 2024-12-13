@@ -22,6 +22,15 @@ async function createUsers() {
           rol: "administrador",
         }),
       ),
+        userRepository.save(
+          userRepository.create({
+            nombreCompleto: "Felipe Alonso Romero Egaña",
+            rut: "21.255.197-K",
+            email: "felipe2024@gmail.cl",
+            password: await encryptPassword("admin1234"),
+            rol: "administrador",
+          }),
+        ),
       userRepository.save(
         userRepository.create({
           nombreCompleto: "Pablo Sanchez",

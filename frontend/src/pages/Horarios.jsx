@@ -65,7 +65,10 @@ const handleDiaFilterChange = (e) => {
         </div>  
         <div className="controls-formHorario">
             <button 
-            className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
+
+
+            className="create-horario-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
+
             onClick={handleCreateClick}
             >Crear Horario
             </button>

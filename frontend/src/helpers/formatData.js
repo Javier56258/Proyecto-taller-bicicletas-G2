@@ -3,6 +3,18 @@ import { format as formatRut } from 'rut.js';
 import { format as formatTempo } from "@formkit/tempo";
 
 
+export function formatDataArray(input) {
+    return Array.isArray(input) ? input : input.data || [];
+}
+
+function formatPaginaWeb(url) {
+    if (url && !url.startsWith('https://')) {
+        return 'https://' + url;
+    }
+    return url;
+}
+
+
 export function formatUserData(user) {
     return {
         ...user,
@@ -43,17 +55,15 @@ export function formatHorarioData(horario) {
 }
 
 export function formatProveedorData(proveedor) {
+    
     return {
         ...proveedor,
         nombreProveedor: proveedor.nombreProveedor,
-        productos_suministrados: startCase(proveedor.productos_suministrados),
-        paginaWeb: proveedor.paginaWeb,
+        paginaWeb: formatPaginaWeb(proveedor.paginaWeb),
         telefono: proveedor.telefono,
         email: proveedor.email,
         direccion: startCase(proveedor.direccion),
-        createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
-
-
+        //createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
 
     };
 }
@@ -77,6 +87,7 @@ export function convertirMinusculas(obj) {
     }
     return obj;
 }
+
 
 export function formatServicioData(servicio) {
     // Implementa la lógica de formateo aquí
@@ -102,15 +113,15 @@ export function formatPostUpdateUser(user) {
 
 
 export function formatPostUpdateProveedor(proveedor) {
+    const { createdAt, idProveedor, ...rest } = proveedor;
     return {
+        ...rest,
         nombreProveedor: proveedor.nombreProveedor,
-        paginaWeb: proveedor.paginaWeb,
+        paginaWeb: formatPaginaWeb(proveedor.paginaWeb),
         telefono: proveedor.telefono,
-        email:proveedor.email,
-        direccion: proveedor.direccion,
-        createdAt: formatTempo(proveedor.createdAt, "DD-MM-YYYY")
+        email: proveedor.email,
+        direccion: startCase(proveedor.direccion),
     };
-
 }
 
 

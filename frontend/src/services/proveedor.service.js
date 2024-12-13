@@ -23,6 +23,16 @@ export async function getProveedores() {
   }
 }
 
+export const getProveedorById = async (data, idProveedor) => {
+  try {
+    const response = await axios.get(`/proveedor/detail/?idProveedor=${idProveedor}`, data);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los detalles del proveedor:', error);
+    throw error;
+  }
+};
+
 export async function updateProveedor(data, idProveedor) {
   try {
     const response = await axios.patch(
@@ -54,3 +64,13 @@ export async function deleteProveedor(idProveedor) {
       : { status: "Error", details: "Error desconocido" };
   }
 }
+
+export const assignProveedorProduct = async (data) => {
+  const { idProveedor, productIds } = data; // Extrae los valores del objeto JSON
+
+  const response = await axios.post('/proveedor/assign-product', {
+    idProveedor,
+    productIds
+  });
+  return response.data;
+};

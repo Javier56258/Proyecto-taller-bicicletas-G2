@@ -1,8 +1,17 @@
 import { createReserva } from "@services/reserva.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert";
+import { getHorarios } from "@services/horarios.service.js";
+import { useEffect, useState } from "react";
 
 function ReservaHora({ data }) {
     const reservaData = data && data.length > 0 ? data[0] : {};
+
+    const [selectedHora, setSelectedHora] = useState(null);
+
+    const handleHoraChange = (event) => {
+        setSelectedHora(event.target.value);
+    };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,6 +38,7 @@ function ReservaHora({ data }) {
             console.error("Error al crear reserva:", error);
         }
     };
+
 
     return (
         <div className="home-reserva-body">
@@ -93,14 +103,18 @@ function ReservaHora({ data }) {
                         <div className="home-form-column">
                             <div className="home-form-group">
                                 <label htmlFor="hora" className="home-label">Hora</label>
-                                <input
-                                    type="time"
-                                    id="hora"
-                                    name="hora"
-                                    required
-                                    className="home-input"
-                                    defaultValue={reservaData.hora || ""}
-                                />
+                                <select
+                                id="hora"
+                                name="hora"
+                                required
+                                className="home-input"
+                                value={selectedHora}
+                                onChange={handleHoraChange}
+                            >
+                                <option value="">Seleccione una hora</option>
+                                
+                               
+                            </select>
                             </div>
                         </div>
                     </div>
