@@ -79,16 +79,24 @@ const Statistics = () => {
                           Nombre
                         </th>
                       </tr>
-                    </thead>
-                    <tbody className="bg-red-50 dark:bg-red-800 divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg">
-                      {outOfStockProducts.map((product, index) => (
+                      </thead>
+                      <tbody className="bg-red-50 dark:bg-red-800 divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg">
+                          {outOfStockProducts.length === 0 ? (
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                          No hay productos agotados.
+                        </td>
+                      </tr>
+                    ) : (
+                       outOfStockProducts.map((product, index) => (
                         <tr key={product.id} className={index === outOfStockProducts.length - 1 ? "rounded-b-lg" : ""}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
                             {product.name}
                           </td>
                         </tr>
-                      ))}
-                    </tbody>
+                     ))
+                    )}
+                    </tbody>  
                   </table>
                 </div>
             </StatisticCard>
@@ -113,18 +121,21 @@ const Statistics = () => {
                       </tr>
                     </thead>
                     <tbody className="bg-red-50 dark:bg-red-800 divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg">
-                      {outOfStockProductsProveedores.map((proveedor, index) => (
-                        <tr key={proveedor.idProveedor} className={index === outOfStockProductsProveedores.length - 1 ? "rounded-b-lg" : ""}>
+                      {outOfStockProductsProveedores.length === 0 ? (
+                        <tr>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                          <Link to={`/proveedores`} className="text-blue-500 hover:underline">
-                              {proveedor.nombreProveedor}
-                          </Link>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                            {proveedor.cantidad_de_productos_agotados} producto(s) agotado(s)                                 
+                            No hay proveedores con productos agotados.
                           </td>
                         </tr>
-                      ))}
+                      ) : (
+                        outOfStockProductsProveedores.map((proveedor, index) => (
+                          <tr key={proveedor.id} className={index === outOfStockProductsProveedores.length - 1 ? "rounded-b-lg" : ""}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                              {proveedor.nombreProveedor}
+                            </td>
+                        </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>        

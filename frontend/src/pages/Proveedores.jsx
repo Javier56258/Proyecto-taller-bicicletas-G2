@@ -106,7 +106,7 @@ const Proveedores = () => {
       const proveedorAssign = proveedores.find(
         (proveedor) => proveedor.idProveedor === selectedProveedor
       );
-      setProveedorAssign(proveedorAssign); // Actualiza el estado de proveedorAssign
+      setProveedorAssign(proveedorAssign); 
       setIsAssignPopupOpen(true);
     } else {
       alert("Selecciona un proveedor para asignar productos.");

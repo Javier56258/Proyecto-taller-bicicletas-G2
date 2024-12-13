@@ -13,6 +13,8 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
 
     const [productos, setProductos] = useState([]);    
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [reloadProducts, setReloadProducts] = useState(false);
+
 
     const handleChange = (selectedOptions) => {
       setSelectedOptions(selectedOptions);
@@ -34,15 +36,30 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
     useEffect(() => {
       const fetchProductos = async () => {
         try {
-          const productosData = await getProducts();
-          setProductos(productosData);
+          const response = await getProducts();
+          if (!response || response.length === 0) {
+            showErrorAlert('No hay productos disponibles.');
+            setProductos([]);
+          } else {
+            console.log("Productos obtenidos:", response); // Verifica si el formato es correcto
+            setProductos(response);
+          }
         } catch (error) {
-          console.error('Error al obtener los productos:', error);
+          if (error.response && error.response.status === 404) {
+            showErrorAlert('No hay productos disponibles.');
+          } else {
+            showErrorAlert('Error al obtener productos.');
+          }
+          setProductos([]);
         }
       };
-  
+    
       fetchProductos();
-    }, []);  
+    }, [reloadProducts]); 
+
+    
+
+    
     
     const handleAssignProduct = async (formData) => {
         try {
@@ -59,17 +76,20 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
           action();
           setShow(false);
           showSuccessAlert("Producto asignado", "El producto ha sido asignado correctamente.");
+          setReloadProducts(prev => !prev); // Cambia el estado para recargar productos
         } catch (error) {
           showErrorAlert("Error", "No se pudo asignar el producto.");
         }
       };
 
-    const productOptions = productos.map(producto => ({
-      value: producto.id,
-      label: producto.proveedor ? `${producto.name} - ${producto.proveedor.name}` : producto.name,    
-    }));
+      const productOptions = Array.isArray(productos) ? productos.map(producto => ({
+        value: producto.id,
+        label: producto.proveedor
+          ? `${producto.name} - ${producto.proveedor.nombreProveedor}`
+          : producto.name,
+      })) : [];
 
-
+    console.log("Opciones", productOptions);
       return (
         <div>
         {show && (
@@ -99,6 +119,7 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
                     options: productOptions,
                     required: true,
                     onChange: handleChange,
+                    getOptionLabel: (e) => `${e.label}`,
                   },
                 ]}
                 buttonText="Asignar"

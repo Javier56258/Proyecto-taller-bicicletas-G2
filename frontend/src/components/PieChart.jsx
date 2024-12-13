@@ -30,8 +30,17 @@ const PieChart = ({ data, labels }) => {
             },
         ],
     };
+    const options = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'rgba(255, 255, 255, 0.87)', // Color de las etiquetas en modo oscuro
+                },
+            },
+        },
+    };
 
-    return <Pie data={chartData} />;
+    return <Pie data={chartData} options={options} />;
 };
 
 export default PieChart;
