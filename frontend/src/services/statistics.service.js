@@ -10,17 +10,17 @@ export async function getProductsWithLeastStock(limit) {
     return response.data.data;
 }
 
-export async function getOutOfStockProducts(limit) {
-    const response = await axios.get(`/statistics/products/out-of-stock?limit=${limit}`);
+export async function getOutOfStockProducts() {
+    const response = await axios.get(`/statistics/products/out-of-stock`);
     return response.data.data;
 }
 
-export async function getProveedoresWithMostProducts(limit) {
-    const response = await axios.get(`/statistics/proveedores/most-products?limit=${limit}`);
+export async function getProveedoresWithMostProducts() {
+    const response = await axios.get(`/statistics/proveedores/most-products`);
     return response.data.data;
 }
 
-export async function getProveedoresWithOutOfStockProducts(limit) {
-    const response = await axios.get(`/statistics/proveedores/out-of-stock-products?limit=${limit}`);
+export async function getProveedoresWithOutOfStockProducts() {
+    const response = await axios.get(`/statistics/proveedores/out-of-stock-products`);
     return response.data.data;
 }
