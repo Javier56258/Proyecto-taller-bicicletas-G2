@@ -14,7 +14,9 @@ import Services from "./pages/Services";
 import Reservas from "./pages/Reserva";
 import Horarios from "./pages/Horarios";
 import "@styles/tailwind.css";
-console.log("Pasando por main.jsx");  
+import StatisticsPage from './pages/StatisticsPage';
+
+  
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["administrador"]}>
             <Horarios />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/statistics",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador"]}>
+            <StatisticsPage />
           </ProtectedRoute>
         )
       },

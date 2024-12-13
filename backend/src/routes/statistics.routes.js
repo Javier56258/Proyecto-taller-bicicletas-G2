@@ -1,5 +1,8 @@
 "use strict";
 import { Router } from "express";
+import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
+
 import {
     getProductsWithMostStockController,
     getProductsWithLeastStockController,
@@ -10,9 +13,14 @@ import {
 
 const router = Router();
 
-router.get("/products/most-stock", getProductsWithMostStockController);
-router.get("/products/least-stock", getProductsWithLeastStockController);
-router.get("/products/out-of-stock", getOutOfStockProductsController);
-router.get("/proveedores/most-products", getProveedoresWithMostProductsController);
-router.get("/proveedores/out-of-stock-products", getProveedoresWithOutOfStockProductsController);
+router
+  .use(authenticateJwt)
+  .use(isAdmin);
+
+router
+    .get("/products/most-stock", getProductsWithMostStockController)
+    .get("/products/least-stock", getProductsWithLeastStockController)
+    .get("/products/out-of-stock", getOutOfStockProductsController)
+    .get("/proveedores/most-products", getProveedoresWithMostProductsController)
+    .get("/proveedores/out-of-stock-products", getProveedoresWithOutOfStockProductsController);
 export default router;

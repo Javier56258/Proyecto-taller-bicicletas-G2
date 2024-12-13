@@ -4,7 +4,7 @@ import Product from "../entity/product.entity.js";
 import Proveedor from "../entity/proveedor.entity.js";
 
 //productos con más stock
-export async function getProductsWithMostStock(limit = 3) {
+export async function getProductsWithMostStock(limit) {
     const productRepository = AppDataSource.getRepository(Product);
     const productos = await productRepository.find({ 
         order: { stock: "DESC" },
@@ -14,7 +14,7 @@ export async function getProductsWithMostStock(limit = 3) {
 }
 
 // Obtener productos con menos stock
-export async function getProductsWithLeastStock(limit = 3) {
+export async function getProductsWithLeastStock(limit) {
     const productRepository = AppDataSource.getRepository(Product);
     const products = await productRepository.find({
         order: { stock: "ASC" },
@@ -24,7 +24,7 @@ export async function getProductsWithLeastStock(limit = 3) {
 }
 
 // Obtener productos agotados
-export async function getOutOfStockProducts(limit = 3) {
+export async function getOutOfStockProducts(limit) {
     const productRepository = AppDataSource.getRepository(Product);
     const products = await productRepository.find({
         where: { stock: 0 }
@@ -33,7 +33,7 @@ export async function getOutOfStockProducts(limit = 3) {
 }
 
 // Obtener proveedores con más productos
-export async function getProveedoresWithMostProducts(limit = 3) {
+export async function getProveedoresWithMostProducts(limit) {
     const proveedorRepository = AppDataSource.getRepository(Proveedor);
     const proveedores = await proveedorRepository
         .createQueryBuilder("proveedor")
@@ -49,7 +49,7 @@ export async function getProveedoresWithMostProducts(limit = 3) {
     return proveedores;
 }
 
-export async function getProveedoresWithOutOfStockProducts(limit = 3) {
+export async function getProveedoresWithOutOfStockProducts(limit) {
     const proveedorRepository = AppDataSource.getRepository(Proveedor);
     const proveedores = await proveedorRepository
         .createQueryBuilder("proveedor")
