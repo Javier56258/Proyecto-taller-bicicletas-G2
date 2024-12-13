@@ -3,7 +3,7 @@ import deleteIcon from "@assets/deleteIcon.svg";
 
 const HorarioCard = ({ horario, onEdit, onDelete }) => {
   return (
-    <div className="service-card">
+    <div className="horario-card">
       {horario.imagen && <img src={horario.imagen} style={{ width: "100px", height: "100px" }} />}
       <p>{horario.hora}</p>
       <button onClick={() => onEdit(horario)}>

@@ -59,13 +59,13 @@ const handleDiaFilterChange = (e) => {
 
  return(
 <div>
-    <div className="main-content">
-        <div className="centered-h1">
+    <div className="main-content-formHorario">
+        <div className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
             <h1>Horarios de atención</h1>
         </div>  
-        <div className="controls">
+        <div className="controls-formHorario">
             <button 
-            className="create-horario-button"
+            className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
             onClick={handleCreateClick}
             >Crear Horario
             </button>
@@ -76,12 +76,12 @@ const handleDiaFilterChange = (e) => {
             />
         </div>
 
-        <div className="schedule">
+        <div className="schedule-horarios">
             {diasOrdenados.map((dia) => (
                 groupedHorarios[dia] && (
-                <div key={dia} className="day-group">
-                    <h2 className="day-title">{dia}</h2>
-                    <div className="services-grid">
+                <div key={dia} className="day-group-horarios">
+                    <h2 className="day-title-horarios">{dia}</h2>
+                    <div className="horarios-grid">
                         {groupedHorarios[dia].map((horario) => (
                             <HorarioCard
                             key={horario.id}

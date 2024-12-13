@@ -2,13 +2,13 @@
     padding: 20px;
   }
   
-  .day-group {
+  .day-group-horarios {
     margin-bottom: 40px; 
   }
 
-  .day-title {
+  .day-title-horarios {
     font-size: 1.8rem;
-    color: #003366;
+    color: #475b63;
     margin-bottom: 20px; 
     text-align: left;
   }
@@ -124,7 +124,7 @@
     font-size: 1.6rem;
   }
 
-  .schedule {
+  .schedule-horarios {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -132,7 +132,7 @@
     padding: 5px;
   }
 
-  .services-grid {
+  .horarios-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Crear columnas automáticas */
     gap: 2px; /* Espacio entre las tarjetas */
