@@ -139,10 +139,13 @@
 
 .home-day-title {
   font-size: 1.8rem;
-  color: #003366;
+  color: #475b63;
   margin-bottom: 10px;
   margin-left: 10px;
   text-align: left;
+}
+.dark .home-day-title {
+  color: #f3f3f3; /* Texto en modo oscuro */
 }
 
 .home-schedule {

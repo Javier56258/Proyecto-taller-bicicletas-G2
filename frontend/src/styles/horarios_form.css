@@ -57,11 +57,26 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+.dark .create-button,
+.dark .order-button {
+  border: 3px solid #475b63;
+  background-color: #475b63; /* Color de fondo oscuro en modo oscuro */
+  color: #e8e9e8; /* Color de texto en modo oscuro */
+}
+
 .create-button:hover,
 .order-button:hover {
   border: 3px solid #bacdb0;
   background-color: #fff;
   color: #475b63;
+}
+
+/* Hover en modo oscuro */
+.dark .create-button:hover,
+.dark .order-button:hover {
+  border: 3px solid #475b63;
+  background-color: #475b63; /* Color más claro al hacer hover en modo oscuro */
+  color: #fff;
 }
 
 @media (max-width: 767px) {
