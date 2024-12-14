@@ -1,11 +1,15 @@
 "use strict";
 import Product from "../entity/product.entity.js";
+import ProveedorSchema from "../entity/proveedor.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
+
+
+//funcion recibe el cuerpo del formulario
 export async function createProductService(product) {
   try {
     const productRepository = AppDataSource.getRepository(Product);
-    const { name, price, description, stock } = product;
+    const { name, price, description, stock,nombreProveedor } = product;
     const createErrorMessage = (dataInfo, message) => ({
       dataInfo,
       message
@@ -23,8 +27,10 @@ export async function createProductService(product) {
       name : name,
       description : description,
       price : price,
-      stock : stock,
+      stock : stock,  
     });
+    //asignamos el proveedor al producto
+
     await productRepository.save(newProduct);
     return [newProduct, null];
   } catch (error) {
