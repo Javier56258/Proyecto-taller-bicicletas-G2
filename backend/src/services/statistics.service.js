@@ -24,7 +24,7 @@ export async function getProductsWithLeastStock(limit) {
 }
 
 // Obtener productos agotados
-export async function getOutOfStockProducts(limit) {
+export async function getOutOfStockProducts() {
     const productRepository = AppDataSource.getRepository(Product);
     const products = await productRepository.find({
         where: { stock: 0 }
@@ -33,7 +33,7 @@ export async function getOutOfStockProducts(limit) {
 }
 
 // Obtener proveedores con más productos
-export async function getProveedoresWithMostProducts(limit) {
+export async function getProveedoresWithMostProducts() {
     const proveedorRepository = AppDataSource.getRepository(Proveedor);
     const proveedores = await proveedorRepository
         .createQueryBuilder("proveedor")
@@ -44,12 +44,11 @@ export async function getProveedoresWithMostProducts(limit) {
         .groupBy("proveedor.idProveedor")
         .addGroupBy("proveedor.nombreProveedor")
         .orderBy("Cantidad_de_productos", "DESC")
-        .limit(limit) // Utiliza take en lugar de limit
         .getRawMany();
     return proveedores;
 }
 
-export async function getProveedoresWithOutOfStockProducts(limit) {
+export async function getProveedoresWithOutOfStockProducts() {
     const proveedorRepository = AppDataSource.getRepository(Proveedor);
     const proveedores = await proveedorRepository
         .createQueryBuilder("proveedor")
@@ -61,7 +60,6 @@ export async function getProveedoresWithOutOfStockProducts(limit) {
         .groupBy("proveedor.idProveedor")
         .addGroupBy("proveedor.nombreProveedor")
         .orderBy("Cantidad_de_productos_agotados", "DESC")
-        .limit(limit) 
     .getRawMany();
     return proveedores;
 }

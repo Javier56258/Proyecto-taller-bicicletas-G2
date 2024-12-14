@@ -8,6 +8,7 @@ import statisticsRoutes from "./statistics.routes.js";
 import serviciosRoutes from "./servicios.routes.js";
 import productRoutes from "./product.routes.js";
 import horariosRouter from "./horarios.routes.js";
+import sendCustomeEmail from "./email.routes.js";
 const router = Router();
 
 router
@@ -19,7 +20,8 @@ router
     .use("/servicios", serviciosRoutes)
     .use("/proveedor", proveedorRoutes)
     .use("/product",productRoutes)
-    .use("/statistics", statisticsRoutes);
+    .use("/statistics", statisticsRoutes)
+    .use("/email", sendCustomeEmail);
 
 
 
