@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Form from './Form';
 import '@styles/popup.css';
@@ -10,7 +11,6 @@ import { getProducts } from '@services/product.service.js';
 function AssignProveedorProduct({ show, setShow, data, action }) {
 
     const proveedorData = data || {};
-    console.log("Proveedor seleccionado para asignar: ", proveedorData);
 
     const [productos, setProductos] = useState([]);    
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -44,7 +44,6 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
   
       fetchProductos();
     }, []);  
-    console.log("Productos disponibles para asignar: ", productos);
     
     const handleAssignProduct = async (formData) => {
         try {

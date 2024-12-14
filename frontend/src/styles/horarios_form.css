@@ -37,8 +37,15 @@
   border-radius: 4px;
 }
 
-.create-horario-button-formHorario,
-.order-button-formHorario {
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.create-button,
+.order-button {
   background-color: #bacdb0;
   color: white;
   padding: 10px 20px;
@@ -50,8 +57,8 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.create-horario-button-formHorario:hover,
-.order-button-formHorario:hover {
+.create-button:hover,
+.order-button:hover {
   border: 3px solid #bacdb0;
   background-color: #fff;
   color: #475b63;
@@ -69,25 +76,13 @@
   .main-content-formHorario {
     max-width: 350px;
   }
-  .right-buttons-formHorario {
+
+  .button-container {
     flex-direction: column;
-    padding-left: 0px;
+    gap: 20px;
   }
-  
-  .create-horario-button,
-  .order-horario-button {
-    background-color: #475b63;
-    color: white;
-    padding: 10px 20px;
-    border: 3px solid #475b63;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  }
-  .create-button-formHorario,
-  .order-button-formHorario {
+  .create-button,
+  .order-button {
     height: 60px;
     font-size: 20px;
   }
