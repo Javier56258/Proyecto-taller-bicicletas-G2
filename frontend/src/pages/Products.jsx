@@ -2,7 +2,6 @@
 import { useEffect } from 'react';
 import { getProducts,createProduct,updateProduct,deleteProduct } from '@services/product.service.js';
 import "@styles/proveedor.css";
-import CreateProduct from '@components/CreateProduct.jsx';
 import { useState } from 'react';
 import ProductCard from '@components/ProductCard.jsx';
 import ProductpopUp from '@components/ProductpopUp.jsx';

@@ -1,19 +1,45 @@
 import Form from "./Form";
 import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
-
-function productPopup({ show, setShow, data, action }) {
+import { getProveedores } from "@services/proveedor.service.js";
+import { useEffect, useState } from "react";
+function ProductPopup({ show, setShow, data, action }) {
   const productData = data && data.length > 0 ? data[0] : {};
 
+  const [proveedores, setProveedores] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const handleSubmit = (formData) => {
     try {
       action(formData);
       setShow(false);
-
     } catch (error) {
       console.error("Error al editar producto:", error);
     }
   };
+
+  const handleChange = (selectedOptions) => {
+    setSelectedOptions(selectedOptions);
+  };
+
+  useEffect(() => {
+    const fetchProveedores = async () => {
+      try {
+        const proveedoresData = await getProveedores();
+        setProveedores(proveedoresData);
+        console.log("Proveedores disponibles para asignar: ", proveedoresData);
+      } catch (error) {
+        console.error("Error al obtener los proveedores:", error);
+      }
+    };
+    fetchProveedores();
+  }, []);
+
+
+
+  const proveedoresOptions = proveedores.map((proveedor) => ({
+    value: proveedor.idProveedor,
+    label: proveedor.nombreProveedor,
+  }));
 
   return (
     <div>
@@ -25,7 +51,7 @@ function productPopup({ show, setShow, data, action }) {
             </button>
             <Form
               className="form"
-              title="Producto"
+              title="Editar Producto"
               fields={[
                 {
                   label: "Nombre",
@@ -80,16 +106,12 @@ function productPopup({ show, setShow, data, action }) {
                 },
                 {
                   label: "Proveedor",
-                  name: "provider",
-                  type: "select",
-                  defaultValue: productData.provider,
-                  options: [
-                    { value: "1", label: "Proveedor 1" },
-                    { value: "2", label: "Proveedor 2" },
-                    { value: "3", label: "Proveedor 3" },
-                  ],
+                  name: "nombreProveedor",
+                  fieldType: "multiSelect",
+                  options: proveedoresOptions,
                   required: true,
-                }
+                  onChange: handleChange,
+                },
               ]}
               onSubmit={handleSubmit}
               buttonText="Crear producto"
@@ -102,4 +124,4 @@ function productPopup({ show, setShow, data, action }) {
   );
 }
 
-export default productPopup;
+export default ProductPopup;
