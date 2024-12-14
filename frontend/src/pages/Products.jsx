@@ -5,6 +5,7 @@ import "@styles/proveedor.css";
 import { useState } from 'react';
 import ProductCard from '@components/ProductCard.jsx';
 import ProductpopUp from '@components/ProductpopUp.jsx';
+import PopupEditProduct from '../components/PopupEditProduct';
 import { showSuccessAlert, showErrorAlert, deleteDataAlert } from '@helpers/sweetAlert.js';
 
 const Products = () => {
@@ -12,6 +13,7 @@ const Products = () => {
     const [editingProducto, setEditingProducto] = useState(null);
     const [filter, setFilter] = useState("");
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [isReversed, setIsReversed] = useState(false);
 
 
@@ -29,6 +31,7 @@ const Products = () => {
       }, []);
 
     const handleSave = async (productoData) => {
+
         try {
             if (editingProducto) {
                 await updateProduct(productoData, editingProducto.id);
@@ -69,7 +72,8 @@ const Products = () => {
 
     const handleEdit = (product) => {
         setEditingProducto(product);
-        setIsPopupOpen(true);
+        setIsEditPopupOpen(true);
+    
     };
 
     const filteredProducts = productos.filter((product) =>
@@ -117,6 +121,16 @@ const Products = () => {
                 data = {editingProducto}
                 action = {handleSave}
             />
+
+
+            <PopupEditProduct
+                show={isEditPopupOpen}
+                setShow={setIsEditPopupOpen}
+                action={handleSave}
+                producto={editingProducto}
+            />
+
+
             <div className='services-grid'>
                 {displayedProductos.map((product) => (
                     <ProductCard

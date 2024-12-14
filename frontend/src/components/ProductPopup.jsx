@@ -51,7 +51,7 @@ function ProductPopup({ show, setShow, data, action }) {
             </button>
             <Form
               className="form"
-              title="Editar Producto"
+              title="Crear Producto"
               fields={[
                 {
                   label: "Nombre",
