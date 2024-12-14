@@ -3,6 +3,7 @@ import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
 import { getProveedores } from "@services/proveedor.service.js";
 import { useEffect, useState } from "react";
+
 function ProductPopup({ show, setShow, data, action }) {
   const productData = data && data.length > 0 ? data[0] : {};
 

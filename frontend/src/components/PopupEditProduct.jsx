@@ -5,7 +5,7 @@ import Form from "./Form";
 import { useState } from "react";
 
 
-export default function PopupEditProduct({ show, setShow, action, producto }) {
+export default function PopupEditProduct({ show, setShow, producto, action }) {
     
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");

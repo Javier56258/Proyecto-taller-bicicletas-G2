@@ -36,6 +36,7 @@ const Products = () => {
             if (editingProducto) {
                 await updateProduct(productoData, editingProducto.id);
                 showSuccessAlert('Producto actualizado correctamente');
+                
                 const updatedProducts = productos.map((product) =>
                     product.id === editingProducto.id ? productoData : product
                 );
@@ -126,12 +127,12 @@ const Products = () => {
             <PopupEditProduct
                 show={isEditPopupOpen}
                 setShow={setIsEditPopupOpen}
-                action={handleSave}
                 producto={editingProducto}
+                action={handleSave}
             />
 
 
-            <div className='services-grid'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
                 {displayedProductos.map((product) => (
                     <ProductCard
                         key={product.id}
