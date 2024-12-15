@@ -45,7 +45,7 @@ const ProveedorSchema = new EntitySchema({
     },
     relations: {
         productos: {
-            type: "many-to-many",
+            type: "one-to-many",
             target: "products",
             inverseSide: "proveedores",
         },

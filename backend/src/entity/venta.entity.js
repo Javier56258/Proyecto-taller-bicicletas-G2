@@ -24,8 +24,8 @@ const VentaSchema = new EntitySchema({
     relations: {
         productos: {
             type: "one-to-many",
-            target: "Producto",
-            inverseSide: "venta",
+            target: "Product",
+            inverseSide: "Venta",
             JoinTable: true,
         }
     }
