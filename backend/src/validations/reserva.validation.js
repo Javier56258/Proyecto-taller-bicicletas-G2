@@ -35,8 +35,8 @@ export const reservaBodyValidation = Joi.object({
         .messages({
             "string.empty": "El nombre del reservador no puede estar vacío.",
             "string.base": "El nombre del reservador debe ser de tipo string.",
-            "string.min": "El nombre del reservador debe tener como mínimo 15 caracteres.",
-            "string.max": "El nombre del reservador debe tener como máximo 50 caracteres.",
+            "string.min": "El nombre del reservador debe tener como mínimo 7 caracteres.",
+            "string.max": "El nombre del reservador debe tener como máximo 60 caracteres.",
             "string.pattern.base": "El nombre del reservador solo puede contener letras y espacios.",
         }),
     email: Joi.string()
@@ -63,8 +63,10 @@ export const reservaBodyValidation = Joi.object({
             "string.pattern.base": "El motivo de servicio solo puede contener letras y números.",
         }),
     fecha: Joi.date().iso()
+        .max(moment().add(1, "month").toISOString()) 
         .messages({
             "date.base": "La fecha debe ser de tipo timestamp with time zone.",
+            "date.max": "La fecha no puede ser mayor a un mes desde la fecha actual.",
         })
         .required()
         .messages({
