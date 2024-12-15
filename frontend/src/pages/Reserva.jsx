@@ -130,7 +130,7 @@ const Reservas = () => {
 
     return (
         <div className="slide-down">
-            <div className="main-container">
+            <div className="main-content bg-none">
                 <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
                     Reservas
                 </h1>
@@ -199,9 +199,9 @@ const Reservas = () => {
 
                             
                             {/* Tabla de reservas */}
-                <div className="overflow-auto rounded-lg shadow">
+                <div className="overflow-auto rounded-lg shadow hidden md:block">
                     <table className="w-full">
-                        <thead className="bg-pink-100 border-b-2 border-gray-200">
+                        <thead className="bg-gray-50 dark:bg-[#2e2c2f] border-b-2 border-gray-200 dark:border-[#212121] dark:text-[#fff]">
                             <tr>
                                 <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left"></th>
                                 <th className="p-3 text-sm font-semibold tracking-wide text-left">
@@ -221,7 +221,7 @@ const Reservas = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-100">
+                        <tbody className="bg-white divide-y divide-gray-100 dark:bg-[#2e2c2f] dark:divide-[#1c1c1c] dark:text-[#fff]">
                             {filteredNombres.map((reserva, index) => {
                                     const isSelected =
                                         selectedReserva?.idreserva === reserva.idreserva;

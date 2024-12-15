@@ -8,12 +8,30 @@ function CreateHorario({ show, setShow, data, action }) {
     console.log("Pasando por CreateHorario de CreateHorario.jsx");
     const horarioData = data && data.length > 0 ? data[0] : {};
    // const [isReversed, setIsReversed] = useState(false);
-    const handleSubmit = async (formData) => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const hora = formData.get("hora"); // Obtén el valor de "hora"
+        const dia = formData.get("dia");   // Obtén el valor de "dia"
+
+        console.log("Hora:", hora);
+        console.log("Día:", dia);
+
+        if (!hora || !dia) {
+            return showErrorAlert("Error", "Por favor, completa todos los campos.");
+        }
+
+        if (hora instanceof Date || hora.includes(":")) {
+            const aux = hora.toString();
+            formData.set('hora', aux);
+        }
+        const horarioData = {
+            dia,
+            hora,
+        };
         try {
-            if (formData.hora instanceof Date || formData.hora.includes(":")) {
-                formData.hora = formData.hora.toString(); 
-            }
-            const validatorError = await createHorario(formData);
+            
+            const validatorError = await createHorario(horarioData);
             if (validatorError.status === 'Horario error'){
                 setShow(false);
                 return showErrorAlert("Error", validatorError.details);
@@ -76,19 +94,21 @@ function CreateHorario({ show, setShow, data, action }) {
                                     </div>
                                 </div>
                             </div>
+                            <button type="submit"
+                            className="submit-button" // Clase del botón
+                            style={{
+                                backgroundColor: "#475b63",
+                                color: "white",
+                                border: "none",
+                                padding: "10px 20px",
+                                borderRadius: "5px",
+                                cursor: "pointer",
+                                marginTop: "5px",
+                                marginBottom: "20px",
+                                marginLeft: "30%",
+                            }}>Ingresar horario</button>
                         </form>
-                        <button type="submit"
-                        className="submit-button" // Clase del botón
-                        style={{
-                          backgroundColor: "#475b63",
-                          color: "white",
-                          border: "none",
-                          padding: "10px 20px",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          marginTop: "5px",
-                          marginBottom: "20px",
-                        }}>Ingresar horario</button>
+                        
                         
                     </div>
                 </div>

@@ -17,12 +17,26 @@ export default function reservaPopup({show,setShow,data,action}) {
             { show && (
                 <div className="bg"> 
                     <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
-                        <button className='close' onClick={() => setShow(false)}>
-                            <img src={CloseIcon} />
+                        <button 
+                            className='close' 
+                            onClick={() => setShow(false)}
+                            style={{    
+                                marginRight: '40px', 
+                                marginTop: '25px'
+                            }}>
+                            <img src={CloseIcon} 
+                            alt= "Cerrar"
+                            />
                         </button>
-                        <div className="proovedores-form-container">        
+                        <h1 className="h1-form dark:text-[#fff]">Editar reserva</h1>
+                        <div    
+                            className="proovedores-form-container"
+                            style={{
+                                marginTop: '20px'
+                            }}
+                        >        
                         <Form
-                            title="Editar Reserva"
+                            title=""
                             fields={[
                                 {   label: "Nombre completo",
                                     name: "nombreReservador",
