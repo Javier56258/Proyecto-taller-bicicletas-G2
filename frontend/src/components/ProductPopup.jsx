@@ -75,8 +75,7 @@ function ProductPopup({ show, setShow, data, action }) {
                   placeholder: "Descripción del producto",
                   fieldType: "input",
                   type: "text",
-                  required: true,
-                  minLength: 0,
+                  required: false,
                   maxLength: 255,
                 },
                 {

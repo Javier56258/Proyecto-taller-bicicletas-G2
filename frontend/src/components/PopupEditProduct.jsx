@@ -1,16 +1,13 @@
-import { useEffect } from "react";
+
 import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
 import Form from "./Form";
-import { useState } from "react";
+
 
 
 export default function PopupEditProduct({ show, setShow, producto, action }) {
     
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [stock, setStock] = useState("");
-    const [price, setPrice] = useState("");
+    const { name, description, stock, price } = producto || {};
  
 
     const handleSubmit = (formData) => {
@@ -23,31 +20,7 @@ export default function PopupEditProduct({ show, setShow, producto, action }) {
     };
 
 
-    useEffect(() => {
-        if (show && producto) {
-            setName(producto.name);
-            setDescription(producto.description);
-            setStock(producto.stock);
-            setPrice(producto.price);
-        } else if (show) {
-            setName("");
-            setDescription("");
-            setStock("");
-            setPrice("");
-        }
 
-        
-
-        if (show) {
-            document.body.classList.add("overflow-hidden");
-        } else {
-            document.body.classList.remove("overflow-hidden");
-        }
-
-        return () => {
-            document.body.classList.remove("overflow-hidden");
-        };
-    }, [show, producto]);
 
 
     return (
@@ -72,6 +45,8 @@ export default function PopupEditProduct({ show, setShow, producto, action }) {
                                     required: true,
                                     minLength: 3,
                                     maxLength: 50,
+                                    pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/,
+                                    patternMessage: "El nombre no puede contener caracteres especiales.",
                                 },
                                 {
                                     label: "Descripción",
@@ -79,8 +54,9 @@ export default function PopupEditProduct({ show, setShow, producto, action }) {
                                     defaultValue: description || "",
                                     placeholder: "Bicicleta de montaña con frenos de disco...",
                                     fieldType: "textarea",
-                                    required: true,
-                                    minLength: 10,
+                                    required: false,
+                                    maxLength: 255,
+                                    
                                 },
                                 {
                                     label: "Stock",
