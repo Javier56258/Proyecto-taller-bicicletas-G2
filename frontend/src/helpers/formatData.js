@@ -2,6 +2,11 @@ import { startCase } from 'lodash';
 import { format as formatRut } from 'rut.js';
 import { format as formatTempo } from "@formkit/tempo";
 
+
+export function formatDataArray(input) {
+    return Array.isArray(input) ? input : input.data || [];
+}
+
 function formatPaginaWeb(url) {
     if (url && !url.startsWith('https://')) {
         return 'https://' + url;

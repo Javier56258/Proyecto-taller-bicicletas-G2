@@ -132,7 +132,7 @@
     padding: 5px;
   }
 
-  .services-grid {
+  .horarios-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Crear columnas automáticas */
     gap: 2px; /* Espacio entre las tarjetas */

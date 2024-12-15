@@ -33,6 +33,8 @@ const Proveedores = () => {
     setDataProveedor,
   } = useEditProveedor(setProveedores, fetchProveedores);
 
+
+
   useEffect(() => {
     console.log("Proveedor seleccionado: ", selectedProveedor);
   }, [selectedProveedor]);
@@ -104,7 +106,7 @@ const Proveedores = () => {
       const proveedorAssign = proveedores.find(
         (proveedor) => proveedor.idProveedor === selectedProveedor
       );
-      setProveedorAssign(proveedorAssign); // Actualiza el estado de proveedorAssign
+      setProveedorAssign(proveedorAssign); 
       setIsAssignPopupOpen(true);
     } else {
       alert("Selecciona un proveedor para asignar productos.");
@@ -131,7 +133,7 @@ const Proveedores = () => {
             <div className="button-container">
               <input
                 value={filterNombre}
-                onChange={handleNombreFilterChange}
+                onChange={handleNombreFilterChange} 
                 placeholder={"Filtrar por nombre"}
                 className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
               />

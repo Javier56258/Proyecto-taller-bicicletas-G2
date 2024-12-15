@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   z-index: 1000; /* Asegúrate de que este valor sea mayor que el z-index del navbar */
-
 }
 .popup {
   top: 30px;
