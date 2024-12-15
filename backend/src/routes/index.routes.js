@@ -9,6 +9,8 @@ import serviciosRoutes from "./servicios.routes.js";
 import productRoutes from "./product.routes.js";
 import horariosRouter from "./horarios.routes.js";
 import sendCustomeEmail from "./email.routes.js";
+import ventasRouter from "./venta.routes.js";
+
 const router = Router();
 
 router
@@ -21,7 +23,8 @@ router
     .use("/proveedor", proveedorRoutes)
     .use("/product",productRoutes)
     .use("/statistics", statisticsRoutes)
-    .use("/email", sendCustomeEmail);
+    .use("/email", sendCustomeEmail)
+    .use("/ventas", ventasRouter);
 
 
 
