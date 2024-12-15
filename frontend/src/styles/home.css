@@ -76,12 +76,25 @@
 /* Input styles */
 .home-input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 8px 5px;
+  background-repeat: no-repeat;
+  
+  border: 3px solid #475b63;
+  border-radius: 12px;
   font-size: 16px;
 }
+.home-input:focus {
+  background-color: #edf3ef;
+  font-weight: regular;
+}
 
+.dark .home-input {
+  background-color: #1a1a1a; /* Fondo en modo oscuro */
+  color: #f3f3f3; /* Texto en modo oscuro */
+}
+.dark .home-input:focus {
+  background-color: #1a1a1a; /* Texto en modo oscuro */
+}
 /* Button styles */
 .home-button {
   background-color: #5e6347;
@@ -89,7 +102,7 @@
   border: none;
   padding: 10px;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 16px;
   cursor: pointer;
   margin-top: 10px;

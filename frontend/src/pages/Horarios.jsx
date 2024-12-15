@@ -1,7 +1,7 @@
 import useHorarios from "@hooks/horarios/useGetHorario.jsx"
 import useEditHorario from "@hooks/horarios/useEditHorario.jsx"
 import useDeleteHorario from "@hooks/horarios/useDeleteHorario.jsx"
-import Search from "../components/Search.jsx";
+//import Search from "../components/Search.jsx";
 import PopUpHorario from "../components/PopupHorario.jsx";
 import CreateHorario from "../components/CreateHorario.jsx";
 import HorarioCard from "../components/HorarioCard.jsx";
@@ -70,12 +70,12 @@ const handleDiaFilterChange = (e) => {
                     onClick={handleCreateClick}
                 >Crear Horario
                 </button>
-                <Search 
-            value={filter} 
-            onChange={handleDiaFilterChange} 
-            placeholder="Filtrar por día" 
-            />
-            
+                <input
+                    value={filter} 
+                    onChange={handleDiaFilterChange} 
+                    placeholder="Filtrar por día" 
+                    className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
+                />
             </div>
             
         </div>

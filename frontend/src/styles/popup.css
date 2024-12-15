@@ -20,6 +20,9 @@
   margin-right: 20px;
   padding: 20px;
 }
+.popup .options-class {
+  width: 10px;
+}
 .close {
   position: absolute;
   margin-top: 21px;
@@ -134,6 +137,52 @@
     margin-top: 0px;
     margin-bottom: auto;
   }
+
+  .inputs {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff; /* Asegura que el fondo sea blanco */
+    color: #000; /* Ajusta el color del texto */
+    appearance: none; /* Elimina el estilo predeterminado del navegador */
+    -webkit-appearance: none; /* Para Safari/Chrome */
+    -moz-appearance: none; /* Para Firefox */
+  }
+  
+  .inputs:focus {
+    outline: none;
+    border-color: #666; /* Color al hacer focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .select-container {
+    position: relative;
+  }
+  
+  .select-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    appearance: none;
+  }
+  
+  .select-container::after {
+    content: '▼'; /* Flecha hacia abajo */
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    pointer-events: none; /* La flecha no interfiere con el select */
+    color: #666;
+  }
+  
+
   .tooltip-icon {
     position: relative;
     top: 4px;

@@ -46,7 +46,7 @@ function ProductPopup({ show, setShow, data, action }) {
     <div>
       {show && (
         <div className="bg">
-          <div className="popup">
+          <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
             <button className="close" onClick={() => setShow(false)}>
               <img src={CloseIcon} />
             </button>
