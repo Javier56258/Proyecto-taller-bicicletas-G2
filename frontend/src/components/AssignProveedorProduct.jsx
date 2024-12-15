@@ -6,16 +6,13 @@ import { assignProveedorProduct } from "@services/proveedor.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; 
 import { getProducts } from '@services/product.service.js';
 
-
 function AssignProveedorProduct({ show, setShow, data, action }) {
-
     const proveedorData = data || {};
+    console.log("Proveedor seleccionado para asignar: ", proveedorData);
 
     const [productos, setProductos] = useState([]);    
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [reloadProducts, setReloadProducts] = useState(false);
-
-
     const handleChange = (selectedOptions) => {
       setSelectedOptions(selectedOptions);
     };
@@ -30,8 +27,6 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
         document.body.classList.remove('no-scroll');
       };
     }, [show]);
-    
-      
   
     useEffect(() => {
       const fetchProductos = async () => {
