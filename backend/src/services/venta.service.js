@@ -2,23 +2,40 @@
 import Venta from "../entity/venta.entity.js";
 import Product from "../entity/product.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { Between } from "typeorm";
 
-export async function createVentaService(venta) {
+
+export async function createVentaService(dataVenta) {
     try {
         const ventaRepository = AppDataSource.getRepository(Venta);
         const productRepository = AppDataSource.getRepository(Product);
 
-        const products = await productRepository.findByIds(dataVenta.productIds);
-        if (products.length !== dataVenta.productIds.length) throw new Error("Uno o más productos no encontrados");
+        const product = await productRepository.findOne({
+            where: {
+                id: dataVenta.idProducto
+            }
+        });
 
-        const total = products.reduce((sum, product) => sum + product.price, 0);
+        if (!product) {
+            return [null, "Producto no encontrado"];
+        }
+        if (product.stock < dataVenta.cantidad) {
+            return [null, "Stock insuficiente"];
+        }
 
+        const total = product.price * dataVenta.cantidad;
         const newVenta = ventaRepository.create({
-            productos: products,
+            producto: product,
             total,
+            cantidad: dataVenta.cantidad,
+            nombreProducto: product.name,
+            
         });
 
         await ventaRepository.save(newVenta);
+
+        // Actualizar el stock usando el método update
+        await productRepository.update(product.id, { stock: product.stock - dataVenta.cantidad });
 
         return [newVenta, null];
     } catch (error) {
@@ -38,15 +55,23 @@ export async function getVentasService() {
     }
 }
 
-export async function getVentaByDateService(date) {
+export async function getVentasByDateService(startDate, endDate) {
     try {
         const ventaRepository = AppDataSource.getRepository(Venta);
+        console.log("Fecha de inicio:", startDate);
+        console.log("Fecha de fin:", endDate);
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+
         const ventas = await ventaRepository.find({
              where: { 
-                fecha: date 
+                fecha: Between(start.toISOString(), end.toISOString())
             }, 
-            relations: ["productos"] 
+            relations: ["producto"] 
         });
+        console.log("Ventas encontradas:", ventas);
         return [ventas, null];
     } catch (error) {
         console.error("Error al obtener ventas por fecha:", error);
