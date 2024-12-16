@@ -30,3 +30,13 @@ export async function getVentasByDate(startDate, endDate) {
     throw error;
   }
 }
+
+export async function delVentas() {
+  try {
+    const response = await axios.delete('/ventas');
+    return response.data;
+  } catch (error) {
+    console.error('Error al eliminar las ventas:', error);
+    throw error;
+  }
+}

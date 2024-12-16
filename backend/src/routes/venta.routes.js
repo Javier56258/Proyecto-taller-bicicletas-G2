@@ -1,6 +1,6 @@
 "use strict";
 import { Router } from "express";
-import { createVenta, getVentas, getVentasByDate } from "../controllers/venta.controller.js";
+import { createVenta, getVentas, getVentasByDate,delVentas } from "../controllers/venta.controller.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 
 
@@ -12,5 +12,6 @@ router
 router
     .post("/",createVenta)
     .get("/all",getVentas)
-    .get("/by-date",getVentasByDate);
+    .get("/by-date",getVentasByDate)
+    .delete("/",delVentas);
 export default router;

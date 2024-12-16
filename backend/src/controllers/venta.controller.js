@@ -1,5 +1,10 @@
 "use strict";
-import { createVentaService, getVentasService, getVentasByDateService} from "../services/venta.service.js";
+import { 
+    createVentaService, 
+    delVentasService,
+    getVentasByDateService,
+    getVentasService, 
+    } from "../services/venta.service.js";
 import { ventaBodyValidation, ventaQueryValidation } from "../validations/venta.validation.js";
 import {
     handleErrorClient,
@@ -9,8 +14,8 @@ import {
 
 export async function createVenta(req, res) {
     try {
-        const { body} = req;
-        const {error} = await ventaBodyValidation.validate(body);
+        const { body } = req;
+        const { error } = await ventaBodyValidation.validate(body);
 
         if (error){
             return res.status(400).json({
@@ -72,4 +77,22 @@ export async function getVentasByDate(req, res) {
     } catch (error) {
         handleErrorServer(res, 500, error.message);
     }
+}
+
+export async function delVentas(req, res) {
+    try {
+        const [ventas, error] = await delVentasService();
+
+        if (error) {
+            return res.status(400).json({
+                message: error.message
+            });
+        }
+
+        handleSuccess(res, 200, "Venta(s) eliminadas", ventas);
+
+    } catch (error) {
+        handleErrorServer(res, 500, error.message);
+    }
+
 }

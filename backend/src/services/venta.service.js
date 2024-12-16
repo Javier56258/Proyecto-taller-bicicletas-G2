@@ -78,3 +78,15 @@ export async function getVentasByDateService(startDate, endDate) {
         return [null, "Error interno del servidor"];
     }
 }
+
+export async function delVentasService() {
+    try {
+        const ventaRepository = AppDataSource.getRepository(Venta);
+        const ventas = await ventaRepository.find();
+        await ventaRepository.remove(ventas);
+        return [ventas, null];
+    } catch (error) {
+        console.error("Error al eliminar ventas:", error);
+        return [null, "Error interno del servidor"];
+    }
+}

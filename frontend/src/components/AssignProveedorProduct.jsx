@@ -78,6 +78,7 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
           showSuccessAlert("Producto asignado", "El producto ha sido asignado correctamente.");
           setReloadProducts(prev => !prev); // Cambia el estado para recargar productos
         } catch (error) {
+          console.error("Error al asignar producto: ", error);
           showErrorAlert("Error", "No se pudo asignar el producto.");
         }
       };

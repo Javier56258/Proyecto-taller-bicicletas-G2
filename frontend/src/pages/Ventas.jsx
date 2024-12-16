@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
-import { getVentas } from '@services/venta.service.js';
-import { showErrorAlert } from '@helpers/sweetAlert.js';
+import { getVentas,delVentas } from '@services/venta.service.js';
+import { showErrorAlert,deleteDataAlert } from '@helpers/sweetAlert.js';
 import '@styles/proveedor.css';
 
 const Ventas = () => {
@@ -25,9 +25,29 @@ const Ventas = () => {
         showErrorAlert('Error', 'La respuesta de la API no es válida.');
       }
     } catch (error) {
+      console.error('Error al obtener las ventas:', error);
       showErrorAlert('Error', 'No se pudieron obtener las ventas.');
     }
   };
+
+  const deleteVentas = async () => {
+    try {
+      if (!ventas.length) {
+        showErrorAlert('Error', 'No hay ventas para eliminar.');
+        return;
+      }
+      const response  = await deleteDataAlert();
+      if(response.isConfirmed){
+        await delVentas();
+        setVentas([]);
+      }
+    } catch (error) {
+      console.error('Error al eliminar las ventas:', error);
+      showErrorAlert('Error', 'No se pudieron eliminar las ventas.');
+
+    }
+  };
+
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -107,31 +127,35 @@ const Ventas = () => {
               onClick={clearFilters}
               className="bg-red-500 text-white p-2 rounded-lg h-full hover:bg-red-700 transition"
             >
-                Limpiar Filtros
+              Limpiar Filtros
             </button>
           </div>
         </div>
+        <button
+          onClick={deleteVentas}
+          className="bg-blue-500 mb-3 text-white p-2 rounded-lg h-full hover:bg-blue-700 transition"
+        >Restablecer ventas</button>
         <table className="w-full">
-            <thead className="bg-gray-50 dark:bg-[#2e2c2f] border-b-2 border-gray-200 dark:border-[#212121] dark:text-[#fff]">
-              <tr>
-                <th className="p-3 text-sm font-semibold tracking-wide text-left">Nombre del Producto</th>
-                <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Cantidad</th>
-                <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Total</th>
-                <th className="w-32 p-3 text-sm font-semibold tracking-wide text-left">Fecha/Hora</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-100 dark:bg-[#2e2c2f] dark:divide-[#1c1c1c] dark:text-[#fff]">
+          <thead className="bg-gray-50 dark:bg-[#2e2c2f] border-b-2 border-gray-200 dark:border-[#212121] dark:text-[#fff]">
+            <tr>
+              <th className="p-3 text-sm font-semibold tracking-wide text-left">Nombre del Producto</th>
+              <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Cantidad</th>
+              <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">Total</th>
+              <th className="w-32 p-3 text-sm font-semibold tracking-wide text-left">Fecha/Hora</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-100 dark:bg-[#2e2c2f] dark:divide-[#1c1c1c] dark:text-[#fff]">
             {ventas
               .filter(filterVentas)
               .map((venta) => (
-                  <tr key={venta.id} className="bg-white dark:bg-[#1f1f1f] border-b dark:border-[#2e2c2f]">
+                <tr key={venta.id} className="bg-white dark:bg-[#1f1f1f] border-b dark:border-[#2e2c2f]">
                   <td className="p-3">{venta.nombreProducto}</td>
                   <td className="p-3">{venta.cantidad}</td>
                   <td className="p-3">{venta.total}</td>
                   <td className="p-3">{formatDate(venta.fecha)}</td>
                 </tr>
-                ))}
-            </tbody>
+              ))}
+          </tbody>
         </table>
       </div>
     </div>
