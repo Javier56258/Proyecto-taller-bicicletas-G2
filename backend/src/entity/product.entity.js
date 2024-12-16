@@ -47,12 +47,14 @@ const ProductSchema = new EntitySchema({
     relations: {
         proveedores: {
             type: "many-to-one",
-            target: "Proveedor",
-            inverseSide: "productos", // Relación inversa
+            target: "proveedores",
+            inverseSide: "productos",
+            
+             // Relación inversa
         },
-        venta: {
+        ventas: {
             type: "many-to-many",
-            target: "Venta", // Relación con la entidad Venta
+            target: "ventas", // Relación con la entidad Venta
             inverseSide: "productos", // Relación inversa
         },
         

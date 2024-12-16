@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema, JoinColumn } from "typeorm";
+import { EntitySchema } from "typeorm";
 
 const ProveedorSchema = new EntitySchema({
     name: "proveedor",
@@ -45,7 +45,7 @@ const ProveedorSchema = new EntitySchema({
     },
     relations: {
         productos: {
-            type: "many-to-many",
+            type: "one-to-many",
             target: "products",
             inverseSide: "proveedores",
         },
