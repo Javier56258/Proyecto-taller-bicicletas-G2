@@ -5,15 +5,24 @@ const VentaSchema = new EntitySchema({
     name: "Venta",
     tableName: "ventas",
     columns: {
-        idVenta: {
+        id: {
             primary: true,
             type: "int",
             generated: true
+        },
+        nombreProducto: {
+            type: "varchar",
+            length: 50,
+            nullable: false,
         },
         fecha: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",
             onUpdate: "CURRENT_TIMESTAMP",
+            nullable: false,
+        },
+        cantidad: {
+            type: "int",
             nullable: false,
         },
         total: {
@@ -24,8 +33,8 @@ const VentaSchema = new EntitySchema({
     relations: {
         productos: {
             type: "one-to-many",
-            target: "Product",
-            inverseSide: "Venta",
+            target: "products",
+            inverseSide: "venta",
             JoinTable: true,
         }
     }

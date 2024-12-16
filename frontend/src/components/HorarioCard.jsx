@@ -3,15 +3,35 @@ import deleteIcon from "@assets/deleteIcon.svg";
 
 const HorarioCard = ({ horario, onEdit, onDelete }) => {
   return (
-    <div className="service-card">
-      {horario.imagen && <img src={horario.imagen} style={{ width: "100px", height: "100px" }} />}
-      <p>{horario.hora}</p>
-      <button onClick={() => onEdit(horario)}>
-        <img src={updateIcon} alt="Editar" />
-      </button>
-      <button onClick={() => onDelete(horario.id)}>
-        <img src={deleteIcon} alt="Eliminar" />
-      </button>
+    <div className="flex flex-col items-center bg-[#F3E8EE] border border-[#729B79] rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow max-w-sm dark:bg-[#2e2c2f]">
+      <h2 className="text-lg font-bold text-[#475B63] mb-2 text-center dark:text-[#F3E8EE]">
+        {horario.hora}
+      </h2>
+      <div>
+
+        <button 
+          onClick={() => onEdit(horario)}
+          className="group p-3 white rounded-md hover:bg-[#bacdb0] transition"
+        >
+          <img  
+            src={updateIcon} 
+            alt="Editar" 
+            className="w-4 h-4 fill-white group-hover:invert group-hover:brightness-0 group-hover:saturate-100 group-hover:contrast-1000"
+          />
+        </button>
+        <button 
+          onClick={() => onDelete(horario.id)}
+          className="group p-3 white rounded-md hover:bg-red-600 transition"
+        >
+          <img 
+            src={deleteIcon} 
+            alt="Eliminar" 
+            className="w-4 h-4 group-hover:invert group-hover:brightness-0 group-hover:saturate-100 group-hover:contrast-1000"
+          />
+        </button>
+
+      </div>
+      
     </div>
   );
 };

@@ -51,3 +51,13 @@ export async function deleteReserva(idreserva) {
         return error.response.data;
     }
 }
+
+export async function getReservaXfechas(fechaInicio, fechaFin) {
+    try {
+        const { data } = await axios.get(`/reservas?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+        const formattedData = data.data.map(formatReservaData);
+        return formattedData;
+    } catch (error) {
+        return error.response.data;
+    }
+}

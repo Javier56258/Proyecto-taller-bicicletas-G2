@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema, JoinColumn } from "typeorm";
+import { EntitySchema } from "typeorm";
 
 const ProveedorSchema = new EntitySchema({
     name: "proveedor",

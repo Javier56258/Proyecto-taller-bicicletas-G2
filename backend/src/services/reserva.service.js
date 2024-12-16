@@ -37,7 +37,6 @@ export async function createReservaService(dataReserva) {
 
         const servicioExistente = await servicioRepository.findOne({
             where: { 
-                id: servicioExistente.id,
                 nombre: motivo
             }
         });
@@ -59,6 +58,7 @@ export async function createReservaService(dataReserva) {
             fecha: fecha,
             hora: hora,
             horario: horarioExistente,
+            servicio: servicioExistente,
         });
         await reservaRepository.save(newReserva);
         return [newReserva, null];

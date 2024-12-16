@@ -1,84 +1,176 @@
-import Table from '@components/Table';
-import useProducts from '@hooks/products/useGetProducts.jsx';
-import UpdateIcon from '../assets/updateIcon.svg';
-import useEditProduct from '@hooks/products/useEditProduct.jsx';
-import UpdateIconDisable from '../assets/updateIconDisabled.svg';
-import ProductPopup from '@components/ProductPopup.jsx';
-import { useCallback } from 'react';
-import useDeleteProduct from '@hooks/products/useDeleteProduct.jsx';
-import DeleteIcon from '../assets/deleteIcon.svg';
-import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import '@styles/users.css';
-import CreateProduct from '@components/CreateProduct.jsx';
+
+import { useEffect } from 'react';
+import { getProducts, createProduct, updateProduct, deleteProduct } from '@services/product.service.js';
+import "@styles/proveedor.css";
 import { useState } from 'react';
+import ProductCard from '@components/ProductCard.jsx';
+import ProductpopUp from '@components/ProductpopUp.jsx';
+import PopupEditProduct from '../components/PopupEditProduct';
+import { showSuccessAlert, showErrorAlert, deleteDataAlert } from '@helpers/sweetAlert.js';
+import { createVenta } from '../services/venta.service';
 
 const Products = () => {
-    //crear producto pop up
-    const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
-    //obtener productos
-    const { products, fetchProducts, setProducts } = useProducts();
-    //editar producto
-    const {
-        handleClickUpdate,
-        handleUpdate,
-        isPopupOpen,
-        setIsPopupOpen,
-        dataProduct,
-        setDataProduct
-    }= useEditProduct(setProducts);
-    //eliminar producto
-    const { handleDelete } = useDeleteProduct(fetchProducts, setDataProduct);
-    
-    const handleCreateClick = () => {
-        setIsCreatePopupOpen(true);
-    };
-    const handleSelectionChange = useCallback((selectedProducts) => {
-        setDataProduct(selectedProducts);
-    }, [setDataProduct]);
+    const [productos, setProductos] = useState([]);
+    const [editingProducto, setEditingProducto] = useState(null);
+    const [filter, setFilter] = useState("");
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+    const [isReversed, setIsReversed] = useState(false);
 
-    const columns = [
-        { title: "Nombre", field: "name", width: 350, responsive: 0 },
-        { title: "Descripción", field: "description", width: 300, responsive: 3 },
-        { title: "Precio", field: "price", width: 150, responsive: 2 },
-        { title: "Stock", field: "stock", width: 200, responsive: 2 },
-        {title: "Creado", field: "createdAt", width: 200, responsive: 2}
-    ];
+
+    useEffect(() => {
+        async function fetchProductos() {
+            try {
+                const data = await getProducts();
+                data.sort((a, b) => b.id - a.id);
+                setProductos(data);
+            } catch (error) {
+                console.error("Error al obtener los servicios:", error);
+            }
+        }
+        fetchProductos();
+    }, []);
+
+    const handleSave = async (productoData) => {
+
+        try {
+            if (editingProducto) {
+                await updateProduct(productoData, editingProducto.id);
+                showSuccessAlert('Producto actualizado correctamente');
+
+                const updatedProducts = productos.map((product) =>
+                    product.id === editingProducto.id ? productoData : product
+                );
+                setProductos(updatedProducts);
+            } else {
+                showSuccessAlert('Producto creado correctamente');
+                const newProduct = await createProduct(productoData);
+                setProductos([newProduct, ...productos]);
+            }
+            setEditingProducto(null);
+        } catch (error) {
+            console.log(error);
+            showErrorAlert('Error al guardar el producto');
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await deleteDataAlert();
+            if (response.isConfirmed) {
+                await deleteProduct(id);
+                showSuccessAlert('Producto eliminado correctamente');
+                const data = await getProducts();
+                data.sort((a, b) => b.id - a.id);
+                setProductos(data);
+            } else {
+                showErrorAlert('Error al eliminar el producto');
+            }
+        } catch (error) {
+            console.log(error);
+            showErrorAlert('Error al eliminar el producto');
+        }
+    };
+
+    const handleEdit = (product) => {
+        setEditingProducto(product);
+        setIsEditPopupOpen(true);
+
+    };
+
+    const handleSell = async (product, cantidad) => {
+        try {
+            if (cantidad <= 0) {
+                showErrorAlert('La cantidad debe ser mayor a 0');
+                return;
+            }
+            const response = await createVenta({
+                idProducto: product.id,
+                cantidad: cantidad,
+            });
+            if (response) {
+                showSuccessAlert('Producto vendido correctamente');
+                const data = await getProducts();
+                data.sort((a, b) => b.id - a.id);
+                setProductos(data);
+            } else {
+                showErrorAlert('Error al vender el producto');
+            }
+
+        } catch (error) {
+            console.log(error);
+            showErrorAlert('Error al vender el producto');
+        }
+    }
+
+    const filteredProducts = productos.filter((product) =>
+        product.name.toLowerCase().includes(filter.toLowerCase())
+
+    );
+
+    const displayedProductos = isReversed ? [...filteredProducts].reverse() : filteredProducts;
 
     return (
-        <div className='main-container'>
-            <div className='table-container'>
-                <div className='top-table'>
-                    <h1 className='title-table'>Productos</h1>
-                    <div className='filter-actions'>
-                        <button onClick={handleCreateClick} className='create-proveedor-button'>
-                            Añadir Producto
-                        </button>
-                        <button onClick={handleClickUpdate} disabled={dataProduct.length ===0} >
-                            {dataProduct.length === 0 ? (
-                                <img src={UpdateIconDisable} alt="edit-disabled" />
-                            ) : (
-                                <img src={UpdateIcon} alt="edit" />
-                            )}
-                        </button>
-                        <button className = 'delete-user-button'  disabled = {dataProduct.length ===0} onClick={()=> handleDelete(dataProduct)}>
-                            {dataProduct.length === 0 ? (
-                                <img src={DeleteIconDisable} alt="delete-disabled" />
-                            ) : (
-                                <img src={DeleteIcon} alt="delete" />
-                            )}
-                        </button>
-                    </div>
+        <div className='main-content bg-none'>
+            <h1 className='text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]'>
+                Productos del Taller
+            </h1>
+            <div className='button-container'>
+                <button
+                    className='create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]'
+                    onClick={() => {
+                        setEditingProducto(null);
+                        setIsPopupOpen(true);
+                    }}
+                >
+                    Crear Producto
+                </button>
+                <div className='right-buttons'>
+                    <input
+                        type="text"
+                        placeholder='Filtrar por nombre'
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                        className='search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert'
+                    />
+                    <button
+                        className='order-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]'
+                        onClick={() => setIsReversed(!isReversed)}
+                    >
+                        {isReversed ? 'Orden: Mas antiguo' : 'Orden: Mas reciente'}
+                    </button>
                 </div>
-                <Table
-                    columns={columns}
-                    data={products}
-                    onSelectionChange={handleSelectionChange}
-                />
             </div>
-            <ProductPopup show= {isPopupOpen} setShow={setIsPopupOpen} data={dataProduct} action = {handleUpdate} />
-            <CreateProduct show={isCreatePopupOpen} setShow={setIsCreatePopupOpen} action={fetchProducts} />
+
+            <ProductpopUp
+                show={isPopupOpen}
+                setShow={setIsPopupOpen}
+                data={editingProducto}
+                action={handleSave}
+            />
+
+
+            <PopupEditProduct
+                show={isEditPopupOpen}
+                setShow={setIsEditPopupOpen}
+                producto={editingProducto}
+                action={handleSave}
+            />
+
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
+                {displayedProductos.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                        onSell={handleSell}
+                    />
+                ))}
+            </div>
         </div>
-    );  
+    );
 };
 
 export default Products;

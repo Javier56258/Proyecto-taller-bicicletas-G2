@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from "@assets/XIcon.svg";
@@ -6,10 +6,11 @@ import { assignProveedorProduct } from "@services/proveedor.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; 
 import { getProducts } from '@services/product.service.js';
 
-
 function AssignProveedorProduct({ show, setShow, data, action }) {
-
     const proveedorData = data || {};
+    console.log("Proveedor seleccionado para asignar: ", proveedorData);
+
+  
 
     const [productos, setProductos] = useState([]);    
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -30,8 +31,6 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
         document.body.classList.remove('no-scroll');
       };
     }, [show]);
-    
-      
   
     useEffect(() => {
       const fetchProductos = async () => {
@@ -64,13 +63,14 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
     const handleAssignProduct = async (formData) => {
         try {
 
+
           const idProveedor = proveedorData.idProveedor;
           const productIds = selectedOptions.map(option => option.value);
 
-          const data = {
-            idProveedor,
-            productIds, 
-          };
+      const data = {
+        idProveedor,
+        productIds,
+      };
 
           await assignProveedorProduct(data);
           action();
@@ -78,6 +78,7 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
           showSuccessAlert("Producto asignado", "El producto ha sido asignado correctamente.");
           setReloadProducts(prev => !prev); // Cambia el estado para recargar productos
         } catch (error) {
+          console.error("Error al asignar producto: ", error);
           showErrorAlert("Error", "No se pudo asignar el producto.");
         }
       };

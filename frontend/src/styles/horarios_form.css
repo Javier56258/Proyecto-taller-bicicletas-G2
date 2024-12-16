@@ -1,86 +1,104 @@
-.main-content {
-    display: inherit;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 1000px;
+.main-content-formHorario {
+  display: inherit;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: hidden;
+}
+
+.centered-h1-formHorario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.controls-formHorario {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+
+.filter-input-formHorario {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.create-button,
+.order-button {
+  background-color: #bacdb0;
+  color: white;
+  padding: 10px 20px;
+  border: 3px solid #bacdb0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark .create-button,
+.dark .order-button {
+  border: 3px solid #475b63;
+  background-color: #475b63; /* Color de fondo oscuro en modo oscuro */
+  color: #e8e9e8; /* Color de texto en modo oscuro */
+}
+
+.create-button:hover,
+.order-button:hover {
+  border: 3px solid #bacdb0;
+  background-color: #fff;
+  color: #475b63;
+}
+
+/* Hover en modo oscuro */
+.dark .create-button:hover,
+.dark .order-button:hover {
+  border: 3px solid #475b63;
+  background-color: #475b63; /* Color más claro al hacer hover en modo oscuro */
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .popup-formHorario .form-formHorario {
     padding: 20px;
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-x: hidden;
+    width: auto;
+    padding-top: 30px;
   }
-  
-  .centered-h1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    text-align: center;
+}
+
+@media (max-width: 540px) {
+  .main-content-formHorario {
+    max-width: 350px;
   }
 
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 40px;
+  .button-container {
+    flex-direction: column;
+    gap: 20px;
   }
-
-  
-  .filter-input {
-    padding: 10px;
-    width: 100%;
-    max-width: 300px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  .create-button,
+  .order-button {
+    height: 60px;
+    font-size: 20px;
   }
-  
-  .create-horario-button,
-  .order-horario-button {
-    background-color: #475b63;
-    color: white;
-    padding: 10px 20px;
-    border: 3px solid #475b63;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .create-horario-button:hover,
-  .order-button:hover {
-    border: 3px solid #003366;
-    background-color: #fff;
-    color: #003366;
-  }
-  
-  @media (max-width: 767px) {
-    .popup .form {
-      padding: 20px;
-      width: auto;
-      padding-top: 30px;
-    }
-  }
-  
-  @media (max-width: 540px) {
-    .main-content {
-      max-width: 350px;
-    }
-    .right-buttons {
-      flex-direction: column;
-      padding-left: 0px;
-    }
-    .button-container {
-      flex-direction: column;
-      gap: 20px;
-    }
-    .create-button,
-    .order-button {
-      height: 60px;
-      font-size: 20px;
-    }
-  }
-  
+}

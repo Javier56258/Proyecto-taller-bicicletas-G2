@@ -22,7 +22,7 @@ export async function createReserva(req, res) {
 
         const { value, error } = reservaBodyValidation.validate(reserva); 
         if (error) {
-            return res.status(400).json({ message: error.message });
+            return handleErrorReserva(res, 400, "Error de validación en datos enviados", error.message);
         }
 
         const [reservaSaved, errorReservaSaved] = await createReservaService(value); 

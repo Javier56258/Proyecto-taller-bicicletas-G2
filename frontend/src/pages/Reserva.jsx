@@ -3,17 +3,22 @@ import PopupReserva from '@components/PopupReserva';
 import useDeleteReserva from '@hooks/reservas/useDeleteReserva';
 import useEditReserva from '@hooks/reservas/useEditReserva';
 import useGetReservas from '@hooks/reservas/useGetReserva';
-import SearchIcon from '../assets/searchIcon.svg';
+//import Search from "../components/Search.jsx";
+//import SearchIcon from '../assets/searchIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import PopupFiltrosRes from '@components/PopupFiltrosRes';
+//import PopupFiltrosRes from '@components/PopupFiltrosRes';
 import '@styles/reserva.css';
 import '@styles/popup_filtrosRes.css';
+//import { set } from 'react-hook-form';
 
 const Reservas = () => {
     const { reservas, fetchReservas, setReservas } = useGetReservas();
+//    const [isFilterPopupOpen, setIsFiltersPopupOpen] = useState(false);
+    const [filtro, setFiltroNombre] = useState("");
+    {/* 
     const [filtros, setFiltros] = useState({
         nombre: "",
         fechaInicio: "",
@@ -21,7 +26,29 @@ const Reservas = () => {
         correo: "",
         servicio: "",
       });
-    const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
+    */}
+    
+    const handleNombreFilterChange = (e) => {
+        setFiltroNombre(e.target.value);
+    }
+
+    const filteredNombres = reservas.filter(reserva =>
+        reserva.nombreReservador.toLowerCase().includes(filtro.toLowerCase())
+    );
+
+{/*    const applyFilters = () => {
+        const { nombre, fechaInicio, fechaFin, correo, servicio } = filtros;
+        const filteredReservas = reservas.filter((reserva) => {
+            const matchesNombre = nombre ? reserva.nombreReservador === nombre : true;
+            const matchesFechaInicio = fechaInicio ? reserva.fecha >= fechaInicio : true;
+            const matchesFechaFin = fechaFin ? reserva.fecha <= fechaFin : true;
+            const matchesCorreo = correo ? reserva.email === correo : true;
+            const matchesServicio = servicio ? reserva.motivo === servicio : true;
+            return matchesNombre && matchesFechaInicio && matchesFechaFin && matchesCorreo && matchesServicio;
+        });
+        setReservas(filteredReservas);
+    };
+*/}
     const [selectedReserva, setSelectedReserva] = useState(null);    
     const {
         handleClickUpdate,
@@ -83,60 +110,98 @@ const Reservas = () => {
         }
     };
 
+    
+
+    {/*
     const handleFilterChange = (newFilters) => {
         setFiltros(newFilters);
-        setIsFilterPopupOpen(false); // Cerrar el popup al aplicar filtros
-      };
+        applyFilters();
+    };   
+    */}
+
+        
     
     const handleRowSelect = (reserva) => {
         setSelectedReserva(
           selectedReserva?.idreserva === reserva.idreserva ? null : reserva
         );
     };
+ //   console.log("¿applyFilters es una función?", typeof applyFilters === "function");
 
     return (
         <div className="slide-down">
-            <div className="main-container">
+            <div className="main-content bg-none">
                 <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
                     Reservas
                 </h1>
     
                 <div className="top-table">
-                    <div className="filter-actions">
-                        <button 
-                        className= "filter-reserva-button"
-                        onClick={() => setIsFilterPopupOpen(true)}>
-                            
-                            <img src={SearchIcon} alt="search" />
-                        </button>
+                    <div className="filter-actions flex space-x-4">
+                       {/* 
                         <button
-                            className="edit-reserva-button"
+                        onClick={() => setIsFiltersPopupOpen(true)}
+                        className="p-3 rounded-md bg-[#bacdb0] hover:bg-[#8da685] text-white font-medium transition duration-300 
+                                    dark:bg-[#475B63] dark:hover:bg-[#36474d]"
+                        >
+                        Filtrar
+                        </button>
+                        */}
+                        <input
+                            value={filtro}
+                            onChange={handleNombreFilterChange}
+                            placeholder={"Filtrar por nombre"}
+                            className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
+                        />
+
+                        {/* Botón Editar */}
+                        <button
                             onClick={handleEditClick}
                             disabled={!selectedReserva}
+                            className={`group p-3 rounded-md mt-4 transition ${
+                                !selectedReserva
+                                ? "hover-off dark:bg-gray-800 dark:text-gray-500" // Deshabilitado
+                                : "bg-white text-black border border-[#bacdb0] hover:bg-[#729b79] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#475b63]" // Habilitado
+                            }`}
                         >
                             <img
-                            src={selectedReserva ? UpdateIcon : UpdateIconDisable}
-                            alt="edit"
+                             src={selectedReserva ? UpdateIcon : UpdateIconDisable}
+                                alt="edit"
+                                className={`w-4 h-4 transition group-hover:brightness-0 group-hover:invert ${
+                                    selectedReserva ? "group-hover:contrast-1000" : ""
+                                  }`}
                             />
                         </button>
+
+                        {/* Botón Eliminar */}
                         <button
-                            className="delete-reserva-button"
-                            disabled={!selectedReserva}
-                            onClick={handleDelete}
+                          onClick={handleDelete}
+                          disabled={!selectedReserva}
+                          className={`group p-3 rounded-md mt-4 transition ${
+                            !selectedReserva
+                            ? "hover-off dark:bg-gray-800 dark:text-gray-500" // Deshabilitado
+                            : "bg-white text-black border border-[#bacdb0] hover:bg-[#729b79] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#475b63]" // Habilitado
+                        }`}
                         >
-                            {dataReserva.length === 0 ? (
-                                <img src={DeleteIconDisable} alt="delete-disabled" />
-                            ) : (
-                                <img src={DeleteIcon} alt="delete" />
-                            )}
+                          <img
+                            src={
+                              dataReserva.length === 0 || !selectedReserva
+                                ? DeleteIconDisable
+                                : DeleteIcon
+                            }
+                            alt="delete"
+                            className={`w-4 h-4 transition group-hover:brightness-0 group-hover:invert ${
+                                selectedReserva ? "group-hover:contrast-1000" : ""
+                              }`}
+                          />
                         </button>
                     </div>
                 </div>
+
                             
                             {/* Tabla de reservas */}
-                <div className="overflow-auto rounded-lg shadow">
+                <div className="overflow-auto rounded-lg shadow hidden md:block">
                     <table className="w-full">
-                        <thead className="bg-pink-100 border-b-2 border-gray-200">
+                        <thead className="bg-gray-50 dark:bg-[#2e2c2f] border-b-2 border-gray-200 dark:border-[#212121] dark:text-[#fff]">
                             <tr>
                                 <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left"></th>
                                 <th className="p-3 text-sm font-semibold tracking-wide text-left">
@@ -156,14 +221,8 @@ const Reservas = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-100">
-                            {reservas
-                                .filter((reserva) =>
-                                    reserva.nombreReservador
-                                        .toLowerCase()
-                                        .includes(filtros.nombre.toLowerCase())
-                                )
-                                .map((reserva, index) => {
+                        <tbody className="bg-white divide-y divide-gray-100 dark:bg-[#2e2c2f] dark:divide-[#1c1c1c] dark:text-[#fff]">
+                            {filteredNombres.map((reserva, index) => {
                                     const isSelected =
                                         selectedReserva?.idreserva === reserva.idreserva;
                                     return (
@@ -214,12 +273,16 @@ const Reservas = () => {
                     data={dataReserva}
                     action={handleUpdate}
                 />
+                {/*
                 <PopupFiltrosRes
                     show={isFilterPopupOpen}
-                    setShow={setIsFilterPopupOpen}
+                    onClose={() => setIsFiltersPopupOpen(false)}
                     filtros={filtros}
                     setFiltros={handleFilterChange}
+                    applyFilters={applyFilters}
                 />
+                */}
+                
             </div>
         </div>
     );

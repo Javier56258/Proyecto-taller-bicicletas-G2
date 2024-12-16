@@ -30,6 +30,7 @@ const ProductSchema = new EntitySchema({
         price: {
             type: "int",
             nullable: false,
+            
         },
         createdAt: {
             type: "timestamp with time zone",
@@ -47,13 +48,14 @@ const ProductSchema = new EntitySchema({
         proveedores: {
             type: "many-to-one",
             target: "proveedores",
-            inverseSide: "productos", // Relación inversa
+            inverseSide: "productos",
+            
+             // Relación inversa
         },
         ventas: {
             type: "many-to-many",
-            target: "Venta", // Relación con la entidad Venta
-            inverseSide: "ventas", // Relación inversa
-            joinTable: true,
+            target: "ventas", // Relación con la entidad Venta
+            inverseSide: "productos", // Relación inversa
         },
         
     },
