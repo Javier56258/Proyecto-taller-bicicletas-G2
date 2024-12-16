@@ -150,6 +150,20 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
+            {(userRole === "administrador" || userRole === "usuario") && (
+              <li>
+                <NavLink
+                  to="/ventas"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    addActiveClass();
+                  }}
+                >
+                  Ventas
+                </NavLink>
+              </li>
+            )}
             {(userRole === "administrador") && (
               <li>
                 <NavLink
@@ -206,6 +220,20 @@ const Navbar = () => {
                   }}
                 >
                   Horarios
+                </NavLink>
+              </li>
+            )}
+            {(userRole === "administrador") && (
+              <li>
+                <NavLink
+                  to="/statistics"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    addActiveClass();
+                  }}
+                >
+                  Estadísticas
                 </NavLink>
               </li>
             )}

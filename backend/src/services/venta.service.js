@@ -55,7 +55,7 @@ export async function getVentasService() {
     }
 }
 
-export async function getVentaByDateService(startDate, endDate) {
+export async function getVentasByDateService(startDate, endDate) {
     try {
         const ventaRepository = AppDataSource.getRepository(Venta);
         console.log("Fecha de inicio:", startDate);

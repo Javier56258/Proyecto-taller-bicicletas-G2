@@ -15,6 +15,7 @@ import Reservas from "./pages/Reserva";
 import Horarios from "./pages/Horarios";
 import "@styles/tailwind.css";
 import StatisticsPage from './pages/StatisticsPage';
+import Ventas from './pages/Ventas.jsx';
 
   
 
@@ -69,6 +70,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: '/ventas',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'usuario']}>
+            <Ventas />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "/horarios",
         element: (
           <ProtectedRoute allowedRoles={["administrador"]}>
@@ -84,6 +93,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      
     ],
   },
   {
