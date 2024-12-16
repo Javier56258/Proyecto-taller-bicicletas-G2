@@ -1,12 +1,13 @@
 
 import { useEffect } from 'react';
-import { getProducts,createProduct,updateProduct,deleteProduct } from '@services/product.service.js';
+import { getProducts, createProduct, updateProduct, deleteProduct } from '@services/product.service.js';
 import "@styles/proveedor.css";
 import { useState } from 'react';
 import ProductCard from '@components/ProductCard.jsx';
 import ProductpopUp from '@components/ProductpopUp.jsx';
 import PopupEditProduct from '../components/PopupEditProduct';
 import { showSuccessAlert, showErrorAlert, deleteDataAlert } from '@helpers/sweetAlert.js';
+import { createVenta } from '../services/venta.service';
 
 const Products = () => {
     const [productos, setProductos] = useState([]);
@@ -19,16 +20,16 @@ const Products = () => {
 
     useEffect(() => {
         async function fetchProductos() {
-          try {
-            const data = await getProducts();
-            data.sort((a, b) => b.id - a.id);
-            setProductos(data);
-          } catch (error) {
-            console.error("Error al obtener los servicios:", error);
-          }
+            try {
+                const data = await getProducts();
+                data.sort((a, b) => b.id - a.id);
+                setProductos(data);
+            } catch (error) {
+                console.error("Error al obtener los servicios:", error);
+            }
         }
         fetchProductos();
-      }, []);
+    }, []);
 
     const handleSave = async (productoData) => {
 
@@ -36,7 +37,7 @@ const Products = () => {
             if (editingProducto) {
                 await updateProduct(productoData, editingProducto.id);
                 showSuccessAlert('Producto actualizado correctamente');
-                
+
                 const updatedProducts = productos.map((product) =>
                     product.id === editingProducto.id ? productoData : product
                 );
@@ -63,7 +64,7 @@ const Products = () => {
                 data.sort((a, b) => b.id - a.id);
                 setProductos(data);
             } else {
-                showErrorAlert('Error al eliminar el producto');  
+                showErrorAlert('Error al eliminar el producto');
             }
         } catch (error) {
             console.log(error);
@@ -74,8 +75,33 @@ const Products = () => {
     const handleEdit = (product) => {
         setEditingProducto(product);
         setIsEditPopupOpen(true);
-    
+
     };
+
+    const handleSell = async (product, cantidad) => {
+        try {
+            if (cantidad <= 0) {
+                showErrorAlert('La cantidad debe ser mayor a 0');
+                return;
+            }
+            const response = await createVenta({
+                idProducto: product.id,
+                cantidad: cantidad,
+            });
+            if (response) {
+                showSuccessAlert('Producto vendido correctamente');
+                const data = await getProducts();
+                data.sort((a, b) => b.id - a.id);
+                setProductos(data);
+            } else {
+                showErrorAlert('Error al vender el producto');
+            }
+
+        } catch (error) {
+            console.log(error);
+            showErrorAlert('Error al vender el producto');
+        }
+    }
 
     const filteredProducts = productos.filter((product) =>
         product.name.toLowerCase().includes(filter.toLowerCase())
@@ -111,16 +137,16 @@ const Products = () => {
                         className='order-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]'
                         onClick={() => setIsReversed(!isReversed)}
                     >
-                        {isReversed ? 'Orden: Mas antiguo' : 'Orden: Mas reciente'} 
+                        {isReversed ? 'Orden: Mas antiguo' : 'Orden: Mas reciente'}
                     </button>
                 </div>
             </div>
 
-            <ProductpopUp 
-                show = {isPopupOpen}
-                setShow = {setIsPopupOpen}
-                data = {editingProducto}
-                action = {handleSave}
+            <ProductpopUp
+                show={isPopupOpen}
+                setShow={setIsPopupOpen}
+                data={editingProducto}
+                action={handleSave}
             />
 
 
@@ -139,6 +165,7 @@ const Products = () => {
                         product={product}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
+                        onSell={handleSell}
                     />
                 ))}
             </div>
