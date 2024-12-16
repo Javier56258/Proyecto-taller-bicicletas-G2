@@ -41,3 +41,23 @@ export const ventaBodyValidation = Joi.object({
         "object.missing":
             "Debes proporcionar al menos un parámetro: idProducto.",
 });
+
+
+export const ventaQueryValidation = Joi.object({
+    startDate: Joi.date()
+        .iso()
+        .required()
+        .messages({
+            "date.base": "La fecha de inicio debe ser una fecha válida.",
+            "date.format": "La fecha de inicio debe estar en formato ISO.",
+            "any.required": "La fecha de inicio es requerida.",
+        }),
+    endDate: Joi.date()
+        .iso()
+        .required()
+        .messages({
+            "date.base": "La fecha de fin debe ser una fecha válida.",
+            "date.format": "La fecha de fin debe estar en formato ISO.",
+            "any.required": "La fecha de fin es requerida.",
+        }),
+});

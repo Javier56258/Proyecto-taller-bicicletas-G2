@@ -2,6 +2,7 @@
 import Venta from "../entity/venta.entity.js";
 import Product from "../entity/product.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { Between } from "typeorm";
 
 
 export async function createVentaService(dataVenta) {
@@ -54,15 +55,23 @@ export async function getVentasService() {
     }
 }
 
-export async function getVentaByDateService(date) {
+export async function getVentaByDateService(startDate, endDate) {
     try {
         const ventaRepository = AppDataSource.getRepository(Venta);
+        console.log("Fecha de inicio:", startDate);
+        console.log("Fecha de fin:", endDate);
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+
         const ventas = await ventaRepository.find({
              where: { 
-                fecha: date 
+                fecha: Between(start.toISOString(), end.toISOString())
             }, 
-            relations: ["productos"] 
+            relations: ["producto"] 
         });
+        console.log("Ventas encontradas:", ventas);
         return [ventas, null];
     } catch (error) {
         console.error("Error al obtener ventas por fecha:", error);

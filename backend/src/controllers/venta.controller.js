@@ -1,6 +1,6 @@
 "use strict";
 import { createVentaService, getVentasService, getVentaByDateService} from "../services/venta.service.js";
-import { ventaBodyValidation } from "../validations/venta.validation.js";
+import { ventaBodyValidation, ventaQueryValidation } from "../validations/venta.validation.js";
 import {
     handleErrorClient,
     handleErrorServer,
@@ -55,10 +55,15 @@ export async function getVentas(req, res) {
 
 export async function getVentaByDate(req, res) {
     try {
-        const { date } = req.query;
-        const [ventas, error] = await getVentaByDateService(date);
+        const { startDate, endDate } = req.query;
+        const { error } = ventaQueryValidation.validate({ startDate, endDate });
+
 
         if (error) return handleErrorClient(res, 400, error.message);
+
+        const [ventas, errorVentas] = await getVentaByDateService(startDate, endDate);
+
+        if (errorVentas) return handleErrorServer(res, 400, errorVentas.message);
 
         res.status(200).json({
             message: "Ventas encontradas",
