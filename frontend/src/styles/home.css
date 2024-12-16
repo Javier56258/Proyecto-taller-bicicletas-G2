@@ -59,7 +59,7 @@
 }
 
 .dark .home-reserva-title {
-  color: #F3E8EE; /* Texto en modo oscuro */
+  color: #f3e8ee; /* Texto en modo oscuro */
 }
 
 /* Form group styles */
@@ -113,17 +113,17 @@
   color: #bacdb09e;
   margin-right: 70px;
   .h1 {
-      font-size: 2.6rem;
+    font-size: 2.6rem;
   }
 }
 
 .home-service-card {
-  display: flex;               /* Usar flexbox */
-  justify-content: center;      /* Centra horizontalmente */
+  display: flex; /* Usar flexbox */
+  justify-content: center; /* Centra horizontalmente */
   align-items: center;
   text-align: center;
-  background-color: #bacdb09e; 
-  color: #101112; 
+  background-color: #bacdb09e;
+  color: #101112;
   width: 70px; /* Ajusta el tamaño según lo que necesites */
   height: 40px;
   border: 1px solid #070000;
@@ -155,14 +155,30 @@
 
 .home-services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Crear columnas automáticas */
-  grid-template-rows: repeat(auto-fill, minmax(40px, 1fr)); /* Crear filas automáticas */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(80px, 1fr)
+  ); /* Crear columnas automáticas */
+  grid-template-rows: repeat(
+    auto-fill,
+    minmax(40px, 1fr)
+  ); /* Crear filas automáticas */
   gap: 30px; /* Espacio entre las tarjetas */
   padding: 30px;
 }
 
+.swiper-pagination-bullet-active {
+  background-color: #729b79 !important;
+}
+.dark .swiper-pagination-bullet {
+  background-color: #fff;
+}
+
 @media (max-width: 768px) {
   .home-services-grid {
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Menor tamaño de columna en pantallas pequeñas */
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(80px, 1fr)
+    ); /* Menor tamaño de columna en pantallas pequeñas */
   }
 }
