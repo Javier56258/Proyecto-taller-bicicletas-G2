@@ -130,7 +130,7 @@ const Statistics = () => {
                       ) : (
                         outOfStockProductsProveedores.map((proveedor, index) => (
                           <tr key={proveedor.id} className={index === outOfStockProductsProveedores.length - 1 ? "rounded-b-lg" : ""}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 dark:text-gray-100">
                               {proveedor.nombreProveedor}
                             </td>
                         </tr>
