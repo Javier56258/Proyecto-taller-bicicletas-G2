@@ -11,6 +11,7 @@ import { createReservaService,
          } from "../services/reserva.service.js"; 
 import moment from "moment";
 import { handleErrorReserva, handleErrorServer, handleSuccess } from "../handlers/responseHandlers.js";
+import { sendEmail } from "../services/email.service.js";
 
 
 export async function createReserva(req, res) {
@@ -31,7 +32,27 @@ export async function createReserva(req, res) {
         }
         reservaSaved.fecha = moment(reservaSaved.fecha).format("DD-MM-YYYY");
         handleSuccess(res, 201, "Reserva creada exitosamente", reservaSaved);
+        const asunto = "Confirmación de reserva";
+        const mensaje = `
+                        Su reserva para el ${reservaSaved.fecha} a las ${reservaSaved.hora} ha sido confirmada.<br>
+                        Detalle:<br>
+                        Nombre: ${reservaSaved.nombreReservador}<br>
+                        Email: ${reservaSaved.email}<br>
+                        Servicio: ${reservaSaved.motivo}<br>
+                        Fecha: ${reservaSaved.fecha}<br>
+                        Hora: ${reservaSaved.hora}<br><br>
 
+                        Gracias por elegirnos.<br>
+                      `;
+        const htmlMessage = `<p>${mensaje}</p>`;
+        console.log("Enviando correo de confirmación de reserva");
+        console.log("Correo enviado a: ", reservaSaved.email);
+        console.log("Asunto: ", asunto);
+        console.log("Mensaje: ", mensaje);
+        console.log("Mensaje HTML: ", htmlMessage);
+        await sendEmail(reservaSaved.email, asunto, mensaje, htmlMessage);
+
+        
     } catch (error) {
         handleErrorReserva(res, 500, error.message);
     }
