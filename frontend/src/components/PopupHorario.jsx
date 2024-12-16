@@ -18,6 +18,11 @@ export default function horarioPopup({show,setShow,data,action}) {
         }
         action(formData);
     };
+    const horasJornadaLaboral = ["07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+                                "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", 
+                                "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", 
+                                "19:00"
+                                ];
 
     return(
         <div>
@@ -25,7 +30,7 @@ export default function horarioPopup({show,setShow,data,action}) {
                 <div className="bg"> 
                     <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
                         <button className='close' onClick={() => setShow(false)}>
-                            <img src={CloseIcon} />
+                            <img src={CloseIcon} alt="Cerrar"/>
                         </button>
 
 
@@ -36,7 +41,7 @@ export default function horarioPopup({show,setShow,data,action}) {
                             <div className="home-form-columns">
                                 <div className="home-form-column">
                                     <div className="home-form-group">
-                                    <label className="text-[#475B63] dark:text-[#F3E8EE]">Dia</label>
+                                        <label className="text-[#475B63] dark:text-[#F3E8EE]">Dia</label>
                                         <select
                                             name="dia"
                                             className="home-input"
@@ -53,35 +58,47 @@ export default function horarioPopup({show,setShow,data,action}) {
                                             <option value="Sabado">Sabado</option>
                                             <option value="Domingo">Domingo</option>
                                         </select>
+                                    
                                     </div>
                                 </div>
                                 <div className="home-form-column">
                                     <div className="home-form-group">
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Hora de reserva</label>
-                                        <input
+                                        <select
                                             type="time"
                                             name="hora"
                                             className="home-input"
                                             id="hora"
                                             required
                                             defaultValue={horarioData.hora || ""}
-                                        />
+                                        >
+                                        <option value="" disabled>Selecciona una hora</option>
+                                            {horasJornadaLaboral.map((hora) => (
+                                                <option key={hora} value={hora}>
+                                                    {hora}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit"
-                            className="submit-button" // Clase del botón
-                            style={{
-                              backgroundColor: "#475b63",
-                              color: "white",
-                              border: "none",
-                              padding: "10px 20px",
-                              borderRadius: "5px",
-                              cursor: "pointer",
-                              marginTop: "5px",
-                              marginBottom: "20px",
-                              marginLeft: "30%",
-                            }}>Editar horario</button>
+                            <div style={{ textAlign: "center" }}>
+                                <button type="submit"
+                                className="submit-button" // Clase del botón
+                                style={{
+                                  backgroundColor: "#475b63",
+                                  color: "white",
+                                  border: "none",
+                                  padding: "10px 20px",
+                                  borderRadius: "5px",
+                                  cursor: "pointer",
+                                  marginTop: "5px",
+                                  marginBottom: "20px",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}>Editar horario</button>
+                            </div>
+                            
                         </form>
                        
 

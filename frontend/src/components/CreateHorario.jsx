@@ -94,19 +94,22 @@ function CreateHorario({ show, setShow, data, action }) {
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit"
-                            className="submit-button" // Clase del botón
-                            style={{
-                                backgroundColor: "#475b63",
-                                color: "white",
-                                border: "none",
-                                padding: "10px 20px",
-                                borderRadius: "5px",
-                                cursor: "pointer",
-                                marginTop: "5px",
-                                marginBottom: "20px",
-                                marginLeft: "30%",
-                            }}>Ingresar horario</button>
+                            <div style={{ textAlign: "center" }}>
+                                <button type="submit"
+                                className="submit-button" // Clase del botón
+                                style={{
+                                  backgroundColor: "#475b63",
+                                  color: "white",
+                                  border: "none",
+                                  padding: "10px 20px",
+                                  borderRadius: "5px",
+                                  cursor: "pointer",
+                                  marginTop: "5px",
+                                  marginBottom: "20px",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}>Crear horario</button>
+                            </div>
                         </form>
                         
                         

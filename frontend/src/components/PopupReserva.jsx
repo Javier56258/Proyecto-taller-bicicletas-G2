@@ -38,9 +38,9 @@ export default function reservaPopup({show,setShow,data,action}) {
                     } catch (error) {
                         console.error("Error: ", error);
                     }
-                };
+        };
         
-                const fetchHorarios = async () => {
+        const fetchHorarios = async () => {
                     try {
                         const response = await getHorarios();
                         const formattedData = response.map(horario => ({
@@ -53,9 +53,9 @@ export default function reservaPopup({show,setShow,data,action}) {
                     } catch (error) {
                         console.error("Error al obtener horarios: ", error);
                     }
-                };
+        };
         
-                const fetchServicios = async () => {
+        const fetchServicios = async () => {
                     try {
                         const response = await getServicios();
                         const formattedData = response.map(servicio => ({
@@ -67,72 +67,73 @@ export default function reservaPopup({show,setShow,data,action}) {
                     } catch (error) {
                         console.error("Error al obtener servicios: ", error);
                     }
-                };
+        };
         
-                fetchReservas();
-                fetchHorarios();
-                fetchServicios();
-            }, []);
+        fetchReservas();
+        fetchHorarios();
+        fetchServicios();
+    }, []);
 
-            const filtrarXdia = (fecha) => {
-                if (!fecha) return;
+    const filtrarXdia = (fecha) => {
+        if (!fecha) return;
         
-                const FECHA = new Date(fecha);
-                let DIA = FECHA.getDay();
-                if (DIA === 0) DIA = "Lunes";
-                if (DIA === 1) DIA = "Martes";
-                if (DIA === 2) DIA = "Miercoles";
-                if (DIA === 3) DIA = "Jueves";
-                if (DIA === 4) DIA = "Viernes";
-                if (DIA === 5) DIA = "Sabado";
-                if (DIA === 6) DIA = "Domingo";
+        const FECHA = new Date(fecha);
+        let DIA = FECHA.getDay();
+        if (DIA === 0) DIA = "Lunes";
+        if (DIA === 1) DIA = "Martes";
+        if (DIA === 2) DIA = "Miercoles";
+        if (DIA === 3) DIA = "Jueves";
+        if (DIA === 4) DIA = "Viernes";
+        if (DIA === 5) DIA = "Sabado";
+        if (DIA === 6) DIA = "Domingo";
         
-                const dateParts = fecha.split('-');
-                const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        const dateParts = fecha.split('-');
+        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
         
-                console.log("Dia: ", DIA);
-                console.log("Fecha: ", fecha);
-                let horariosDisponibles = horarios.filter(horario => {
-                    return horario.dia === DIA;
-                });
+        console.log("Dia: ", DIA);
+        console.log("Fecha: ", fecha);
+        let horariosDisponibles = horarios.filter(horario => {
+            return horario.dia === DIA;
+        });
         
-                reservas.forEach(reserva => {
-                    if (reserva.fecha === formattedDate) {
-                        const horaReservada = reserva.hora;
-                        // Eliminar las horas ya reservadas
-                        horariosDisponibles = horariosDisponibles.filter(
-                            horario => {return horario.hora !== horaReservada });
-                    }
-                });
+        reservas.forEach(reserva => {
+            if (reserva.fecha === formattedDate) {
+                const horaReservada = reserva.hora;
+                // Eliminar las horas ya reservadas
+                horariosDisponibles = horariosDisponibles.filter(
+                    horario => {return horario.hora !== horaReservada }
+                );
+            }
+        });
         
-                setFilteredHorarios(horariosDisponibles);
-            };
+        setFilteredHorarios(horariosDisponibles);
+    };
 
-            const handleFechaChange = (e) => {
-                setSelectedFecha(e.target.value);
-                filtrarXdia(e.target.value);
-            };
-            const handleSelectedChangeHorario = (e) => {
-                setSelectedHorario(e.target.value);
-            };
+    const handleFechaChange = (e) => {
+        setSelectedFecha(e.target.value);
+        filtrarXdia(e.target.value);
+    };
+    const handleSelectedChangeHorario = (e) => {
+        setSelectedHorario(e.target.value);
+    };
 
-            const handleSubmit = (e) => {
-                e.preventDefault(); // Detener la recarga de página.
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Detener la recarga de página.
                 
-                const formData = {
-                    nombreReservador: e.target.nombreReservador.value,
-                    email: e.target.email.value,
-                    fecha: selectedFecha,
-                    hora: selectedHorario,
-                    motivo: selectedServicio,
-                };
+        const formData = {
+            nombreReservador: e.target.nombreReservador.value,
+            email: e.target.email.value,
+            fecha: selectedFecha,
+            hora: selectedHorario,
+            motivo: selectedServicio,
+        };
             
-                if (formData.hora instanceof Date || formData.hora.includes(":")) {
-                    formData.hora = formData.hora.toString(); 
-                }
+        if (formData.hora instanceof Date || formData.hora.includes(":")) {
+            formData.hora = formData.hora.toString(); 
+        }
             
-                action(formData); // Llamar a la acción proporcionada.
-            };
+        action(formData); // Llamar a la acción proporcionada.
+    };
 
     return(
         <div>
