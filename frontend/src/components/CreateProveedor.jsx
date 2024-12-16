@@ -66,9 +66,9 @@ function CreateProveedor({ show, setShow, data, action }) {
                     minLength: 10,
                     maxLength: 30,
                     required: true,
-                    pattern: /^[a-zA-Z0-9._%+-]+@gmail\.cl$/,
+                    pattern: /^[^@\s]+@[^@\s]+\.[^@\s]+$/, 
                     patternMessage:
-                      "El correo electrónico debe finalizar en @gmail.cl.",
+                      "El email debe ser un correo electrónico válido.",
                   },
                   {
                     label: "Número de teléfono",

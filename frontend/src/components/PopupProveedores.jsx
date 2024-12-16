@@ -55,8 +55,8 @@ function PopupProveedores({ show, setShow, data, action }) {
                     minLength: 10,
                     maxLength: 30,
                     required: true,
-                    pattern: /^[a-zA-Z0-9._%+-]+@gmail\.cl$/,
-                    patternMessage: "El correo debe finalizar en @gmail.cl.",
+                    pattern: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+                    patternMessage: "El email debe ser un correo electrónico válido.",
                   },
                   {
                     label: "Número de teléfono",
