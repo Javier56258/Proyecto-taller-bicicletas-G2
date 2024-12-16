@@ -11,9 +11,9 @@ import { createReserva,
 
 const router = Router();
 router.post("/", createReserva)
+      .get("/all", getallReservas);
 router.use(authenticateJwt);
 router.get("/", getReservas)
-      .get("/all", getallReservas)
       .patch("/detail/", updateReserva)
       .delete("/", deleteReserva);
 

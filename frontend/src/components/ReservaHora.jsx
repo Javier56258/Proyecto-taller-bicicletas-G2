@@ -1,44 +1,156 @@
+import { useEffect, useState } from "react";
 import { createReserva } from "@services/reserva.service.js";
 import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert";
-import { getHorarios } from "@services/horarios.service.js";
-import { useEffect, useState } from "react";
+import { getServicios } from "../services/servicios.service.js";
+import { getHorarios } from "../services/horarios.service";
+import { getReservas } from "../services/reserva.service";
+import '@styles/home.css';
 
-function ReservaHora({ data }) {
-    const reservaData = data && data.length > 0 ? data[0] : {};
+function CreateReserva() {
+    const [horarios, setHorarios] = useState([]);
+    const [filteredHorarios, setFilteredHorarios] = useState([]);
+    const [selectedHorario, setSelectedHorario] = useState("");
+    const [servicios, setServicios] = useState([]);
+    const [selectedServicio, setSelectedServicio] = useState("");
+    const [selectedFecha, setSelectedFecha] = useState("");
+    const [reservas, setReservas] = useState([]);
 
-    const [selectedHora, setSelectedHora] = useState(null);
-
-    const handleHoraChange = (event) => {
-        setSelectedHora(event.target.value);
-    };
-
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const formData = new FormData(event.target);
-        const reserva = {
-            nombre: formData.get("nombre"),
-            email: formData.get("email"),
-            motivo: formData.get("motivo"),
-            fecha: formData.get("fecha"),
-            hora: formData.get("hora"),
+    useEffect(() => {
+        const fetchReservas = async () => {
+            try {
+                const response = await getReservas();
+                console.log("Pasando por fetchReservas");
+                console.log(response);
+                const formattedData = response.map((reserva) => ({
+                    nombreReservador: reserva.nombreReservador,
+                    email: reserva.email,
+                    motivo: reserva.motivo,
+                    fecha: reserva.fecha,
+                    hora: reserva.hora,
+                    idreserva: reserva.idreserva,
+                    createdAt: reserva.createdAt
+                }));
+                setReservas(formattedData);
+            } catch (error) {
+                console.error("Error: ", error);
+            }
         };
 
-        try {
-            const response = await createReserva(reserva);
-
-            if (response.status === "Reserva error") {
-                return showErrorAlert("Error", response.details);
+        const fetchHorarios = async () => {
+            try {
+                const response = await getHorarios();
+                const formattedData = response.map(horario => ({
+                    id: horario.id,
+                    hora: horario.hora,
+                    dia: horario.dia
+                }));
+                setHorarios(formattedData);
+                console.log("Horarios: ", formattedData);
+            } catch (error) {
+                console.error("Error al obtener horarios: ", error);
             }
+        };
 
-            showSuccessAlert("¡Reserva creada!", "La reserva se ha creado correctamente.");
-        } catch (error) {
-            showErrorAlert("Error", "Ocurrió un error al crear la reserva.");
-            console.error("Error al crear reserva:", error);
-        }
+        const fetchServicios = async () => {
+            try {
+                const response = await getServicios();
+                const formattedData = response.map(servicio => ({
+                    idServicio: servicio.idServicio,
+                    nombre: servicio.nombre,
+                    descripcion: servicio.descripcion
+                }));
+                setServicios(formattedData);
+            } catch (error) {
+                console.error("Error al obtener servicios: ", error);
+            }
+        };
+
+        fetchReservas();
+        fetchHorarios();
+        fetchServicios();
+    }, []);
+
+    const filtrarXdia = (fecha) => {
+        if (!fecha) return;
+
+        const FECHA = new Date(fecha);
+        let DIA = FECHA.getDay();
+        if (DIA === 0) DIA = "Lunes";
+        if (DIA === 1) DIA = "Martes";
+        if (DIA === 2) DIA = "Miercoles";
+        if (DIA === 3) DIA = "Jueves";
+        if (DIA === 4) DIA = "Viernes";
+        if (DIA === 5) DIA = "Sabado";
+        if (DIA === 6) DIA = "Domingo";
+
+        const dateParts = fecha.split('-');
+        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+        console.log("Dia: ", DIA);
+        console.log("Fecha: ", fecha);
+        let horariosDisponibles = horarios.filter(horario => {
+            return horario.dia === DIA;
+        });
+
+        reservas.forEach(reserva => {
+            if (reserva.fecha === formattedDate) {
+                const horaReservada = reserva.hora;
+                // Eliminar las horas ya reservadas
+                horariosDisponibles = horariosDisponibles.filter(
+                    horario => {return horario.hora !== horaReservada });
+            }
+        });
+
+        setFilteredHorarios(horariosDisponibles);
     };
 
+    const handleFechaChange = (e) => {
+        setSelectedFecha(e.target.value);
+        filtrarXdia(e.target.value);
+    };
+
+    const handleSelectedChangeHorario = (e) => {
+        setSelectedHorario(e.target.value);
+    };
+
+    const handleSelectedChangeServicio = (e) => {
+        setSelectedServicio(e.target.value);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        console.log("Form data: ", formData);
+        const fechaSF = formData.get('fecha')
+        const dateParts = fechaSF.split('-');
+        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        console.log(formattedDate);
+        formData.set('fecha', formattedDate);
+        const reservaData = {
+            nombreReservador: formData.get('nombreReservador'),
+            email: formData.get('email'),
+            motivo: selectedServicio,
+            fecha: formData.get('fecha'),
+            hora: selectedHorario,
+        };
+        console.log(reservaData);
+        console.log("Fecha: ", reservaData.fecha);
+        console.log("Hora: ", reservaData.hora);
+
+        try {
+            const validatorError = await createReserva(reservaData);
+            console.log("Validator error: ", validatorError);
+            if (validatorError.status === 'Reserva error') {
+                console.log("Error al crear reserva ");
+                return showErrorAlert("Error", validatorError.details);
+            }
+            console.log("Reserva creada correctamente");
+            showSuccessAlert("¡Reservado!", "La reserva ha sido creada correctamente.");
+        } catch (error) {
+            showErrorAlert("Error", "Ocurrió un error al crear la reserva.");
+            console.error('Error al crear reserva:', error);
+        }
+    };
 
     return (
         <div className="home-reserva-body">
@@ -46,79 +158,73 @@ function ReservaHora({ data }) {
                 <h1 className="home-reserva-title">Reserva tu hora</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="home-form-columns">
-                        {/* Primera columna */}
                         <div className="home-form-column">
                             <div className="home-form-group">
-                                <label htmlFor="nombre" className="home-label">Nombre</label>
+                                <label className="home-label" htmlFor="nombreReservador">Nombre</label>
                                 <input
-                                    type="text"
                                     id="nombre"
-                                    name="nombre"
+                                    name="nombreReservador"
+                                    type="text"
                                     placeholder="Ingresa tu nombre"
-                                    required
                                     className="home-input"
-                                    defaultValue={reservaData.nombre || ""}
+                                    required
                                 />
                             </div>
                             <div className="home-form-group">
-                                <label htmlFor="email" className="home-label">Email</label>
+                                <label className="home-label" htmlFor="email">Email</label>
                                 <input
-                                    type="text"
                                     id="email"
                                     name="email"
+                                    type="text"
                                     placeholder="Ingresa tu email"
-                                    required
                                     className="home-input"
-                                    defaultValue={reservaData.email || ""}
+                                    required
                                 />
                             </div>
                         </div>
-                        {/* Segunda columna */}
+
                         <div className="home-form-column">
                             <div className="home-form-group">
-                                <label htmlFor="motivo" className="home-label">Motivo</label>
-                                <input
-                                    type="text"
-                                    id="motivo"
-                                    name="motivo"
-                                    placeholder="Motivo de la reserva"
-                                    required
-                                    className="home-input"
-                                    defaultValue={reservaData.motivo || ""}
-                                />
+                                <label className="home-label" htmlFor="motivo">Motivo</label>
+                                <select id="motivo" name="motivo" className="home-input" required
+                                    value={selectedServicio} onChange={handleSelectedChangeServicio}>
+                                    <option value="" disabled> Selecciona un servicio </option>
+                                    {servicios.map((servicio) => (
+                                        <option key={servicio.idServicio} value={servicio.nombre}>{servicio.nombre}</option>
+                                    ))}
+                                </select>
+                                {selectedServicio === ""} 
                             </div>
                             <div className="home-form-group">
-                                <label htmlFor="fecha" className="home-label">Fecha</label>
+                                <label className="home-label" htmlFor="fecha">Fecha</label>
                                 <input
-                                    type="date"
                                     id="fecha"
                                     name="fecha"
-                                    required
+                                    type="date"
                                     className="home-input"
-                                    defaultValue={reservaData.fecha || ""}
+                                    required
+                                    value={selectedFecha}
+                                    onChange={handleFechaChange}
                                 />
                             </div>
                         </div>
-                        {/* Tercera columna */}
-                        <div className="home-form-column">
+                        <div className="home-form-column"> 
                             <div className="home-form-group">
-                                <label htmlFor="hora" className="home-label">Hora</label>
-                                <select
-                                id="hora"
-                                name="hora"
-                                required
-                                className="home-input"
-                                value={selectedHora}
-                                onChange={handleHoraChange}
-                            >
-                                <option value="">Seleccione una hora</option>
-                                
-                               
-                            </select>
-                            </div>
+                                <label className="home-label" htmlFor="hora">Hora</label>
+                                <select id="hora" name="hora" className="home-input" required
+                                    value={selectedHorario} onChange={handleSelectedChangeHorario}>
+                                    <option value="" disabled> Selecciona un horario </option>
+                                    {filteredHorarios.map((horario) => (
+                                        <option key={horario.id} value={horario.hora}>{horario.hora}</option>
+                                    ))}
+                                </select>
+                            
+                            </div>    
                         </div>
                     </div>
-                    {/* Botón para enviar */}
+                        
+                    
+
                     <button type="submit" className="home-button">Reservar</button>
                 </form>
             </div>
@@ -126,5 +232,4 @@ function ReservaHora({ data }) {
     );
 }
 
-export default ReservaHora;
-
+export default CreateReserva;

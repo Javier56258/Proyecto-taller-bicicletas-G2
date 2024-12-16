@@ -70,10 +70,15 @@
   .form-group input,
   .form-group select {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
+    padding: 10px 18px;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
+    background-color: #fff; /* Asegura que el fondo sea blanco */
+    color: #000; /* Ajusta el color del texto */
+    appearance: none; /* Elimina el estilo predeterminado del navegador */
+    -webkit-appearance: none; /* Para Safari/Chrome */
+    -moz-appearance: none;
   }
   
   /* Inputs de fecha en línea */

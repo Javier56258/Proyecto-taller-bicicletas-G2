@@ -16,8 +16,16 @@
 
   .form input,
   .form select {
-    padding: 10px;
+    width: 100%;
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 14px;
+    background-color: #fff; /* Asegura que el fondo sea blanco */
+    color: #000; /* Ajusta el color del texto */
+    appearance: none; /* Elimina el estilo predeterminado del navegador */
+    -webkit-appearance: none; /* Para Safari/Chrome */
+    -moz-appearance: none; /* Para Firefox */
   }
 
   .form button {
@@ -95,33 +103,39 @@
   }
   select {
     display: flex;
-    border: 3px solid #003366;
-    border-radius: 12px;
-    padding: 8px 5px;
-    background-repeat: no-repeat;
-    margin-bottom: 0.8vh;
-    background-color: #eef7ff;
-    font-weight: regular;
-    font-size: 16px;
-    color: #003366;
-    border-radius: 12px;
-    background-position: right 30px center;
-    background-size: 25px 25px;
-    box-sizing: border-box;
-    background-image: url("../assets/ChevronDownIcon.svg");
-    background-repeat: no-repeat;
-    background-position: calc(100% - 12px) center;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  border: 2px solid #475b63; /* Borde más delgado */
+  border-radius: 20px; /* Bordes más redondeados */
+  padding: 12px 10px; /* Más altura interna */
+  background-repeat: no-repeat;
+  margin-bottom: 0.8vh;
+  background-color: #1a1a1a; /* Fondo oscuro como en el ejemplo */
+  font-size: 1.1rem; /* Ajustar tamaño de fuente */
+  color: #fff; /* Color de texto blanco */
+  background-image: url("../assets/ChevronDownIcon.svg");
+  background-position: calc(100% - 15px) center;
+  background-size: 20px 20px;
+  box-sizing: border-box;
   }
   select::placeholder {
     color: rgba(0, 51, 102, 0.3);
     font-weight: light;
   }
   select:focus {
-    background-color: #edf3ef;
-    font-weight: regular;
+    outline: none;
+    border: 2px solid #0077cc; /* Color al enfocar */
+    background-color: #292929;
+  }
+  select:field {
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .select-large {
+    border-radius: 20px;
+    padding: 12px 10px;
+    font-size: 1.1rem;
+    background-color: #1a1a1a;
+    color: #fff;
   }
   textarea {
     display: flex;
@@ -307,7 +321,10 @@ body.dark .form label {
 }
 
 body.dark .form input,
-body.dark .form select,
+body.dark .form select{
+  background-color: #1a1a1a; /* Fondo más oscuro */
+  color: #fff; /* Texto blanco */
+}
 body.dark .form textarea {
   background-color: #171617; /* Fondo oscuro para campos */
   border: 3px solid #666666; /* Borde más claro */

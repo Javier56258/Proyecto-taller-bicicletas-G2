@@ -1,7 +1,7 @@
 import useHorarios from "@hooks/horarios/useGetHorario.jsx"
 import useEditHorario from "@hooks/horarios/useEditHorario.jsx"
 import useDeleteHorario from "@hooks/horarios/useDeleteHorario.jsx"
-import Search from "../components/Search.jsx";
+//import Search from "../components/Search.jsx";
 import PopUpHorario from "../components/PopupHorario.jsx";
 import CreateHorario from "../components/CreateHorario.jsx";
 import HorarioCard from "../components/HorarioCard.jsx";
@@ -59,29 +59,33 @@ const handleDiaFilterChange = (e) => {
 
  return(
 <div>
-    <div className="main-content">
-        <div className="centered-h1">
+    <div className="main-content-formHorario">
+        <div className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
             <h1>Horarios de atención</h1>
         </div>  
-        <div className="controls">
-            <button 
-            className="create-horario-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
-            onClick={handleCreateClick}
-            >Crear Horario
-            </button>
-            <Search 
-            value={filter} 
-            onChange={handleDiaFilterChange} 
-            placeholder="Filtrar por día" 
-            />
+        <div className="controls-formHorario">
+            <div className="button-container"> 
+                <button 
+                    className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
+                    onClick={handleCreateClick}
+                >Crear Horario
+                </button>
+                <input
+                    value={filter} 
+                    onChange={handleDiaFilterChange} 
+                    placeholder="Filtrar por día" 
+                    className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
+                />
+            </div>
+            
         </div>
 
-        <div className="schedule">
+        <div className="schedule-horarios ">
             {diasOrdenados.map((dia) => (
                 groupedHorarios[dia] && (
-                <div key={dia} className="day-group">
-                    <h2 className="day-title">{dia}</h2>
-                    <div className="services-grid">
+                <div key={dia} className="day-group-horarios ">
+                    <h2 className="day-title-horarios dark:text-white">{dia}</h2>
+                    <div className="horarios-grid dark:text-white">
                         {groupedHorarios[dia].map((horario) => (
                             <HorarioCard
                             key={horario.id}
