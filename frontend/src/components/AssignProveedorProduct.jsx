@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from "@assets/XIcon.svg";
@@ -10,7 +10,7 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
     const proveedorData = data || {};
     console.log("Proveedor seleccionado para asignar: ", proveedorData);
 
-    const proveedorData = data || {};
+  
 
     const [productos, setProductos] = useState([]);    
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -63,8 +63,6 @@ function AssignProveedorProduct({ show, setShow, data, action }) {
     const handleAssignProduct = async (formData) => {
         try {
 
-          const idProveedor = proveedorData.idProveedor;
-          const productIds = selectedOptions.map(option => option.value);
 
           const idProveedor = proveedorData.idProveedor;
           const productIds = selectedOptions.map(option => option.value);
