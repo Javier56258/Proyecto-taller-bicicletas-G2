@@ -45,13 +45,11 @@
     width: 20px;
     height: 20px;
   }
-
 }
 
 .textField-large {
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
 }
-
 
 .form {
   background-color: #fff;
@@ -67,7 +65,7 @@
     margin: 0;
     margin-bottom: 20px;
   }
-  
+
   div {
     width: 100%;
     display: flex;
@@ -76,6 +74,7 @@
     color: #475b63;
     font-weight: bold;
     margin: 0;
+    padding-bottom: 5px;
   }
   input {
     display: flex;
@@ -103,18 +102,18 @@
   }
   select {
     display: flex;
-  border: 2px solid #475b63; /* Borde más delgado */
-  border-radius: 20px; /* Bordes más redondeados */
-  padding: 12px 10px; /* Más altura interna */
-  background-repeat: no-repeat;
-  margin-bottom: 0.8vh;
-  background-color: #1a1a1a; /* Fondo oscuro como en el ejemplo */
-  font-size: 1.1rem; /* Ajustar tamaño de fuente */
-  color: #fff; /* Color de texto blanco */
-  background-image: url("../assets/ChevronDownIcon.svg");
-  background-position: calc(100% - 15px) center;
-  background-size: 20px 20px;
-  box-sizing: border-box;
+    border: 2px solid #475b63; /* Borde más delgado */
+    border-radius: 20px; /* Bordes más redondeados */
+    padding: 12px 10px; /* Más altura interna */
+    background-repeat: no-repeat;
+    margin-bottom: 0.8vh;
+    background-color: #1a1a1a; /* Fondo oscuro como en el ejemplo */
+    font-size: 1.1rem; /* Ajustar tamaño de fuente */
+    color: #fff; /* Color de texto blanco */
+    background-image: url("../assets/ChevronDownIcon.svg");
+    background-position: calc(100% - 15px) center;
+    background-size: 20px 20px;
+    box-sizing: border-box;
   }
   select::placeholder {
     color: rgba(0, 51, 102, 0.3);
@@ -321,13 +320,13 @@ body.dark .form label {
 }
 
 body.dark .form input,
-body.dark .form select{
+body.dark .form select {
   background-color: #1a1a1a; /* Fondo más oscuro */
   color: #fff; /* Texto blanco */
 }
 body.dark .form textarea {
   background-color: #171617; /* Fondo oscuro para campos */
-  border: 3px solid #666666; /* Borde más claro */
+  border: 3px solid #475b63; /* Borde más claro */
   color: #ffffff; /* Texto claro */
 }
 
