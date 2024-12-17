@@ -62,7 +62,7 @@ const Home = () => {
     <div className="home-container">
       <Navbar />
       <h1 className="text-5xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
-        Bienvenido a la Página de Inicio
+        Taller de bicicleta
       </h1>
 
       {/* Carrusel de Servicios */}
@@ -99,9 +99,6 @@ const Home = () => {
 
       {/* Reserva Tu Hora */}
       <section>
-        <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mt-12 mb-6">
-          Reserva tu Hora
-        </h2>
         <ReservaHora />
       </section>
     </div>

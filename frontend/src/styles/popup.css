@@ -40,7 +40,7 @@
 
 .popup-container {
   margin: 20px auto;
-  padding: 20px; 
+  padding: 20px;
 }
 
 .container_inputs textarea {
@@ -80,7 +80,7 @@
   padding: 0px;
   padding-left: 35px;
   padding-right: 35px;
-  width: auto;
+  width: 100%;
   background-color: #fff;
 
   .tooltip-icon {
@@ -132,7 +132,7 @@
   .h1 {
     margin-bottom: 30px;
   }
-  
+
   .container_inputs {
     margin-top: 0px;
     margin-bottom: auto;
@@ -150,7 +150,7 @@
     -webkit-appearance: none; /* Para Safari/Chrome */
     -moz-appearance: none; /* Para Firefox */
   }
-  
+
   .inputs:focus {
     outline: none;
     border-color: #666; /* Color al hacer focus */
@@ -160,7 +160,7 @@
   .select-container {
     position: relative;
   }
-  
+
   .select-container select {
     width: 100%;
     padding: 10px;
@@ -170,9 +170,9 @@
     background-color: #fff;
     appearance: none;
   }
-  
+
   .select-container::after {
-    content: '▼'; /* Flecha hacia abajo */
+    content: "▼"; /* Flecha hacia abajo */
     font-size: 12px;
     position: absolute;
     top: 50%;
@@ -181,7 +181,6 @@
     pointer-events: none; /* La flecha no interfiere con el select */
     color: #666;
   }
-  
 
   .tooltip-icon {
     position: relative;
