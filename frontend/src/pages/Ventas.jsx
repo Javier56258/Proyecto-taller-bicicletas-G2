@@ -19,6 +19,7 @@ const Ventas = () => {
       const response = await getVentas();
       const data = response.data;
       if (Array.isArray(data)) {
+        data.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
         setVentas(data);
       } else {
         console.error('La respuesta de la API no es un array:', data);
