@@ -2,9 +2,24 @@ import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import { createHorario } from '@services/horarios.service.js';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert.js';
+import { useEffect } from 'react';
 
 
 function CreateHorario({ show, setShow, data, action }) {
+
+    useEffect(() => {
+            if (show) {
+                // Bloquear scroll en el fondo
+                document.body.classList.add("overflow-hidden");
+            } else {
+                // Restaurar el scroll
+                document.body.classList.remove("overflow-hidden");
+            }
+    
+            // Limpieza al desmontar el componente
+            return () => document.body.classList.remove("overflow-hidden");
+        }, [show]);
+
     console.log("Pasando por CreateHorario de CreateHorario.jsx");
     const horarioData = data && data.length > 0 ? data[0] : {};
    // const [isReversed, setIsReversed] = useState(false);

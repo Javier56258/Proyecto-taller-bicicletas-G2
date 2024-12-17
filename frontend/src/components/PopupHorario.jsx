@@ -1,8 +1,22 @@
+import { useEffect } from "react";
 import "@styles/popup.css";
 import CloseIcon from '@assets/XIcon.svg';
 
-export default function horarioPopup({show,setShow,data,action}) {
+export default function PopupHorario({show,setShow,data,action}) {
     const horarioData = data && data.length > 0 ? data[0] : {};
+
+    useEffect(() => {
+        if (show) {
+            // Bloquear scroll en el fondo
+            document.body.classList.add("overflow-hidden");
+        } else {
+            // Restaurar el scroll
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        // Limpieza al desmontar el componente
+        return () => document.body.classList.remove("overflow-hidden");
+    }, [show]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

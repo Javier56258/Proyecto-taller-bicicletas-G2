@@ -1,13 +1,27 @@
 //import Form from './Form';
 import "@styles/popup.css";
 import CloseIcon from '@assets/XIcon.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useGetReservas from '@hooks/reservas/useGetReserva';
 import useHorarios from "@hooks/horarios/useGetHorario.jsx";
 import useServicio from "@hooks/servicios/useGetServicios.jsx";
 
 
 export default function PopupReserva({show,setShow,data,action}) {
+
+    useEffect(() => {
+        if (show) {
+            // Bloquear scroll en el fondo
+            document.body.classList.add("overflow-hidden");
+        } else {
+            // Restaurar el scroll
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        // Limpieza al desmontar el componente
+        return () => document.body.classList.remove("overflow-hidden");
+    }, [show]);
+
     const { reservas  } = useGetReservas();
     const { horarios } = useHorarios();
     const { servicios } = useServicio();
