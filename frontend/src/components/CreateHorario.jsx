@@ -3,7 +3,7 @@ import CloseIcon from '@assets/XIcon.svg';
 import { createHorario } from '@services/horarios.service.js';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert.js';
 import useHorarios from "@hooks/horarios/useGetHorario.jsx";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function CreateHorario({ show, setShow, data, action }) {
@@ -12,6 +12,19 @@ function CreateHorario({ show, setShow, data, action }) {
     
     const horarioData = data && data.length > 0 ? data[0] : {};
     
+    useEffect(() => {
+            if (show) {
+                // Bloquear scroll en el fondo
+                document.body.classList.add("overflow-hidden");
+            } else {
+                // Restaurar el scroll
+                document.body.classList.remove("overflow-hidden");
+            }
+    
+            // Limpieza al desmontar el componente
+            return () => document.body.classList.remove("overflow-hidden");
+        }, [show]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
