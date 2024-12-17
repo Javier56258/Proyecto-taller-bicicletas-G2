@@ -24,3 +24,18 @@ export async function getProveedoresWithOutOfStockProducts() {
     const response = await axios.get(`/statistics/proveedores/out-of-stock-products`);
     return response.data.data;
 }
+
+export async function getProveedoresWithMostSoldProducts(limit) {
+    const response = await axios.get(`/statistics/proveedores/most-sold-products?limit=${limit}`);
+    return response.data.data;
+}
+
+export async function getMostSoldProducts(limit) {
+    const response = await axios.get(`/statistics/products/most-sold?limit=${limit}`);
+    return response.data.data;
+}
+
+export async function getEarningsByDateRange(startDate, endDate) {
+    const response = await axios.get(`/statistics/earnings?startDate=${startDate}&endDate=${endDate}`);
+    return response.data;
+}

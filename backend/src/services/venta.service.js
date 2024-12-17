@@ -25,12 +25,12 @@ export async function createVentaService(dataVenta) {
 
         const total = product.price * dataVenta.cantidad;
         const newVenta = ventaRepository.create({
-            producto: product,
+            productos: product,
             total,
             cantidad: dataVenta.cantidad,
-            nombreProducto: product.name,
-            
+            nombreProducto: product.name,            
         });
+        console.log("Venta creada:", newVenta); // Agregar log para verificar los datos de la venta
 
         await ventaRepository.save(newVenta);
 
