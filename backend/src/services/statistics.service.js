@@ -1,7 +1,11 @@
 "use strict"
+
+import { Between } from "typeorm";
 import { AppDataSource } from "../config/configDb.js";
 import Product from "../entity/product.entity.js";
 import Proveedor from "../entity/proveedor.entity.js";
+import Venta from "../entity/venta.entity.js"; 
+import Reserva from "../entity/reserva.entity.js";
 
 //productos con más stock
 export async function getProductsWithMostStock(limit) {
@@ -62,4 +66,60 @@ export async function getProveedoresWithOutOfStockProducts() {
         .orderBy("Cantidad_de_productos_agotados", "DESC")
     .getRawMany();
     return proveedores;
+}
+
+export async function getMostSoldProducts(limit) {
+    const ventaRepository = AppDataSource.getRepository(Venta);
+    const productos = await ventaRepository
+        .createQueryBuilder("venta")
+        .select("venta.idProducto", "idProducto")
+        .addSelect("venta.nombreProducto", "nombre_producto")
+        .addSelect("SUM(venta.cantidad) AS totalVentas")
+        .groupBy("venta.idProducto")
+        .addGroupBy("venta.nombreProducto")
+        .orderBy("totalVentas", "DESC")
+        .take(limit)
+        .getRawMany();
+    return productos;
+}
+
+export async function getEarningsByDateRange(startDate, endDate) {
+    const ventaRepository = AppDataSource.getRepository(Venta);
+    const ganancias = await ventaRepository
+        .createQueryBuilder("venta")
+        .select("SUM(venta.total) AS totalGanancias")
+        .where("venta.fecha BETWEEN :startDate AND :endDate", { startDate, endDate })
+        .getRawOne();
+    return ganancias;
+}
+
+export async function getProveedoresWithMostSoldProducts(limit) {
+    const ventaRepository = AppDataSource.getRepository(Venta);
+    
+    const proveedores = await ventaRepository
+        .createQueryBuilder("venta")
+        .innerJoin("venta.productos", "producto")
+        .innerJoin("producto.proveedores", "proveedor")
+        .select("proveedor.idProveedor", "idProveedor")
+        .addSelect("proveedor.nombreProveedor", "nombreProveedor")
+        .addSelect("SUM(venta.cantidad) AS totalVentasProveedor")
+        .groupBy("proveedor.idProveedor")
+        .addGroupBy("proveedor.nombreProveedor")
+        .orderBy("totalVentasProveedor", "DESC")
+        .limit(limit)
+        .getRawMany();
+    return proveedores;
+}
+
+export async function getMostRequestedServices(limit) {
+    const reservaRepository = AppDataSource.getRepository(Reserva);
+    const servicios = await reservaRepository
+        .createQueryBuilder("reserva")
+        .innerJoin("reserva.servicio", "servicio")
+        .select("servicio.nombre, COUNT(reserva.idreserva) AS totalSolicitudes")
+        .groupBy("servicio.nombre")
+        .orderBy("totalSolicitudes", "DESC")
+        .limit(limit)
+        .getRawMany();
+    return servicios;
 }
