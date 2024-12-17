@@ -12,6 +12,7 @@ import {
     getMostSoldProductsController,
     getEarnings,
     getProveedoresWithMostSoldProductsController,
+    getMostRequestedServicesController,
 } from "../controllers/statistics.controller.js";
 
 const router = Router();
@@ -28,6 +29,7 @@ router
     .get("/proveedores/out-of-stock-products", getProveedoresWithOutOfStockProductsController)
     .get("/proveedores/most-sold-products", getProveedoresWithMostSoldProductsController)
     .get("/products/most-sold", getMostSoldProductsController)
+    .get('/servicios/most-requested-services', getMostRequestedServicesController)
     .get("/earnings", getEarnings);
     
 export default router;

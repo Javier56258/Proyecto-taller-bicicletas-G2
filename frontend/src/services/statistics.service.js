@@ -39,3 +39,8 @@ export async function getEarningsByDateRange(startDate, endDate) {
     const response = await axios.get(`/statistics/earnings?startDate=${startDate}&endDate=${endDate}`);
     return response.data;
 }
+
+export async function getMostRequestedServices(limit) {
+    const response = await axios.get(`/statistics/servicios/most-requested-services?limit=${limit}`);
+    return response.data.data;
+}

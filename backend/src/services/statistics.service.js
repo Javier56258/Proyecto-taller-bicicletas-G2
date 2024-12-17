@@ -4,7 +4,8 @@ import { Between } from "typeorm";
 import { AppDataSource } from "../config/configDb.js";
 import Product from "../entity/product.entity.js";
 import Proveedor from "../entity/proveedor.entity.js";
-import Venta from "../entity/venta.entity.js"; // Importar la entidad Venta
+import Venta from "../entity/venta.entity.js"; 
+import Reserva from "../entity/reserva.entity.js";
 
 //productos con más stock
 export async function getProductsWithMostStock(limit) {
@@ -108,4 +109,17 @@ export async function getProveedoresWithMostSoldProducts(limit) {
         .limit(limit)
         .getRawMany();
     return proveedores;
+}
+
+export async function getMostRequestedServices(limit) {
+    const reservaRepository = AppDataSource.getRepository(Reserva);
+    const servicios = await reservaRepository
+        .createQueryBuilder("reserva")
+        .innerJoin("reserva.servicio", "servicio")
+        .select("servicio.nombre, COUNT(reserva.idreserva) AS totalSolicitudes")
+        .groupBy("servicio.nombre")
+        .orderBy("totalSolicitudes", "DESC")
+        .limit(limit)
+        .getRawMany();
+    return servicios;
 }

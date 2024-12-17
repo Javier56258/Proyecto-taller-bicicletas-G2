@@ -7,7 +7,8 @@ import {
     getProveedoresWithOutOfStockProducts,
     getProveedoresWithMostSoldProducts,
     getMostSoldProducts,
-    getEarningsByDateRange
+    getEarningsByDateRange,
+    getMostRequestedServices
 } from "../services/statistics.service.js";
 import { formatDataArray } from "../helpers/formatData.js"; 
 import StatisticCard from "@components/StatisticCard";
@@ -24,12 +25,14 @@ const Statistics = () => {
     const [mostSoldProductsProveedores, setMostSoldProductsProveedores] = useState([]); 
     const [mostSoldProducts, setMostSoldProducts] = useState([]); 
     const [earnings, setEarnings] = useState([]);
+    const [mostRequestedServices, setMostRequestedServices] = useState([]);
   
 
     const [limitMostStockProducts, setLimitMostStockProducts] = useState(3);
     const [limitLeastStockProducts, setLimitLeastStockProducts] = useState(3);
     const [limitMostSoldProducts, setLimitMostSoldProducts] = useState(3);
     const [limitMostSoldProveedores, setLimitMostSoldProveedores] = useState(3);
+    const [limitMostRequestedServices, setLimitMostRequestedServices] = useState(3);
     const [startDate, setStartDate] = useState(new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0]);
     const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
   
@@ -57,11 +60,15 @@ const Statistics = () => {
             const formattedDataOutOfStockProviders = formatDataArray(outOfStockProveedores);
             setOutOfStockProductsProveedores(formattedDataOutOfStockProviders);
 
-            const mostSoldProveedores = await getProveedoresWithMostSoldProducts(limitMostSoldProveedores); // Nueva llamada
+            const mostSoldProveedores = await getProveedoresWithMostSoldProducts(limitMostSoldProveedores); 
             const formattedDataMostSoldProveedores = formatDataArray(mostSoldProveedores);
             setMostSoldProductsProveedores(formattedDataMostSoldProveedores);
 
-            const mostSold = await getMostSoldProducts(limitMostSoldProducts); // Nueva llamada
+            const mostRequestedServices = await getMostRequestedServices(limitMostRequestedServices);
+            const formattedDataMostRequestedServices = formatDataArray(mostRequestedServices);
+            setMostRequestedServices(formattedDataMostRequestedServices);
+
+            const mostSold = await getMostSoldProducts(limitMostSoldProducts); 
             const formattedDataMostSold = formatDataArray(mostSold);
             setMostSoldProducts(formattedDataMostSold);
             
@@ -70,7 +77,7 @@ const Statistics = () => {
             setEarnings(totalGanancias); 
       }
         fetchStatistics();
-    }, [limitMostStockProducts, limitLeastStockProducts, limitMostSoldProveedores, limitMostSoldProducts, startDate, endDate]);
+    }, [limitMostStockProducts, limitLeastStockProducts, limitMostSoldProveedores, limitMostSoldProducts, startDate, endDate, limitMostRequestedServices]);
 
 
     const handleLimitMostStockProductsChange = (event) => {
@@ -87,6 +94,10 @@ const Statistics = () => {
 
     const handleLimitMostSoldProveedoresChange = (event) => {
       setLimitMostSoldProveedores(Number(event.target.value));
+    };
+
+    const handleLimitMostRequestedServicesChange = (event) => {
+      setLimitMostRequestedServices(Number(event.target.value));
     };
 
     const handleStartDateChange = (event) => {
@@ -405,6 +416,55 @@ const Statistics = () => {
                     </p>
                 </div>
             </StatisticCard>
+
+            <StatisticCard title="Servicios más solicitados" className="bg-yellow-100 dark:bg-yellow-900">
+                <div className="overflow-x-auto rounded-lg shadow-lg">
+                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 bg-yellow-50 dark:bg-yellow-800">
+                    <thead className="bg-yellow-200 dark:bg-yellow-700">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400 rounded-tl-lg"
+                        >
+                          Servicio
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400 rounded-tr-lg"
+                        >
+                          Total Solicitudes
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-yellow-50 dark:bg-yellow-800 divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg">
+                      {mostRequestedServices.map((service, index) => (
+                        <tr key={service.id} className={index === mostRequestedServices.length - 1 ? "rounded-b-lg" : ""}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                            {service.nombre}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            {service.totalsolicitudes}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-4">
+                  <label htmlFor="limitMostRequestedServices" className="block text-sm font-medium text-gray-700 dark:invert">
+                    Límite de servicios:
+                  </label>
+                  <input
+                    type="number"
+                    id="limitMostRequestedServices"
+                    value={limitMostRequestedServices}
+                    onChange={handleLimitMostRequestedServicesChange}
+                    min="1"
+                    onKeyDown={(e) => e.preventDefault()}
+                    className="text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert w-16 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </StatisticCard>
 
             </div>
           );

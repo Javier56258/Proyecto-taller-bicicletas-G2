@@ -8,6 +8,7 @@ import {
     getMostSoldProducts,
     getEarningsByDateRange,
     getProveedoresWithMostSoldProducts,
+    getMostRequestedServices,
 } from "../services/statistics.service.js";
 import { handleErrorServer, handleSuccess } from "../handlers/responseHandlers.js";
 
@@ -81,7 +82,7 @@ export async function getEarnings(req, res) {
         const ganancias = await getEarningsByDateRange(startDate, endDate);
         return res.status(200).json(ganancias);
     } catch (error) {
-        console.error("Error fetching earnings:", error);
+        console.error("Error:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -94,7 +95,18 @@ export async function getProveedoresWithMostSoldProductsController(req, res) {
         const proveedores = await getProveedoresWithMostSoldProducts(limit);
         handleSuccess(res, 200, "Proveedores con más productos vendidos obtenidos", proveedores);
     } catch (error) {
-        console.error("Error fetching proveedores con mas productos:", error);
+        console.error("Error uniendo los productos:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
+export async function getMostRequestedServicesController(req, res) {
+    try {
+        const limit = parseInt(req.query.limit) || 3;
+        const servicios = await getMostRequestedServices(limit);
+        handleSuccess(res, 200, "Servicios más solicitados obtenidos", servicios);
+    } catch (error) {
+        console.error("Error fetching most requested services:", error);
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 }
