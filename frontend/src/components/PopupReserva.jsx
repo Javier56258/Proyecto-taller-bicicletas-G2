@@ -159,7 +159,7 @@ export default function PopupReserva({show,setShow,data,action}) {
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Hora de reserva</label>
                                         <select
                                             name="hora"
-                                            className="home-input"
+                                            className="home-input-select"
                                             id="hora"
                                             required
                                             value={selectedHorario} onChange={handleSelectedChangeHorario}>                                           
@@ -171,7 +171,7 @@ export default function PopupReserva({show,setShow,data,action}) {
                                     </div>
                                     <div className="home-form-group">
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Servicio a pedir</label>
-                                        <select id="motivo" name="motivo" className="home-input" required
+                                        <select id="motivo" name="motivo" className="home-input-select" required
                                                 value={selectedServicio} onChange={handleSelectedChangeServicio}>
                                             <option value="" disabled> Selecciona un servicio </option>                              
                                             {servicios.map((servicio) => (

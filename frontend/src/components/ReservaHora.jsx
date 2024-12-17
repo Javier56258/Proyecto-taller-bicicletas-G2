@@ -199,7 +199,7 @@ function CreateReserva() {
                 <select
                   id="motivo"
                   name="motivo"
-                  className="home-input"
+                  className="home-input-select"
                   required
                   value={selectedServicio}
                   onChange={handleSelectedChangeServicio}
@@ -239,7 +239,7 @@ function CreateReserva() {
                 <select
                   id="hora"
                   name="hora"
-                  className="home-input"
+                  className="home-input-select"
                   required
                   value={selectedHorario}
                   onChange={handleSelectedChangeHorario}

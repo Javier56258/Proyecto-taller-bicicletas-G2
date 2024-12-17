@@ -117,9 +117,11 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent }) => {
                 validate: field.validate || {},
               })}
               name={field.name}
+              className="select-user"
               defaultValue={field.defaultValue || ""}
               disabled={field.disabled}
               onChange={field.onChange}
+              
             >
               <option value="">Seleccionar opción</option>
               {field.options?.map((option, optIndex) => (

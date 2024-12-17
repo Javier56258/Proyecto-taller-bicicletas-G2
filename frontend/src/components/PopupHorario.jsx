@@ -81,7 +81,7 @@ export default function PopupHorario({show,setShow,data,action}) {
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Dia</label>
                                         <select
                                             name="dia"
-                                            className="home-input"
+                                            className="home-input-select"
                                             id="dia"
                                             required
                                             defaultValue={horarioData.dia || ""}
@@ -103,7 +103,7 @@ export default function PopupHorario({show,setShow,data,action}) {
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Hora de reserva</label>
                                         <select
                                             name="hora"
-                                            className="home-input"
+                                            className="home-input-select"
                                             id="hora"
                                             required
                                             defaultValue={horarioData.hora || ""}
