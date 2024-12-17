@@ -22,6 +22,7 @@ router
   .get("/all", getProveedores)
   .get("/detail/", getProveedor);
 
+//Rutas que requieren autenticación y autorización
 router.use(isAdmin);
 
 router

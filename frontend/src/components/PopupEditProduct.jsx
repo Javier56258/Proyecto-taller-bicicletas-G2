@@ -78,6 +78,7 @@ export default function PopupEditProduct({ show, setShow, producto, action }) {
                                     required: true,
                                     min: 0,
                                 },
+                               
                             ]}
                             buttonText="Guardar"
                             onSubmit={handleSubmit}

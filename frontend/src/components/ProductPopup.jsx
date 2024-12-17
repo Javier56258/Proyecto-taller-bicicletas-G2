@@ -1,15 +1,14 @@
 import Form from "./Form";
 import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
-import { getProveedores } from "@services/proveedor.service.js";
-import { useEffect, useState } from "react";
+
 
 function ProductPopup({ show, setShow, data, action }) {
   const productData = data && data.length > 0 ? data[0] : {};
-
-  const [proveedores, setProveedores] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  console.log("Producto a editar: ", productData);
+ 
   const handleSubmit = (formData) => {
+    console.log("Form data: ", formData);
     try {
       action(formData);
       setShow(false);
@@ -18,29 +17,6 @@ function ProductPopup({ show, setShow, data, action }) {
     }
   };
 
-  const handleChange = (selectedOptions) => {
-    setSelectedOptions(selectedOptions);
-  };
-
-  useEffect(() => {
-    const fetchProveedores = async () => {
-      try {
-        const proveedoresData = await getProveedores();
-        setProveedores(proveedoresData);
-        console.log("Proveedores disponibles para asignar: ", proveedoresData);
-      } catch (error) {
-        console.error("Error al obtener los proveedores:", error);
-      }
-    };
-    fetchProveedores();
-  }, []);
-
-
-
-  const proveedoresOptions = proveedores.map((proveedor) => ({
-    value: proveedor.idProveedor,
-    label: proveedor.nombreProveedor,
-  }));
 
   return (
     <div>
@@ -104,14 +80,7 @@ function ProductPopup({ show, setShow, data, action }) {
                   max: 1000,
                   patternMessage: "stock invalido",
                 },
-                {
-                  label: "Proveedor",
-                  name: "nombreProveedor",
-                  fieldType: "multiSelect",
-                  options: proveedoresOptions,
-                  required: true,
-                  onChange: handleChange,
-                },
+                
               ]}
               onSubmit={handleSubmit}
               buttonText="Crear producto"
