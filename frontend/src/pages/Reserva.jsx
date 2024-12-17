@@ -61,9 +61,7 @@ const Reservas = () => {
 
     const { handleDelete: deleteFunction } = useDeleteReserva(fetchReservas, setDataReserva);
 
-    useEffect(() => {
-        console.log("Reserva seleccionado: ", selectedReserva);
-    }, [selectedReserva]);
+
 
     useEffect(() => {
         if (

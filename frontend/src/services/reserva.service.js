@@ -8,10 +8,21 @@ export async function createReserva(reservaData) {
     try {
       const response = await axios.post("/reservas", reservaData);
       console.log("Response ", response);
+      console.log("Response data ", response.data);
+      console.log("Response data data ", response.data.data);
+      console.log("Status: ", response.status);
+      console.log("Details: ", response.details);
+      console.log("Details data: ", response.data.details);
+      console.log("Error: ", response.error);
       //const formattedData = response.data.map(formatHorarioData);
       //console.log("formattedData ", formattedData);
       return response;
     } catch (error) {
+      console.log("error ", error);
+      console.log("error message ", error.response.data.message);
+      console.log("error details ", error.response.data.details);
+      console.log("error Status: ", error.response.data.status);
+      console.log("error data: ", error.data);
       console.error("Error al crear la reserva:", error);
       return error.response.data;
     }
@@ -20,6 +31,10 @@ export async function createReserva(reservaData) {
 export async function getReservas() {
     try {
         const { data } = await axios.get('/reservas/all');
+        console.log("data es: ", data);
+        if (data == "") {
+            return [];
+        }
         console.log(data);
         const formattedData = data.data.map(formatReservaData);
         console.log("Pasando por getReservas formattedData");

@@ -1,78 +1,24 @@
 //import Form from './Form';
 import "@styles/popup.css";
 import CloseIcon from '@assets/XIcon.svg';
-import { useEffect, useState } from 'react';
-import { getServicios } from "../services/servicios.service.js";
-import { getHorarios } from "../services/horarios.service";
-import { getReservas } from "../services/reserva.service";
+import { useState } from 'react';
+import useGetReservas from '@hooks/reservas/useGetReserva';
+import useHorarios from "@hooks/horarios/useGetHorario.jsx";
+import useServicio from "@hooks/servicios/useGetServicios.jsx";
 
-export default function reservaPopup({show,setShow,data,action}) {
-    const [horarios, setHorarios] = useState([]);
+
+export default function PopupReserva({show,setShow,data,action}) {
+    const { reservas  } = useGetReservas();
+    const { horarios } = useHorarios();
+    const { servicios } = useServicio();
     const [filteredHorarios, setFilteredHorarios] = useState([]);
     const [selectedServicio, setSelectedServicio] = useState("");
-    const [servicios, setServicios] = useState([]);
     const [selectedFecha, setSelectedFecha] = useState("");
-    const [reservas, setReservas] = useState([]);
     const [selectedHorario, setSelectedHorario] = useState("");
     const reservaData = data && data.length > 0 ? data[0] : {};
     const handleSelectedChangeServicio = (e) => {
         setSelectedServicio(e.target.value);
     };
-
-    useEffect(() => {
-        const fetchReservas = async () => {
-                    try {
-                        const response = await getReservas();
-                        console.log("Pasando por fetchReservas");
-                        console.log(response);
-                        const formattedData = response.map((reserva) => ({
-                            nombreReservador: reserva.nombreReservador,
-                            email: reserva.email,
-                            motivo: reserva.motivo,
-                            fecha: reserva.fecha,
-                            hora: reserva.hora,
-                            idreserva: reserva.idreserva,
-                            createdAt: reserva.createdAt
-                        }));
-                        setReservas(formattedData);
-                    } catch (error) {
-                        console.error("Error: ", error);
-                    }
-        };
-        
-        const fetchHorarios = async () => {
-                    try {
-                        const response = await getHorarios();
-                        const formattedData = response.map(horario => ({
-                            id: horario.id,
-                            hora: horario.hora,
-                            dia: horario.dia
-                        }));
-                        setHorarios(formattedData);
-                        console.log("Horarios: ", formattedData);
-                    } catch (error) {
-                        console.error("Error al obtener horarios: ", error);
-                    }
-        };
-        
-        const fetchServicios = async () => {
-                    try {
-                        const response = await getServicios();
-                        const formattedData = response.map(servicio => ({
-                            idServicio: servicio.idServicio,
-                            nombre: servicio.nombre,
-                            descripcion: servicio.descripcion
-                        }));
-                        setServicios(formattedData);
-                    } catch (error) {
-                        console.error("Error al obtener servicios: ", error);
-                    }
-        };
-        
-        fetchReservas();
-        fetchHorarios();
-        fetchServicios();
-    }, []);
 
     const filtrarXdia = (fecha) => {
         if (!fecha) return;
@@ -212,7 +158,7 @@ export default function reservaPopup({show,setShow,data,action}) {
                                     <div className="home-form-group">
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Servicio a pedir</label>
                                         <select id="motivo" name="motivo" className="home-input" required
-                                                value={selectedHorario} onChange={handleSelectedChangeServicio}>
+                                                value={selectedServicio} onChange={handleSelectedChangeServicio}>
                                             <option value="" disabled> Selecciona un servicio </option>                              
                                             {servicios.map((servicio) => (
                                                 <option key={servicio.idServicio} value={servicio.nombre}>{servicio.nombre}</option>
