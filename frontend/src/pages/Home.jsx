@@ -60,7 +60,6 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <Navbar />
       <h1 className="text-5xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
         Taller de bicicleta
       </h1>

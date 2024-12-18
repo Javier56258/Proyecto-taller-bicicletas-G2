@@ -1,6 +1,7 @@
 .home-container {
   position: relative;
   padding: 20px;
+  margin-top: 35px;
 }
 
 .home-back-button {
@@ -95,23 +96,24 @@
   color: #aaa !important; /* Texto en modo oscuro */
 }
 
-.home-input-select{
+.home-input-select {
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  text-overflow: '';
+  text-overflow: "";
   border: 3px solid #475b63;
   border-radius: 12px;
   height: 40px;
   display: flex;
+  background-color: white;
 
   width: 100%;
   color: #1a1a1a;
-    background-repeat: no-repeat;
-    margin-bottom: 0.8vh;
-    background-image: url("../assets/ChevronDownIcon.svg");
-    background-position: calc(100% - 5px) center;
-    background-size: 20px 20px;
+  background-repeat: no-repeat;
+  margin-bottom: 0.8vh;
+  background-image: url("../assets/ChevronDownIcon.svg");
+  background-position: calc(100% - 5px) center;
+  background-size: 20px 20px;
 }
 .dark .home-input-select {
   background-color: #1a1a1a !important; /* Fondo en modo oscuro */
