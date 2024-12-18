@@ -160,11 +160,18 @@ const Proveedores = () => {
                   <img
                     src={selectedProveedor ? UpdateIcon : UpdateIconDisable}
                     alt="edit"
+                    className={` transition group-hover:brightness-0 group-hover:invert !bg-none  ${
+                      selectedProveedor
+                        ? "group-hover:contrast-10000 group-hover:brightness-10000"
+                        : ""
+                    }`}
                   />
                 </button>
                 <button
                   className={`group p-3 white rounded-md hover:bg-[#bacdb0] transition mt-4 ${
-                    !selectedProveedor ? "hover-off" : ""
+                    !selectedProveedor
+                      ? "hover-off group-hover:contrast-1000"
+                      : ""
                   }`}
                   disabled={!selectedProveedor}
                   onClick={handleDelete}
@@ -172,6 +179,11 @@ const Proveedores = () => {
                   <img
                     src={selectedProveedor ? DeleteIcon : DeleteIconDisable}
                     alt="delete"
+                    className={` transition group-hover:brightness-0 group-hover:invert !bg-none  ${
+                      selectedProveedor
+                        ? "group-hover:contrast-10000 group-hover:brightness-10000"
+                        : ""
+                    }`}
                   />
                 </button>
               </div>

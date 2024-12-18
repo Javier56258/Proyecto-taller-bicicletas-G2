@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
-import PopupUser from "@components/Popup";
-import useDeleteUser from "@hooks/users/useDeleteUser";
-import useEditUser from "@hooks/users/useEditUser";
-import useGetUsers from "@hooks/users/useGetUsers";
+import PopupUser from "@components/Popup.jsx";
+import useDeleteUser from "@hooks/users/useDeleteUser.jsx";
+import useEditUser from "@hooks/users/useEditUser.jsx";
+import useUsers from "@hooks/users/useGetUsers.jsx";
 import UpdateIcon from "../assets/updateIcon.svg";
 import UpdateIconDisable from "../assets/updateIconDisabled.svg";
 import DeleteIcon from "../assets/deleteIcon.svg";
 import DeleteIconDisable from "../assets/deleteIconDisabled.svg";
+import RegisterPopup from "@components/RegisterPopup.jsx";
 import "@styles/users.css";
 
 const Users = () => {
-  const { users, fetchUsers, setUsers } = useGetUsers();
+  const { users, fetchUsers, setUsers } = useUsers();
   const [filterRut, setFilterRut] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
+  const [isPopupRegisterOpen, setIsPopupRegisterOpen] = useState(false);
+
+  const loadUsers = async () => {
+    const usersData = await fetchUsers();
+    setUsers(usersData);
+  };
 
   const handleRutFilterChange = (e) => {
     setFilterRut(e.target.value);
@@ -45,7 +52,6 @@ const Users = () => {
 
   const handleEditClick = () => {
     if (selectedUser) {
-      console.log("Usuario seleccionado para editar:", selectedUser);
       const userToEdit = users.find((user) => user.rut === selectedUser.rut);
       if (userToEdit) {
         setDataUser([userToEdit]);
@@ -75,6 +81,10 @@ const Users = () => {
     setSelectedUser(selectedUser?.rut === user.rut ? null : user);
   };
 
+  const handleAddUserClick = () => {
+    setIsPopupRegisterOpen(true);
+  };
+
   return (
     <div className="slide-down">
       <div className="main-content bg-none">
@@ -83,53 +93,63 @@ const Users = () => {
         </h1>
 
         <div className="top-table">
-          <div className="filter-actions flex space-x-4">
+          <div className="button-container-user">
             <input
               value={filterRut}
               onChange={handleRutFilterChange}
               placeholder={"Filtrar por RUT"}
               className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
             />
+            <div className="filter-actions flex space-x-4">
+              <button
+                className="create-button-user hover:!bg-[#fff] hover:text-[#475B63] dark:hover:!bg-[#2e2c2f]  dark:hover:text-white dark:text-[#2e2c2f] mt-4"
+                onClick={handleAddUserClick}
+              >
+                Añadir Usuario
+              </button>
 
-            <button
-              onClick={handleEditClick}
-              disabled={!selectedUser}
-              className={`group p-3 rounded-md mt-4 transition ${
-                !selectedUser
-                  ? "hover-off dark:bg-gray-800 dark:text-gray-500"
-                  : "bg-white text-black border border-[#bacdb0] hover:bg-[#729b79] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#475b63]"
-              }`}
-            >
-              <img
-                src={selectedUser ? UpdateIcon : UpdateIconDisable}
-                alt="edit"
-                className={`w-4 h-4 transition group-hover:brightness-0 group-hover:invert ${
-                  selectedUser ? "group-hover:contrast-1000" : ""
+              <button
+                onClick={handleEditClick}
+                disabled={!selectedUser}
+                className={`group p-3 rounded-md mt-4 transition ${
+                  !selectedUser
+                    ? "hover-off dark:bg-none dark:text-gray-500"
+                    : "bg-none text-black border border-[#bacdb0] hover:bg-[#bacdb0] dark:bg-none dark:text-gray-300 dark:hover:bg-[#bacdb0]"
                 }`}
-              />
-            </button>
+              >
+                <img
+                  src={selectedUser ? UpdateIcon : UpdateIconDisable}
+                  alt="edit"
+                  className={`transition group-hover:brightness-0 group-hover:invert !bg-none !shadow-none ${
+                    selectedUser ? "group-hover:contrast-1000" : ""
+                  }`}
+                />
+              </button>
 
-            <button
-              onClick={handleDelete}
-              disabled={!selectedUser}
-              className={`group p-3 rounded-md mt-4 transition ${
-                !selectedUser
-                  ? "hover-off dark:bg-gray-800 dark:text-gray-500"
-                  : "bg-white text-black border border-[#bacdb0] hover:bg-[#729b79] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#475b63]"
-              }`}
-            >
-              <img
-                src={
-                  dataUser.length === 0 || !selectedUser
-                    ? DeleteIconDisable
-                    : DeleteIcon
-                }
-                alt="delete"
-                className={`w-4 h-4 transition group-hover:brightness-0 group-hover:invert ${
-                  selectedUser ? "group-hover:contrast-1000" : ""
+              <button
+                onClick={handleDelete}
+                disabled={!selectedUser}
+                className={`group p-3 rounded-md mt-4 transition ${
+                  !selectedUser
+                    ? "hover-off dark:bg-none dark:text-gray-500"
+                    : "bg-white text-black border border-[#bacdb0] hover:bg-[#bacdb0]  dark:text-gray-300 dark:hover:bg-[#bacdb0]"
                 }`}
-              />
-            </button>
+              >
+                <img
+                  src={
+                    dataUser.length === 0 || !selectedUser
+                      ? DeleteIconDisable
+                      : DeleteIcon
+                  }
+                  alt="delete"
+                  className={`transition group-hover:brightness-0 group-hover:invert !bg-none  ${
+                    selectedUser
+                      ? "group-hover:contrast-10000 group-hover:brightness-10000"
+                      : ""
+                  }`}
+                />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -191,6 +211,11 @@ const Users = () => {
           setShow={setIsPopupOpen}
           data={dataUser}
           action={handleUpdate}
+        />
+        <RegisterPopup
+          show={isPopupRegisterOpen}
+          setShow={setIsPopupRegisterOpen}
+          action={fetchUsers}
         />
       </div>
     </div>

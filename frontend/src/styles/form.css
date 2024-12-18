@@ -5,7 +5,7 @@ body .form select {
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  text-overflow: '';
+  text-overflow: "";
 
   border: 3px solid #475b63;
   border-radius: 12px;
@@ -13,11 +13,11 @@ body .form select {
   display: flex;
 
   color: #1a1a1a;
-    background-repeat: no-repeat;
-    margin-bottom: 0.8vh;
-    background-image: url("../assets/ChevronDownIcon.svg");
-    background-position: calc(100% - 15px) center;
-    background-size: 20px 20px;
+  background-repeat: no-repeat;
+  margin-bottom: 0.8vh;
+  background-image: url("../assets/ChevronDownIcon.svg");
+  background-position: calc(100% - 15px) center;
+  background-size: 20px 20px;
 }
 @media (max-width: 480px) {
   .form {
@@ -132,7 +132,7 @@ body .form select {
     background-size: 20px 20px;
     box-sizing: border-box;
   }
-  
+
   select::placeholder {
     color: rgba(0, 51, 102, 0.3);
     font-weight: light;
@@ -211,11 +211,11 @@ body .form select {
   }
 }
 
-select-user{
+select-user {
   display: flex;
   border: 3px solid #475b63; /* Borde más delgado */
   border-radius: 12px; /* Bordes más redondeados */
-  padding: 12px 10px; /* Más altura interna */
+  padding: 0px 0px; /* Más altura interna */
   background-repeat: no-repeat;
   margin-bottom: 0.8vh;
   background-color: #1a1a1a; /* Fondo oscuro como en el ejemplo */
@@ -359,7 +359,7 @@ body.dark .form select {
   background-color: #1a1a1a; /* Fondo más oscuro */
   color: #fff; /* Texto blanco */
 }
-body.dark .form select option{
+body.dark .form select option {
   background-color: #1a1a1a; /* Fondo más oscuro */
   color: #fff; /* Texto blanco */
 }
