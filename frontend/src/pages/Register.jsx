@@ -34,14 +34,16 @@ const registerSubmit = async (data) => {
 const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/)
 
 	return (
-		<main className="container">
-			<Form
-				title="Crea tu cuenta"
+        <div className="relative h-screen w-screen bg-black">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#171617_1px,#171617_1px)] bg-[size:14px_24px]"></div>
+		    <main className="relative flex items-center justify-center h-full">
+			  <Form
+				title="Ingresar usuario"
 				fields={[
 					{
 						label: "Nombre completo",
 						name: "nombreCompleto",
-						placeholder: "Diego Alexis Salazar Jara",
+						placeholder: "Nombre y apellido",
                         fieldType: 'input',
 						type: "text",
 						required: true,
@@ -53,22 +55,20 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
                     {
                         label: "Correo electrónico",
                         name: "email",
-                        placeholder: "example@gmail.cl",
+                        placeholder: "example@gmail.com",
                         fieldType: 'input',
                         type: "email",
                         required: true,
                         minLength: 15,
                         maxLength: 35,
                         errorMessageData: errorEmail,
-                        validate: {
-                            emailDomain: (value) => value.endsWith('@gmail.cl') || 'El correo debe terminar en @gmail.cl'
-                        },
+                        
                         onChange: (e) => handleInputChange('email', e.target.value)
                     },
                     {
 						label: "Rut",
                         name: "rut",
-                        placeholder: "23.770.330-1",
+                        placeholder: "11.111.111-1",
                         fieldType: 'input',
                         type: "text",
 						minLength: 9,
@@ -94,13 +94,10 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
 				]}
 				buttonText="Registrarse"
 				onSubmit={registerSubmit}
-				footerContent={
-					<p>
-						¿Ya tienes cuenta?, <a href="/auth">¡Inicia sesión aquí!</a>
-					</p>
-				}
+
 			/>
 		</main>
+    </div>
 	);
 };
 
