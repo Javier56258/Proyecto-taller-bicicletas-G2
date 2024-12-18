@@ -3,6 +3,16 @@ import deleteIcon from "@assets/deleteIcon.svg";
 import { useState } from "react";
 
 const ProductCard = ({ product, onEdit, onDelete, onSell }) => {
+
+    const precio = product.price;
+    //formatear precio a pesos chilenos
+    const formatter = new Intl.NumberFormat('es-CL', {
+        style: 'currency',
+        currency: 'CLP',
+        
+    });
+
+    
     const [cantidad, setCantidad] = useState(0);
     return (
         <div className="bg-slate-50 shadow-md rounded-lg p-4 ">
@@ -20,7 +30,7 @@ const ProductCard = ({ product, onEdit, onDelete, onSell }) => {
                     <span className="font-bold">Stock:</span> {product.stock}
                 </p>
                 <p>
-                    <span className="font-bold">Precio:</span> ${product.price}
+                    <span className="font-bold">Precio:</span> {formatter.format(precio)}
                 </p>
                 <div className="flex space-x-4">
                     <button

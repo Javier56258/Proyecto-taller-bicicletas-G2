@@ -2,137 +2,98 @@
 import "@styles/popup.css";
 import CloseIcon from '@assets/XIcon.svg';
 import { useEffect, useState } from 'react';
-import { getServicios } from "../services/servicios.service.js";
-import { getHorarios } from "../services/horarios.service";
-import { getReservas } from "../services/reserva.service";
+import useGetReservas from '@hooks/reservas/useGetReserva';
+import useHorarios from "@hooks/horarios/useGetHorario.jsx";
+import useServicio from "@hooks/servicios/useGetServicios.jsx";
 
-export default function reservaPopup({show,setShow,data,action}) {
-    const [horarios, setHorarios] = useState([]);
+
+export default function PopupReserva({show,setShow,data,action}) {
+
+    useEffect(() => {
+        if (show) {
+            // Bloquear scroll en el fondo
+            document.body.classList.add("overflow-hidden");
+        } else {
+            // Restaurar el scroll
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        // Limpieza al desmontar el componente
+        return () => document.body.classList.remove("overflow-hidden");
+    }, [show]);
+
+    const { reservas  } = useGetReservas();
+    const { horarios } = useHorarios();
+    const { servicios } = useServicio();
     const [filteredHorarios, setFilteredHorarios] = useState([]);
     const [selectedServicio, setSelectedServicio] = useState("");
-    const [servicios, setServicios] = useState([]);
     const [selectedFecha, setSelectedFecha] = useState("");
-    const [reservas, setReservas] = useState([]);
     const [selectedHorario, setSelectedHorario] = useState("");
     const reservaData = data && data.length > 0 ? data[0] : {};
     const handleSelectedChangeServicio = (e) => {
         setSelectedServicio(e.target.value);
     };
 
-    useEffect(() => {
-        const fetchReservas = async () => {
-                    try {
-                        const response = await getReservas();
-                        console.log("Pasando por fetchReservas");
-                        console.log(response);
-                        const formattedData = response.map((reserva) => ({
-                            nombreReservador: reserva.nombreReservador,
-                            email: reserva.email,
-                            motivo: reserva.motivo,
-                            fecha: reserva.fecha,
-                            hora: reserva.hora,
-                            idreserva: reserva.idreserva,
-                            createdAt: reserva.createdAt
-                        }));
-                        setReservas(formattedData);
-                    } catch (error) {
-                        console.error("Error: ", error);
-                    }
-                };
+    const filtrarXdia = (fecha) => {
+        if (!fecha) return;
         
-                const fetchHorarios = async () => {
-                    try {
-                        const response = await getHorarios();
-                        const formattedData = response.map(horario => ({
-                            id: horario.id,
-                            hora: horario.hora,
-                            dia: horario.dia
-                        }));
-                        setHorarios(formattedData);
-                        console.log("Horarios: ", formattedData);
-                    } catch (error) {
-                        console.error("Error al obtener horarios: ", error);
-                    }
-                };
+        const FECHA = new Date(fecha);
+        let DIA = FECHA.getDay();
+        if (DIA === 0) DIA = "Lunes";
+        if (DIA === 1) DIA = "Martes";
+        if (DIA === 2) DIA = "Miercoles";
+        if (DIA === 3) DIA = "Jueves";
+        if (DIA === 4) DIA = "Viernes";
+        if (DIA === 5) DIA = "Sabado";
+        if (DIA === 6) DIA = "Domingo";
         
-                const fetchServicios = async () => {
-                    try {
-                        const response = await getServicios();
-                        const formattedData = response.map(servicio => ({
-                            idServicio: servicio.idServicio,
-                            nombre: servicio.nombre,
-                            descripcion: servicio.descripcion
-                        }));
-                        setServicios(formattedData);
-                    } catch (error) {
-                        console.error("Error al obtener servicios: ", error);
-                    }
-                };
+        const dateParts = fecha.split('-');
+        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
         
-                fetchReservas();
-                fetchHorarios();
-                fetchServicios();
-            }, []);
+        console.log("Dia: ", DIA);
+        console.log("Fecha: ", fecha);
+        let horariosDisponibles = horarios.filter(horario => {
+            return horario.dia === DIA;
+        });
+        
+        reservas.forEach(reserva => {
+            if (reserva.fecha === formattedDate) {
+                const horaReservada = reserva.hora;
+                // Eliminar las horas ya reservadas
+                horariosDisponibles = horariosDisponibles.filter(
+                    horario => {return horario.hora !== horaReservada }
+                );
+            }
+        });
+        
+        setFilteredHorarios(horariosDisponibles);
+    };
 
-            const filtrarXdia = (fecha) => {
-                if (!fecha) return;
-        
-                const FECHA = new Date(fecha);
-                let DIA = FECHA.getDay();
-                if (DIA === 0) DIA = "Lunes";
-                if (DIA === 1) DIA = "Martes";
-                if (DIA === 2) DIA = "Miercoles";
-                if (DIA === 3) DIA = "Jueves";
-                if (DIA === 4) DIA = "Viernes";
-                if (DIA === 5) DIA = "Sabado";
-                if (DIA === 6) DIA = "Domingo";
-        
-                const dateParts = fecha.split('-');
-                const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-        
-                console.log("Dia: ", DIA);
-                console.log("Fecha: ", fecha);
-                let horariosDisponibles = horarios.filter(horario => {
-                    return horario.dia === DIA;
-                });
-        
-                reservas.forEach(reserva => {
-                    if (reserva.fecha === formattedDate) {
-                        const horaReservada = reserva.hora;
-                        // Eliminar las horas ya reservadas
-                        horariosDisponibles = horariosDisponibles.filter(
-                            horario => {return horario.hora !== horaReservada });
-                    }
-                });
-        
-                setFilteredHorarios(horariosDisponibles);
-            };
+    const handleFechaChange = (e) => {
+        setSelectedFecha(e.target.value);
+        filtrarXdia(e.target.value);
+    };
+    const handleSelectedChangeHorario = (e) => {
+        setSelectedHorario(e.target.value);
+    };
 
-            const handleFechaChange = (e) => {
-                setSelectedFecha(e.target.value);
-                filtrarXdia(e.target.value);
-            };
-            const handleSelectedChangeHorario = (e) => {
-                setSelectedHorario(e.target.value);
-            };
-
-            const handleSubmit = (e) => {
-                e.preventDefault(); // Detener la recarga de página.
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Detener la recarga de página.
                 
-                const formData = {
-                    nombreReservador: e.target.nombreReservador.value,
-                    email: e.target.email.value,
-                    fecha: selectedFecha,
-                    hora: selectedHorario,
-                    motivo: selectedServicio,
-                };
+        const formData = {
+            nombreReservador: e.target.nombreReservador.value,
+            email: e.target.email.value,
+            fecha: selectedFecha,
+            hora: selectedHorario,
+            motivo: selectedServicio,
+        };
             
-                if (formData.hora instanceof Date || formData.hora.includes(":")) {
-                    formData.hora = formData.hora.toString(); 
-                }
+        if (formData.hora instanceof Date || formData.hora.includes(":")) {
+            formData.hora = formData.hora.toString(); 
+        }
             
-                action(formData); // Llamar a la acción proporcionada.
-            };
+        action(formData); // Llamar a la acción proporcionada.
+    };
 
     return(
         <div>
@@ -198,7 +159,7 @@ export default function reservaPopup({show,setShow,data,action}) {
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Hora de reserva</label>
                                         <select
                                             name="hora"
-                                            className="home-input"
+                                            className="home-input-select"
                                             id="hora"
                                             required
                                             value={selectedHorario} onChange={handleSelectedChangeHorario}>                                           
@@ -210,8 +171,8 @@ export default function reservaPopup({show,setShow,data,action}) {
                                     </div>
                                     <div className="home-form-group">
                                         <label className="text-[#475B63] dark:text-[#F3E8EE]">Servicio a pedir</label>
-                                        <select id="motivo" name="motivo" className="home-input" required
-                                                value={selectedHorario} onChange={handleSelectedChangeServicio}>
+                                        <select id="motivo" name="motivo" className="home-input-select" required
+                                                value={selectedServicio} onChange={handleSelectedChangeServicio}>
                                             <option value="" disabled> Selecciona un servicio </option>                              
                                             {servicios.map((servicio) => (
                                                 <option key={servicio.idServicio} value={servicio.nombre}>{servicio.nombre}</option>

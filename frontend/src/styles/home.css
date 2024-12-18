@@ -31,16 +31,14 @@
   font-family: Arial, sans-serif;
   background-color: transparent;
   margin: 30px;
-  padding: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 /* Card styles */
 .home-reserva-card {
-  background-color: #475b63;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 800px;
@@ -48,18 +46,22 @@
   margin: 50px;
 }
 
+.dark .home-reserva-card {
+  background-color: #2e2c2f;
+}
+
 /* Title styles */
 .home-reserva-title {
-  margin-bottom: 20px;
+  margin-bottom: 45px;
   text-align: center;
-  color: #bacdb09e;
+  color: #475b63;
   font-size: 2rem;
   line-height: 1;
   font-weight: 800;
 }
 
 .dark .home-reserva-title {
-  color: #f3e8ee; /* Texto en modo oscuro */
+  color: #ffffff; /* Texto en modo oscuro */
 }
 
 /* Form group styles */
@@ -73,7 +75,7 @@
   margin-bottom: 5px;
 }
 .dark .home-label {
-  color: #F3E8EE; /* Texto en modo oscuro */
+  color: #f3e8ee; /* Texto en modo oscuro */
 }
 
 /* Input styles */
@@ -81,25 +83,43 @@
   width: 100%;
   padding: 8px 5px;
   background-repeat: no-repeat;
-  background-color: #edf3ef;
+  background-color: white;
   border: 3px solid #475b63;
   border-radius: 12px;
   font-size: 16px;
-}
-.home-input::placeholder {
-  color: #fefefe; /* Texto en modo oscuro */
+  color: #9ca3af;
 }
 
 .dark .home-input {
   background-color: #1a1a1a !important; /* Fondo en modo oscuro */
-  color: #f3f3f3 !important; /* Texto en modo oscuro */
+  color: #aaa !important; /* Texto en modo oscuro */
 }
-.dark .home-input::placeholder {
-  color: #f3f3f3; /* Texto en modo oscuro */
+
+.home-input-select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  border: 3px solid #475b63;
+  border-radius: 12px;
+  height: 40px;
+  display: flex;
+
+  width: 100%;
+  color: #1a1a1a;
+    background-repeat: no-repeat;
+    margin-bottom: 0.8vh;
+    background-image: url("../assets/ChevronDownIcon.svg");
+    background-position: calc(100% - 5px) center;
+    background-size: 20px 20px;
+}
+.dark .home-input-select {
+  background-color: #1a1a1a !important; /* Fondo en modo oscuro */
+  color: #aaa !important; /* Texto en modo oscuro */
 }
 /* Button styles */
 .home-button {
-  background-color: #5e6347;
+  background-color: #729b79;
   color: white;
   border: none;
   padding: 10px;
@@ -117,6 +137,7 @@
 .home-form-columns {
   display: flex;
   gap: 20px; /* Espacio entre las columnas */
+  width: 25rem;
 }
 
 /* Cada columna del formulario */
@@ -198,16 +219,5 @@
       auto-fill,
       minmax(80px, 1fr)
     ); /* Menor tamaño de columna en pantallas pequeñas */
-  }
-  .home-input{
-      background-color: #fff; /* Fondo oscuro */
-      color: #333; /* Texto blanco */
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .home-input {
-      background-color: #333; /* Fondo oscuro */
-      color: #fff; /* Texto blanco */
   }
 }

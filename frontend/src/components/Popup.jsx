@@ -16,7 +16,7 @@ export default function Popup({ show, setShow, data, action }) {
         <div>
             { show && (
             <div className="bg">
-                <div className="popup">
+                <div className="prov-popup dark:bg-[#2e2c2f] mt-20 h-570">
                     <button className='close' onClick={() => setShow(false)}>
                         <img src={CloseIcon} />
                     </button>
@@ -63,13 +63,14 @@ export default function Popup({ show, setShow, data, action }) {
                             {
                                 label: "Rol",
                                 name: "rol",
-                                fieldType: 'select',
+                                fieldType: "select",
                                 options: [
                                     { value: 'administrador', label: 'Administrador' },
-                                    { value: 'usuario', label: 'Usuario' },
+                                    { value: 'usuario', label: 'Empleado' },
                                 ],
                                 required: true,
                                 defaultValue: userData.rol || "",
+                            
                             },
                             {
                                 label: (

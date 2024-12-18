@@ -3,9 +3,9 @@ import Joi from "joi";
 import moment from "moment";
 
 const domainEmailValidator = (value, helper) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|cl)$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(value)) {
-        return helper.message("El correo electrónico no tiene un formato válido. Debe terminar en .com o .cl");
+        return helper.message("El correo electrónico no tiene un formato válido.");
     }
     return value;
 };
@@ -41,7 +41,7 @@ export const reservaBodyValidation = Joi.object({
         }),
     email: Joi.string()
         .min(15)
-        .max(35)
+        .max(64)
         .email()
         .messages({
             "string.empty": "El correo electrónico no puede estar vacío.",
@@ -51,17 +51,18 @@ export const reservaBodyValidation = Joi.object({
             "string.max": "El correo electrónico debe tener como máximo 35 caracteres.",
         })
         .custom(domainEmailValidator, "Validación dominio email"),
-    motivo: Joi.string()
+        motivo: Joi.string()
         .min(5)
         .max(60)
-        .pattern(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/)
+        .pattern(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,]+$/)
         .messages({
             "string.empty": "El motivo de servicio no puede estar vacío.",
             "string.base": "El motivo de servicio debe ser de tipo string.",
-            "string.min": "El motivo de servicio debe tener como mínimo 10 caracteres.",
+            "string.min": "El motivo de servicio debe tener como mínimo 5 caracteres.",
             "string.max": "El motivo de servicio debe tener como máximo 60 caracteres.",
-            "string.pattern.base": "El motivo de servicio solo puede contener letras y números.",
+            "string.pattern.base": "El motivo de servicio solo puede contener letras, números, tildes y comas.",
         }),
+    
     fecha: Joi.date().iso()
         .max(moment().add(1, "month").toISOString()) 
         .messages({

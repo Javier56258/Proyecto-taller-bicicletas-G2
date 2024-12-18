@@ -56,7 +56,8 @@ function PopupProveedores({ show, setShow, data, action }) {
                     maxLength: 30,
                     required: true,
                     pattern: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
-                    patternMessage: "El email debe ser un correo electrónico válido.",
+                    patternMessage:
+                      "El email debe ser un correo electrónico válido.",
                   },
                   {
                     label: "Número de teléfono",
