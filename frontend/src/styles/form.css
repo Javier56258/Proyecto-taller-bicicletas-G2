@@ -1,12 +1,35 @@
 .no-padding-top {
   padding-top: 0px !important;
 }
+body .form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+  background-color: #fff !important;
 
+  border: 3px solid #475b63;
+  border-radius: 12px;
+  height: 40px;
+  display: flex;
+
+  color: #1a1a1a;
+  background-repeat: no-repeat;
+  margin-bottom: 0.8vh;
+  background-image: url("../assets/ChevronDownIcon.svg");
+  background-position: calc(100% - 15px) center;
+  background-size: 20px 20px;
+}
+
+body .form select option {
+  background-color: #fff !important;
+  color: #1a1a1a;
+}
 @media (max-width: 480px) {
   .form {
     padding-left: 2px;
     padding-right: 2px;
-    width: 90%;
+    width: 100%;
   }
 
   .form h1 {
@@ -16,8 +39,16 @@
 
   .form input,
   .form select {
-    padding: 10px;
+    width: 100%;
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 14px;
+    background-color: #fff; /* Asegura que el fondo sea blanco */
+    color: #000; /* Ajusta el color del texto */
+    appearance: none; /* Elimina el estilo predeterminado del navegador */
+    -webkit-appearance: none; /* Para Safari/Chrome */
+    -moz-appearance: none; /* Para Firefox */
   }
 
   .form button {
@@ -39,40 +70,46 @@
   }
 }
 
+.textField-large {
+  font-size: 1.1rem;
+}
+
 .form {
-  background-color: #eef7ff;
+  background-color: #fff;
   padding: 35px;
   display: flex;
   flex-direction: column;
   border-radius: 24px;
   align-items: center;
   h1 {
-    color: #003366;
+    color: #475b63;
     font-size: 30px;
     font-weight: bold;
     margin: 0;
     margin-bottom: 20px;
   }
+
   div {
     width: 100%;
     display: flex;
   }
   label {
-    color: #003366;
+    color: #475b63;
     font-weight: bold;
-    margin-bottom: 0.7vh;
+    margin: 0;
+    padding-bottom: 5px;
   }
   input {
     display: flex;
-    border: 3px solid #003366;
+    border: 3px solid #475b63;
     border-radius: 12px;
     padding: 8px 5px;
     background-repeat: no-repeat;
     margin-bottom: 0.8vh;
-    background-color: #eef7ff;
+    background-color: #fff;
     font-weight: regular;
     font-size: 16px;
-    color: #003366;
+    color: #475b63;
     border-radius: 12px;
     background-position: right 10px center;
     background-size: 25px 25px;
@@ -83,61 +120,68 @@
     font-weight: light;
   }
   input:focus {
-    background-color: rgba(0, 110, 223, 0.14);
+    background-color: #edf3ef;
     font-weight: regular;
   }
   select {
     display: flex;
-    border: 3px solid #003366;
-    border-radius: 12px;
-    padding: 8px 5px;
+    border: 2px solid #475b63; /* Borde más delgado */
+    border-radius: 20px; /* Bordes más redondeados */
+    padding: 12px 10px; /* Más altura interna */
     background-repeat: no-repeat;
     margin-bottom: 0.8vh;
-    background-color: #eef7ff;
-    font-weight: regular;
-    font-size: 16px;
-    color: #003366;
-    border-radius: 12px;
-    background-position: right 30px center;
-    background-size: 25px 25px;
-    box-sizing: border-box;
+    background-color: #1a1a1a; /* Fondo oscuro como en el ejemplo */
+    font-size: 1.1rem; /* Ajustar tamaño de fuente */
+    color: #fff; /* Color de texto blanco */
     background-image: url("../assets/ChevronDownIcon.svg");
-    background-repeat: no-repeat;
-    background-position: calc(100% - 12px) center;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    background-position: calc(100% - 15px) center;
+    background-size: 20px 20px;
+    box-sizing: border-box;
   }
+
   select::placeholder {
     color: rgba(0, 51, 102, 0.3);
     font-weight: light;
   }
   select:focus {
-    background-color: rgba(0, 110, 223, 0.14);
-    font-weight: regular;
+    outline: none;
+    border: 2px solid #0077cc; /* Color al enfocar */
+    background-color: #292929;
+  }
+  select:field {
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .select-large {
+    border-radius: 20px;
+    padding: 12px 10px;
+    font-size: 1.1rem;
+    background-color: #1a1a1a;
+    color: #fff;
   }
   textarea {
     display: flex;
-    border: 3px solid #003366;
+    border: 3px solid #475b63;
     border-radius: 12px;
     padding: 8px 5px;
     background-repeat: no-repeat;
     margin-bottom: 0.8vh;
-    background-color: #eef7ff;
+    background-color: #fff;
     font-weight: regular;
     font-size: 16px;
-    color: #003366;
+    color: #475b63;
     border-radius: 12px;
     background-position: right 10px center;
     background-size: 25px 25px;
     box-sizing: border-box;
   }
   textarea::placeholder {
-    color: rgba(0, 51, 102, 0.3);
+    color: #475b63;
     font-weight: light;
   }
   textarea:focus {
-    background-color: rgba(0, 110, 223, 0.14);
+    background-color: #edf3ef;
     font-weight: regular;
   }
   button {
@@ -148,17 +192,17 @@
     border-radius: 12px;
     border: none;
     width: 100%;
-    background-color: #003366;
+    background-color: #475b63;
     color: #eef7ff;
     font-weight: bold;
     font-size: 16px;
-    border: 3px solid #003366;
+    border: 3px solid #475b63;
     margin-top: 10px;
   }
   button:hover {
-    border: 3px solid #003366;
-    background-color: #eef7ff;
-    color: #003366;
+    border: 3px solid #475b63;
+    background-color: #fff;
+    color: #475b63;
     transition: 0.3s ease-out;
   }
   div {
@@ -172,6 +216,23 @@
     margin-top: 10px;
   }
 }
+
+select-user {
+  display: flex;
+  border: 3px solid #475b63; /* Borde más delgado */
+  border-radius: 12px; /* Bordes más redondeados */
+  padding: 0px 0px; /* Más altura interna */
+  background-repeat: no-repeat;
+  margin-bottom: 0.8vh;
+  background-color: #1a1a1a; /* Fondo oscuro como en el ejemplo */
+  font-size: 1.1rem; /* Ajustar tamaño de fuente */
+  color: #fff; /* Color de texto blanco */
+  background-image: url("../assets/ChevronDownIcon.svg");
+  background-position: calc(100% - 15px) center;
+  background-size: 20px 20px;
+  box-sizing: border-box;
+}
+
 .form .error-message {
   visibility: hidden;
   height: 20px;
@@ -208,6 +269,8 @@ input[name="rol"] {
 }
 
 .container_inputs {
+  display: flex;
+  flex-direction: column;
   position: relative;
   margin-bottom: 5px;
 }
@@ -247,7 +310,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   margin: 0;
 }
 
@@ -283,4 +345,63 @@ body {
   max-width: 800px;
   padding: 20px;
   box-sizing: border-box;
+}
+
+/* Estilos para el modo oscuro */
+body.dark .form {
+  background-color: #2e2c2f !important; /* Fondo oscuro para el formulario */
+}
+
+body.dark .form h1 {
+  color: #ffffff; /* Color claro para el título */
+}
+
+body.dark .form label {
+  color: #ffffff; /* Color claro para las etiquetas */
+}
+
+body.dark .form input,
+body.dark .form select {
+  background-color: #1a1a1a !important; /* Fondo más oscuro */
+  color: #fff; /* Texto blanco */
+}
+body.dark .form select option {
+  background-color: #1a1a1a !important; /* Fondo más oscuro */
+  color: #fff; /* Texto blanco */
+}
+body.dark .form textarea {
+  background-color: #171617; /* Fondo oscuro para campos */
+  border: 3px solid #475b63; /* Borde más claro */
+  color: #ffffff; /* Texto claro */
+}
+
+body.dark .form input::placeholder,
+body.dark .form select::placeholder,
+body.dark .form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5); /* Color claro para los placeholders */
+}
+
+body.dark .form input:focus,
+body.dark .form select:focus,
+body.dark .form textarea:focus {
+  background-color: rgba(0, 152, 223, 0.048); /* Fondo claro para el focus */
+}
+
+body.dark .form button {
+  background-color: #475b63; /* Color de fondo del botón en modo oscuro */
+  color: #eef7ff; /* Color claro para el texto del botón */
+}
+
+body.dark .form button:hover {
+  background-color: #eef7ff;
+  color: #475b63;
+  transition: 0.3s ease-out;
+}
+
+body.dark .container {
+  background: linear-gradient(90deg, #003366, #001a33);
+}
+
+body.dark .form .error-message {
+  color: #ff3333; /* Error mensajes más visibles */
 }

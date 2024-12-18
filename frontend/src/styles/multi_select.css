@@ -1,0 +1,83 @@
+/*para el multi select*/
+.mi-multi-select-container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 5px; /* Espacio entre los productos */
+  max-width: 400px; /* Ajusta el ancho máximo según sea necesario */
+  width: 100%; /* Ancho inicial */
+  padding: 0;
+}
+
+.mi-multi-select-container .basic-multi-select {
+  flex: 1 1 auto;
+  min-width: 150px; /* Ajusta el ancho mínimo según sea necesario */
+  max-width: 250%;
+}
+
+.mi-multi-select-container .select__value-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea */
+  flex-direction: row;
+  gap: 5px; /* Espacio entre los elementos */
+  align-items: center; /* Asegura alineación vertical */
+  padding: 4px; /* Espaciado interno */
+  max-height: 100px; /* Ajusta la altura máxima según sea necesario */
+  overflow: auto;
+}
+
+.mi-multi-select-container .select__control {
+  display: flex;
+  align-items: center;
+  border: 5px solid #475b63;
+  border-radius: 12px;
+  min-height: 48px;
+  padding: 4px 8px;
+  box-shadow: none;
+  background-color: #fff;
+  font-size: 100%;
+  max-width: 100%; /* Asegura que el control no se expanda más allá del contenedor */
+  position: relative;
+}
+.dark .mi-multi-select-container .select__control {
+  background-color: #171617;
+}
+
+.mi-multi-select-container .select__multi-value {
+  display: flex;
+  flex: 0 1 auto;
+  width: auto;
+  height: auto;
+  justify-content: space-between; /* Alinea el texto y el botón de eliminar */
+  align-items: center; /* Centra verticalmente el texto y el icono */
+  background-color: #edf3ef; /* Fondo para las etiquetas */
+  padding: 1%; /* Espaciado interno */
+  border-radius: 12px; /* Bordes redondeados */
+  margin: 2px; /* Elimina margen adicional */
+  gap: 8px; /* Espacio entre el texto y el botón de eliminar */
+  max-width: 100%; /* Limita el ancho de cada tarjeta */
+  max-height: 50px; /* Limita la altura de cada tarjeta */
+}
+
+.mi-multi-select-container .select__multi-value__label {
+  color: #475b63;
+  font-size: 14px;
+  margin-right: 5px; /* Espacio entre texto y botón de eliminar */
+}
+
+.mi-multi-select-container .select__multi-value__remove {
+  display: flex;
+  align-items: center; /* Centra el botón */
+  justify-content: center;
+  background-color: #475b63; /* Color de fondo del botón */
+  border-radius: 50%; /* Forma circular */
+  color: #fff; /* Color del icono */
+  width: 16px; /* Tamaño del botón */
+  height: 16px; /* Tamaño del botón */
+  cursor: pointer; /* Cursor de clic */
+  margin-left: 8px; /* Espacio a la izquierda entre el texto y el botón */
+}
+
+.mi-multi-select-container .select__multi-value__remove:hover {
+  background-color: #ff3333; /* Color de fondo al pasar el mouse */
+}

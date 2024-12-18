@@ -21,6 +21,31 @@ const ServiciosList = () => {
   const [filter, setFilter] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isReversed, setIsReversed] = useState(false);
+  const [darkMode, setDarkMode] = useState(false); // Estado para modo oscuro
+
+  // Efecto para cargar y almacenar la preferencia de modo oscuro
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode") === "true";
+    setDarkMode(savedMode);
+    if (savedMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      localStorage.setItem("darkMode", newMode);
+      if (newMode) {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+      return newMode;
+    });
+  };
 
   useEffect(() => {
     async function fetchServicios() {
@@ -34,28 +59,40 @@ const ServiciosList = () => {
     }
     fetchServicios();
   }, []);
-
-  const handleSave = async (servicioData) => {
+  const handleSave = async (formData) => {
     try {
+      let newServicio;
+
       if (editingServicio) {
-        await updateServicio(editingServicio.idServicio, servicioData);
+        // Actualización del servicio con imagen
+        await updateServicio(editingServicio.idServicio, formData);
         showSuccessAlert(
           "¡Actualizado!",
           "El servicio ha sido actualizado correctamente."
         );
         const updatedServicios = servicios.map((servicio) =>
           servicio.idServicio === editingServicio.idServicio
-            ? servicioData
+            ? { ...servicio, ...formData }
             : servicio
         );
         setServicios(updatedServicios);
+
+        const data = await getServicios();
+        data.sort((a, b) => b.idServicio - a.idServicio);
+        setServicios(data);
       } else {
+        // Creación de un nuevo servicio con imagen
         showSuccessAlert(
           "¡Creado!",
           "El servicio ha sido creado correctamente."
         );
-        const newServicio = await createServicio(servicioData);
+        newServicio = await createServicio(formData);
+        console.log("Nuevo servicio creado Services:", newServicio); // Verifica los datos del nuevo servicio
         setServicios([newServicio, ...servicios]);
+
+        const data = await getServicios();
+        data.sort((a, b) => b.idServicio - a.idServicio);
+        setServicios(data);
       }
       setEditingServicio(null);
     } catch (error) {
@@ -94,7 +131,7 @@ const ServiciosList = () => {
   };
 
   const filteredServicios = servicios.filter((servicio) =>
-    servicio.nombre.toLowerCase().includes(filter.toLowerCase())
+    servicio?.nombre?.toLowerCase().includes(filter.toLowerCase())
   );
 
   const displayedServicios = isReversed
@@ -102,13 +139,14 @@ const ServiciosList = () => {
     : filteredServicios;
 
   return (
-    <div className="main-content">
-      <div className="centered-h1">
-        <h1>Servicios del Taller</h1>
-      </div>
+    <div className="main-content bg-none">
+      <h1 className="text-4xl font-extrabold text-center text-[#475B63] mb-10 dark:text-[#F3E8EE]">
+        Servicios del Taller
+      </h1>
+
       <div className="button-container">
         <button
-          className="create-button"
+          className="create-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
           onClick={() => {
             setEditingServicio(null);
             setIsPopupOpen(true);
@@ -122,31 +160,37 @@ const ServiciosList = () => {
             placeholder="Filtrar por nombre"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="search-input-table"
+            className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert"
           />
           <button
-            className="order-button"
+            className="order-button hover:bg-[#fff] hover:text-[#475B63] dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
             onClick={() => setIsReversed(!isReversed)}
           >
             {isReversed ? "Orden: Más antiguo" : "Orden: Más reciente"}
           </button>
         </div>
       </div>
+
       <PopupService
         show={isPopupOpen}
         setShow={setIsPopupOpen}
         onSave={handleSave}
         servicio={editingServicio}
       />
-      <div className="services-grid">
-        {displayedServicios.map((servicio) => (
-          <ServiceCard
-            key={servicio.idServicio}
-            servicio={servicio}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
-        ))}
+
+      <div className="services-grid dark:text-white">
+        {displayedServicios.length > 0 ? (
+          displayedServicios.map((servicio) => (
+            <ServiceCard
+              key={servicio.idServicio}
+              servicio={servicio}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p>No hay servicios disponibles.</p>
+        )}
       </div>
     </div>
   );

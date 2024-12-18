@@ -1,0 +1,63 @@
+.main-content-formHorario {
+  display: inherit;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: hidden;
+}
+
+.centered-h1-formHorario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.controls-formHorario {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.filter-input-formHorario {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 767px) {
+  .popup-formHorario .form-formHorario {
+    padding: 20px;
+    width: auto;
+    padding-top: 30px;
+  }
+}
+
+@media (max-width: 540px) {
+  .main-content-formHorario {
+    max-width: 350px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

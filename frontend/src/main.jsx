@@ -12,7 +12,13 @@ import Products from "./pages/Products";
 import Proveedores from "./pages/Proveedores";
 import Services from "./pages/Services";
 import Reservas from "./pages/Reserva";
-console.log("Pasando por main.jsx");  
+import Horarios from "./pages/Horarios";
+import "@styles/tailwind.css";
+import StatisticsPage from './pages/StatisticsPage';
+import Ventas from './pages/Ventas.jsx';
+
+  
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -62,7 +68,32 @@ const router = createBrowserRouter([
             <Reservas />
           </ProtectedRoute>
         )
-      }
+      },
+      {
+        path: '/ventas',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'usuario']}>
+            <Ventas />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/horarios",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador"]}>
+            <Horarios />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/statistics",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador"]}>
+            <StatisticsPage />
+          </ProtectedRoute>
+        )
+      },
+      
     ],
   },
   {

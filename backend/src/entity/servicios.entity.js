@@ -18,6 +18,11 @@ const ServicioSchema = new EntitySchema({
       type: "text",
       nullable: true,
     },
+    imagen: {
+      type: "varchar",
+      length: 255, // Suficiente para almacenar la ruta del archivo
+      nullable: true, // Opcional para no afectar servicios actuales sin imagen
+    },
   },
 });
 

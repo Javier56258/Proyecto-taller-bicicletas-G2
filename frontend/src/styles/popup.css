@@ -8,13 +8,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000; /* Asegúrate de que este valor sea mayor que el z-index del navbar */
 }
 .popup {
   top: 30px;
   width: 600px;
-  background: white;
+  background: transparent;
   position: relative;
   border-radius: 12px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px;
+}
+.popup .options-class {
+  width: 10px;
 }
 .close {
   position: absolute;
@@ -22,7 +29,7 @@
   margin-right: 10px;
   right: 10px;
   cursor: pointer;
-  background-color: white;
+  background-color: transparent;
   border: white;
   margin-right: 20px;
 }
@@ -31,10 +38,26 @@
   font-weight: 700;
 }
 
+.popup-container {
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.container_inputs-rol {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.container_inputs-rol select {
+  padding: 0 !important;
+}
+
 .container_inputs textarea {
   width: 100%;
   max-width: 100%;
-  height: 100px;
+  height: 200px;
   max-height: 200px;
   min-height: 40px;
   resize: vertical;
@@ -42,16 +65,16 @@
 
 .prov-popup {
   display: flex;
-  padding: 0px;
+  padding: 10px;
   width: 600px;
   margin-left: 10px;
   margin-right: 10px;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  background-color: #fff;
   border-radius: 24px;
   position: relative;
+  background-color: #fff;
 
   .close {
     position: absolute;
@@ -59,7 +82,7 @@
     margin-top: 20px;
     right: 0;
     cursor: pointer;
-    background-color: white;
+    background-color: transparent;
     border: #fff;
   }
 }
@@ -68,7 +91,8 @@
   padding: 0px;
   padding-left: 35px;
   padding-right: 35px;
-  width: auto;
+  width: 100%;
+  background-color: #fff;
 
   .tooltip-icon {
     position: relative;
@@ -119,10 +143,56 @@
   .h1 {
     margin-bottom: 30px;
   }
+
   .container_inputs {
     margin-top: 0px;
     margin-bottom: auto;
   }
+
+  .inputs {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff; /* Asegura que el fondo sea blanco */
+    color: #000; /* Ajusta el color del texto */
+    appearance: none; /* Elimina el estilo predeterminado del navegador */
+    -webkit-appearance: none; /* Para Safari/Chrome */
+    -moz-appearance: none; /* Para Firefox */
+  }
+
+  .inputs:focus {
+    outline: none;
+    border-color: #666; /* Color al hacer focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .select-container {
+    position: relative;
+  }
+
+  .select-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    appearance: none;
+  }
+
+  .select-container::after {
+    content: "▼"; /* Flecha hacia abajo */
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    pointer-events: none; /* La flecha no interfiere con el select */
+    color: #666;
+  }
+
   .tooltip-icon {
     position: relative;
     top: 4px;
@@ -169,4 +239,8 @@
   display: flex;
   justify-content: space-between;
   margin-top: auto;
+}
+
+.no-scroll {
+  overflow: hidden;
 }

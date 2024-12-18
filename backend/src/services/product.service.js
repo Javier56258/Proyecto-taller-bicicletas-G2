@@ -1,11 +1,16 @@
 "use strict";
 import Product from "../entity/product.entity.js";
+import ProveedorSchema from "../entity/proveedor.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
+
+
+//funcion recibe el cuerpo del formulario
 export async function createProductService(product) {
   try {
     const productRepository = AppDataSource.getRepository(Product);
     const { name, price, description, stock } = product;
+
     const createErrorMessage = (dataInfo, message) => ({
       dataInfo,
       message
@@ -18,13 +23,17 @@ export async function createProductService(product) {
       return [null, createErrorMessage("name", "El nombre del producto ya existe")];
 
     }
+
+
     //creamos el nuevo producto
     const newProduct = productRepository.create({
       name : name,
       description : description,
       price : price,
-      stock : stock,
+      stock : stock,  
     });
+    //asignamos el proveedor al producto
+
     await productRepository.save(newProduct);
     return [newProduct, null];
   } catch (error) {

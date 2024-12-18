@@ -1,5 +1,7 @@
 "use strict";
+import { In } from "typeorm";
 import Proveedor from "../entity/proveedor.entity.js";
+import Product from "../entity/product.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
 export async function createProveedorService(dataProveedor) {
@@ -8,7 +10,6 @@ export async function createProveedorService(dataProveedor) {
 
         const newProveedor = proveedorRepository.create({
             nombreProveedor: dataProveedor.nombreProveedor,
-            productos_suministrados: dataProveedor.productos_suministrados,
             email: dataProveedor.email,
             telefono: dataProveedor.telefono,
             PaginaWeb: dataProveedor.PaginaWeb,
@@ -25,12 +26,13 @@ export async function createProveedorService(dataProveedor) {
 
 export async function getProveedorService(query) {
     try {
-        const { id, nombreProveedor } = query;
+        const { idProveedor, nombreProveedor } = query;
 
         const proveedorRepository = AppDataSource.getRepository(Proveedor);
 
         const proveedorFound = await proveedorRepository.findOne({
-            where: [{ id: id }, { nombreProveedor: nombreProveedor }],
+            where: [{ idProveedor: idProveedor }, { nombreProveedor: nombreProveedor }],
+            relations: ["productos"],
         });
 
         if (!proveedorFound) return [null, "Proveedor no encontrado"];
@@ -46,7 +48,9 @@ export async function getProveedoresService() {
     try {
         const proveedorRepository = AppDataSource.getRepository(Proveedor);
 
-        const proveedores = await proveedorRepository.find();
+        const proveedores = await proveedorRepository.find({
+            relations: ["productos"],
+        });
 
         if (!proveedores || proveedores.length === 0) return [null, "No hay proveedores"];
 
@@ -77,19 +81,18 @@ export async function updateProveedorService(query, body) {
             return [null, "Ya existe un proveedor con el mismo nombre o email"];
         }
 
-        const dataUserUpdated = {
+        const dataProveedorUpdated = {
             nombreProveedor: body.nombreProveedor,
-            productos_suministrados: body.productos_suministrados, 
             PaginaWeb: body.PaginaWeb,
             telefono: body.telefono,
             email: body.email,
             direccion: body.direccion,
         };
 
-        await userRepository.update(proveedorFound.idProveedor, dataUserUpdated);
+        await userRepository.update(proveedorFound.idProveedor, dataProveedorUpdated);
         
         const proveedorData = await userRepository.findOne({
-            where: {idProveedor: proveedorFound.idProveedor},
+            where: { idProveedor: proveedorFound.idProveedor },
         });
     
         if (!proveedorData) return [null, "Proveedor no encontrado"];
@@ -122,4 +125,24 @@ export async function deleteProveedorService(query) {
         console.error("Error al eliminar el proveedor:", error);
         return [null, "Error interno del servidor"];
     }
+}
+
+export async function assignProductsToProveedorService({ idProveedor, productIds }) {
+    const proveedorRepository = AppDataSource.getRepository(Proveedor);
+    const productRepository = AppDataSource.getRepository(Product);
+
+    const proveedor = await proveedorRepository.findOne({ where: { idProveedor }, relations: ["productos"] });
+    if (!proveedor) throw new Error("Proveedor no encontrado");
+
+    const products = await productRepository.find({
+        where: {
+            id: In(productIds)
+        }
+    });
+    if (products.length !== productIds.length) throw new Error("Uno o más productos no encontrados");
+
+    proveedor.productos = [...proveedor.productos, ...products];
+    await proveedorRepository.save(proveedor);
+
+    return proveedor;
 }

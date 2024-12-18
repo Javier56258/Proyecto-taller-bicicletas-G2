@@ -11,6 +11,10 @@ const useReservas = () => {
             const response = await getReservas();
             console.log("Pasando por fetchReservas");
             console.log(response);
+            if (response.message === "No hay reservas") {
+                console.log("No hay reservas");
+                return;
+            }
             const formattedData = response.map((reserva) => ({
                 nombreReservador: reserva.nombreReservador,
                 email: reserva.email,

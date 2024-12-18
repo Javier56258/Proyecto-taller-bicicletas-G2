@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinTable } from "typeorm";
 
 //CREACION DE TABLA PRODUCTOS
 const ProductSchema = new EntitySchema({
@@ -30,6 +30,7 @@ const ProductSchema = new EntitySchema({
         price: {
             type: "int",
             nullable: false,
+            
         },
         createdAt: {
             type: "timestamp with time zone",
@@ -42,6 +43,21 @@ const ProductSchema = new EntitySchema({
             onUpdate: "CURRENT_TIMESTAMP",
             nullable: false,
         }
+    },
+    relations: {
+        proveedores: {
+            type: "many-to-one",
+            target: "proveedores",
+            inverseSide: "productos",
+            
+             // Relación inversa
+        },
+        ventas: {
+            type: "one-to-many",
+            target: "ventas", // Relación con la entidad Venta
+            inverseSide: "productos", // Relación inversa
+        },
+        
     },
     //VER IMPLEMENTACION DE INDICES
 

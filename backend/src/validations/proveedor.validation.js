@@ -1,14 +1,7 @@
 "use strict";
 import Joi from "joi";
 
-const domainEmailValidator = (value, helper) => {
-  if (!value.endsWith("@gmail.cl")) {
-    return helper.message(
-      "El correo electrónico debe ser del dominio @gmail.cl"
-    );
-  }
-    return value;
-};
+
 
 export const proveedorQueryValidation = Joi.object({
     idProveedor: Joi.number()
@@ -24,10 +17,11 @@ export const proveedorQueryValidation = Joi.object({
             "string.base": "El nombre del proveedor debe ser de tipo string."
         }),
     email: Joi.string()
-        .email()
+        .pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)   
         .messages({
             "string.base": "El email debe ser de tipo string.",
-            "string.email": "El email debe ser un correo electrónico válido."
+            "string.email": "El email debe ser un correo electrónico válido.",
+            "string.pattern.base": "El email debe ser un correo electrónico válido."
         })
     
 })
@@ -41,25 +35,18 @@ export const proveedorQueryValidation = Joi.object({
 
 export const proveedorBodyValidation = Joi.object({
     nombreProveedor: Joi.string()
-        .min(5)
-        .max(50)
+        .min(1)
+        .max(100)
         .pattern(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/)
         .messages({
             "string.empty": "El nombre no puede estar vacío.",
             "string.base": "El nombre debe ser de tipo string.",
-            "string.min": "El nombre debe tener como mínimo 5 caracteres.",
-            "string.max": "El nombre debe tener como máximo 50 caracteres.",
+            "string.min": "El nombre debe tener como mínimo 1 caracter.",
+            "string.max": "El nombre debe tener como máximo 100 caracteres.",
             "string.pattern.base": "El nombre debe contener solo letras y numeros.",
         }),
-    productos_suministrados: Joi.string()
-    .min(1)
-    .messages({
-        "string.empty": "Los productos suministrados no pueden estar vacíos.",
-        "string.base": "Los productos suministrados deben ser de tipo string.",
-        "string.min":
-            "Los productos suministrados deben tener como minimo 10 caracteres.",
-    }),
     email: Joi.string()
+        .pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)   
         .min(10)
         .max(35)
         .email()
@@ -71,17 +58,17 @@ export const proveedorBodyValidation = Joi.object({
                 "El correo electrónico debe tener como mínimo 15 caracteres.",
             "string.max":
                 "El correo electrónico debe tener como máximo 35 caracteres.",
-        })
-        .custom(domainEmailValidator, "Validación dominio email"),
+            "string.pattern.base": "El email debe ser un correo electrónico válido."
+        }),
     telefono: Joi.string()
-        .min(8)
-        .max(15)
+        .min(6)
+        .max(8)
         .pattern(/^\d+$/)
         .messages({
             "string.empty": "El teléfono no puede estar vacío.",
             "string.base": "El teléfono debe ser de tipo string.",
-            "string.min": "El teléfono debe tener como mínimo 8 caracteres.",
-            "string.max": "El teléfono debe tener como máximo 15 caracteres.",
+            "string.min": "El teléfono debe tener como mínimo 6 caracteres.",
+            "string.max": "El teléfono debe tener como máximo 8 caracteres.",
         }),
     PaginaWeb: Joi.string()
         .max(50)

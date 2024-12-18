@@ -3,6 +3,7 @@
 import Reserva from "../entity/reserva.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import Horario from "../entity/horario.entity.js";
+import Servicio from "../entity/servicios.entity.js";
 import moment from "moment";
 
 export async function createReservaService(dataReserva) {
@@ -31,6 +32,18 @@ export async function createReservaService(dataReserva) {
         if (!horarioExistente) {
             return [null, "Horario inexistente"];
         }
+
+        const servicioRepository = AppDataSource.getRepository(Servicio);
+
+        const servicioExistente = await servicioRepository.findOne({
+            where: { 
+                nombre: motivo
+            }
+        });
+
+        if (!servicioExistente) {
+            return [null, "Servicio inexistente"];
+        }
         
         const reservaExistente = await reservaRepository.findOne({
             where: { fecha, hora }
@@ -41,10 +54,11 @@ export async function createReservaService(dataReserva) {
         const newReserva = reservaRepository.create({
             nombreReservador: nombreReservador,
             email: email,
-            motivo: motivo,
+            motivo: servicioExistente.nombre,
             fecha: fecha,
             hora: hora,
             horario: horarioExistente,
+            servicio: servicioExistente,
         });
         await reservaRepository.save(newReserva);
         return [newReserva, null];
@@ -78,6 +92,7 @@ export async function updateReservaService(query, body) {
 
         const reservaRepository = AppDataSource.getRepository(Reserva);
         const horarioRepository = AppDataSource.getRepository(Horario);
+        const servicioRepository = AppDataSource.getRepository(Servicio);
         //Comprobar que el horario en el que se quiere hacer la reserva existe
         let dia = moment(body.fecha).format("dddd"); 
         if (dia === "Monday")  dia = "Lunes";
@@ -100,6 +115,17 @@ export async function updateReservaService(query, body) {
             return [null, "Horario inexistente, ingrese hora presentada por el local"];
         }
         
+        const servicioExistente = await servicioRepository.findOne({
+            where: {
+                nombre: body.motivo
+            }
+        });
+
+        if (!servicioExistente) {
+            console.log("Servicio inexistente");
+            return [null, "Servicio inexistente, ingrese servicio presentado por el local"];
+        }
+
         const reservaFound = await reservaRepository.findOne({
             where: { idreserva: idreserva },
         });

@@ -3,21 +3,21 @@ import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
 
 function PopupProveedores({ show, setShow, data, action }) {
-  const proveedorData = data && data.length > 0 ? data[0] : {};
-
+  // Verificamos que `data` contiene un proveedor válido
+  const proveedorData = data || {};
   const handleSubmit = (formData) => {
-    action(formData);
+    action(formData); // Llama la acción pasada como prop para actualizar los datos
   };
 
   return (
     <div>
       {show && (
         <div className="bg">
-          <div className="prov-popup">
+          <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
             <button className="close" onClick={() => setShow(false)}>
-              <img src={CloseIcon} />
+              <img src={CloseIcon} alt="Cerrar" />
             </button>
-            <h1 className="h1-form">Editar Proveedor</h1>
+            <h1 className="h1-form dark:text-[#fff]">Editar Proveedor</h1>
             <div className="proovedores-form-container">
               <Form
                 title=""
@@ -33,17 +33,16 @@ function PopupProveedores({ show, setShow, data, action }) {
                     minLength: 5,
                     maxLength: 50,
                     pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/,
-                    patternMessage: "",
+                    patternMessage:
+                      "El nombre no puede contener caracteres especiales.",
                   },
                   {
-                    label: "Pagina Web",
+                    label: "Página Web",
                     name: "PaginaWeb",
                     defaultValue: proveedorData.PaginaWeb || "",
                     placeholder: "www.ejemplo.com",
                     fieldType: "input",
                     type: "text",
-                    pattern: "",
-                    patternMessage: "",
                     required: false,
                   },
                   {
@@ -56,9 +55,9 @@ function PopupProveedores({ show, setShow, data, action }) {
                     minLength: 10,
                     maxLength: 30,
                     required: true,
-                    pattern: /^[a-zA-Z0-9._%+-]+@gmail\.cl$/,
+                    pattern: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
                     patternMessage:
-                      "El correo electrónico debe finalizar en @gmail.cl.",
+                      "El email debe ser un correo electrónico válido.",
                   },
                   {
                     label: "Número de teléfono",
@@ -73,7 +72,6 @@ function PopupProveedores({ show, setShow, data, action }) {
                     pattern: /^\d+$/,
                     patternMessage: "El teléfono debe contener solo números.",
                   },
-
                   {
                     label: "Dirección",
                     name: "direccion",
@@ -87,8 +85,7 @@ function PopupProveedores({ show, setShow, data, action }) {
                   },
                 ]}
                 onSubmit={handleSubmit}
-                buttonText="Editar proveedor"
-                backgroundColor={"#fff"}
+                buttonText="Guardar Cambios"
               />
             </div>
           </div>

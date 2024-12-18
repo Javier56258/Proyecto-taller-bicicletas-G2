@@ -7,7 +7,11 @@ const useUsers = () => {
     const fetchUsers = async () => {
         try {
             const response = await getUsers();
-            const formattedData = response.map(user => ({
+            if (response.message === "No hay usuarios") {
+                console.log("No hay usuarios");
+                return;
+            }
+            const formattedData = response.map((user) => ({
                 nombreCompleto: user.nombreCompleto,
                 rut: user.rut,
                 email: user.email,

@@ -1,29 +1,38 @@
-import React from "react";
 import Form from "./Form";
 import "@styles/Popup.css";
 import CloseIcon from "@assets/XIcon.svg";
-import { createProveedor } from "@services/proveedor.service.js";
+import { createProveedor  } from "@services/proveedor.service.js";
+import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert"; 
+import {formatProveedorData} from "@helpers/formatData.js";
 
 function CreateProveedor({ show, setShow, data, action }) {
+  
+
   const handleSubmit = async (formData) => {
     try {
-      await createProveedor(formData);
-      action(formData);
+      const formattedData = formatProveedorData(formData);
+      
+      await createProveedor(formattedData);
+      action(formattedData);
       setShow(false);
+      setShow(false);
+      showSuccessAlert("Proveedor creado", "El proveedor ha sido creado correctamente.");
     } catch (error) {
-      console.error("Error al crear proveedor:", error);
+      showErrorAlert("Error", "No se pudo crear el proveedor.");
     }
   };
+  
+
 
   return (
     <div>
       {show && (
         <div className="bg">
-          <div className="prov-popup">
+          <div className="prov-popup dark:bg-[#2e2c2f] slide-down">
             <button className="close" onClick={() => setShow(false)}>
               <img src={CloseIcon} />
             </button>
-            <h1 className="h1-form">Ingresar Proveedor</h1>
+            <h1 className="h1-form dark:text-[#fff]">Ingresar Proveedor</h1>
             <div className="proovedores-form-container">
               <Form
                 title=""
@@ -37,14 +46,6 @@ function CreateProveedor({ show, setShow, data, action }) {
                     required: true,
                     pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/,
                     patternMessage: "",
-                  },
-                  {
-                    label: "Productos Suministrados",
-                    name: "productos_suministrados",
-                    placeholder: "Ingresar Productos",
-                    fieldType: "input",
-                    type: "text",
-                    required: true,
                   },
                   {
                     label: "Pagina Web",
@@ -65,9 +66,9 @@ function CreateProveedor({ show, setShow, data, action }) {
                     minLength: 10,
                     maxLength: 30,
                     required: true,
-                    pattern: /^[a-zA-Z0-9._%+-]+@gmail\.cl$/,
+                    pattern: /^[^@\s]+@[^@\s]+\.[^@\s]+$/, 
                     patternMessage:
-                      "El correo electrónico debe finalizar en @gmail.cl.",
+                      "El email debe ser un correo electrónico válido.",
                   },
                   {
                     label: "Número de teléfono",
@@ -79,7 +80,6 @@ function CreateProveedor({ show, setShow, data, action }) {
                     maxLength: 8,
                     required: true,
                   },
-
                   {
                     label: "Dirección",
                     name: "direccion",
