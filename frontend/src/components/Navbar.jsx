@@ -31,7 +31,7 @@ const Navbar = () => {
       }
 
     };
-    
+
     const observer = new IntersectionObserver(makeNavbarSticky, {
       root: null,
       threshold: 0,
@@ -70,11 +70,11 @@ const Navbar = () => {
 
   const logoutSubmit = () => {
     try {
-      const confirmed = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
-      if (confirmed) {
+      if (isAuthenticated) {
         logout();
-        navigate("/home");
+        //hacer refresh de la página
         window.location.reload();
+        
       }
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
@@ -91,7 +91,7 @@ const Navbar = () => {
     activeLinks.forEach((link) => link.classList.remove("active"));
   };
   */
-  
+
 
   const addActiveClass = () => {
     const links = document.querySelectorAll(".nav-menu ul li a");
@@ -241,7 +241,7 @@ const Navbar = () => {
             <li>
               {isAuthenticated ? (
                 <NavLink
-                  to="/"
+                  to="/home"
                   className={({ isActive }) => (isActive ? "active" : "")}
                   onClick={() => {
                     logoutSubmit();
@@ -250,7 +250,7 @@ const Navbar = () => {
                 >
                   Cerrar Sesión
                 </NavLink>
-            ) : (
+              ) : (
                 <NavLink
                   to="/auth"
                   className={({ isActive }) => (isActive ? "active" : "")}
@@ -262,8 +262,8 @@ const Navbar = () => {
                   Iniciar Sesión
                 </NavLink>
               )}
-        </li>
-        <button
+            </li>
+            <button
               onClick={() => setDarkMode(!darkMode)} // Cambiar entre modo oscuro y claro
               className="p-3 mr-0 md:mr-6 bg-[#729B79] dark:bg-[#BACDB0] text-[#F3E8EE] dark:text-[#475B63] rounded-md transition"
             >
