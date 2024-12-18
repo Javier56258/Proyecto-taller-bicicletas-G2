@@ -11,7 +11,7 @@ import {
   FaTools,
 } from "react-icons/fa";
 import { MdSell, MdOutlineAccessTimeFilled } from "react-icons/md";
-import { IoIosStats } from "react-icons/io";
+import { IoIosStats, IoIosNotifications } from "react-icons/io";
 import { AiFillProduct, AiFillHome } from "react-icons/ai";
 import { RiBookMarkedFill } from "react-icons/ri";
 import { FaTruck } from "react-icons/fa6";
@@ -19,17 +19,35 @@ import { TbLogout, TbLogin } from "react-icons/tb";
 
 import { useAuth } from "@context/AuthContext.jsx";
 
+import NotifyProduct from "@components/NotifyProduct.jsx";
+
 const Navbar = () => {
+  const [productos, setProductos] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const user = JSON.parse(sessionStorage.getItem("usuario")) || "";
   const userRole = user?.rol;
   const { isAuthenticated } = useAuth();
 
+  const [notifyPopupOpen, setNotifyPopupOpen] = useState(false);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
+
+  useEffect(() => {
+    async function fetchProductos() {
+      try {
+        const data = await getProducts();
+        data.sort((a, b) => b.id - a.id);
+        setProductos(data);
+      } catch (error) {
+        console.error("Error al obtener los servicios:", error);
+      }
+    }
+    fetchProductos();
+  }, []);
 
   // Verificar el modo oscuro en el inicio
   useEffect(() => {
@@ -74,11 +92,22 @@ const Navbar = () => {
         </NavLink>
       </div>
 
+      <div className="ml-auto pr-4 mt-1.5">
+        <button onClick={() => setNotifyPopupOpen(true)}>
+          <IoIosNotifications className="text-2xl hover:text-gray-400 " />
+        </button>
+
+        <NotifyProduct
+          show={notifyPopupOpen}
+          setShow={setNotifyPopupOpen}
+          data={productos}
+        />
+      </div>
+
       {/* Icono Hamburguesa */}
       <button
-        className="text-2xl focus:outline-none"
+        className="text-2xl focus:outline-none hover:text-gray-400"
         onClick={toggleMenu}
-        aria-label="Toggle Menu"
       >
         {menuOpen ? <FaTimes /> : <FaBars />}
       </button>

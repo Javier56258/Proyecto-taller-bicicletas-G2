@@ -9,7 +9,8 @@ import { AppDataSource } from "../config/configDb.js";
 export async function createProductService(product) {
   try {
     const productRepository = AppDataSource.getRepository(Product);
-    const { name, price, description, stock,nombreProveedor } = product;
+    const { name, price, description, stock } = product;
+
     const createErrorMessage = (dataInfo, message) => ({
       dataInfo,
       message
@@ -22,6 +23,8 @@ export async function createProductService(product) {
       return [null, createErrorMessage("name", "El nombre del producto ya existe")];
 
     }
+
+
     //creamos el nuevo producto
     const newProduct = productRepository.create({
       name : name,

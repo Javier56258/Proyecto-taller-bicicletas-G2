@@ -15,27 +15,28 @@ const ProductCard = ({ product, onEdit, onDelete, onSell }) => {
     
     const [cantidad, setCantidad] = useState(0);
     return (
-        <div className="bg-slate-50 shadow-md rounded-lg p-4 ">
-            <div className=" " >
+        <div className="bg-slate-50  border border-[#729B79]  shadow-md rounded-lg p-4 dark:bg-[#2e2c2f]  dark:text-[#F3E8EE]">
+            <div className="  border-gray-300 dark:border-[#F3E8EE]">
                 <p className="text-lg font-bold text-[#475B63] mb-2 text-center dark:text-[#F3E8EE]">
                     {product.name}
                 </p>
                 <p
-                    className="font-normal text-gray-700 dark:text-gray-400"
+                    className="font-normal text-gray-700 dark:text-[#F3E8EE] text-center "
                     title={product.description}
                 >
                     {product.description}
                 </p>
                 <p>
-                    <span className="font-bold">Stock:</span> {product.stock}
+                    <span className="font-bold dark:text-[#F3E8EE]">Stock:</span> {product.stock}
                 </p>
                 <p>
-                    <span className="font-bold">Precio:</span> {formatter.format(precio)}
+                    <span className="font-bold dark:text-[#F3E8EE]">Precio:</span> {formatter.format(precio)}
                 </p>
-                <div className="flex space-x-4">
+                <hr />
+                <div className="flex space-x-1 items-center ">
                     <button
                         onClick={() => onEdit(product)}
-                        className="inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-md text-white hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="group p-3 white rounded-md hover:bg-[#bacdb0] transition"
                     >
                         <img
                             src={updateIcon}
@@ -52,12 +53,12 @@ const ProductCard = ({ product, onEdit, onDelete, onSell }) => {
                             className="w-4 h-4 group-hover:invert group-hover:brightness-0 group-hover:saturate-100 group-hover:contrast-1000"
                         />
                     </button>
-                    <div action="">
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad </label>
-                        <input required  className="size-10 m-3" type="number" value={cantidad} onChange={(e) => setCantidad(e.target.value)}/>
+                    <div className="">
+                        
+                        <input required  className="size-10 m-3 border dark:text-black " type="number" value={cantidad} onChange={(e) => setCantidad(e.target.value)}/>
                         <button
                             onClick={() => onSell(product,cantidad )}
-                            className="group my-4 p-2 white rounded-md hover:bg-green-500 transition">
+                            className="text-white bg-[#bacdb0] border group my-4 p-2 white rounded-md hover:bg-green-400  transition">
                             Vender
                         </button>
                     </div>
