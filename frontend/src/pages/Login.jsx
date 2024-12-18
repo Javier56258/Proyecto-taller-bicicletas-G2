@@ -81,11 +81,7 @@ const handleGoHome = () => {
                 minLength: 15,
                 maxLength: 30,
                 errorMessageData: errorEmail,
-                validate: {
-                  emailDomain: (value) =>
-                    value.endsWith("@gmail.cl") ||
-                    "El correo debe terminar en @gmail.cl",
-                },
+                pattern: (/^[^@\s]+@[^@\s]+\.[^@\s]+$/),
                 onChange: (e) => handleInputChange("email", e.target.value),
               },
               {
@@ -105,17 +101,6 @@ const handleGoHome = () => {
             ]}
             buttonText="Iniciar sesión"
             onSubmit={loginSubmit}
-            footerContent={
-              <p className="text-center text-sm text-gray-600 dark:text-white">
-                ¿No tienes cuenta?{" "}
-                <a
-                  href="/register"
-                  className="text-[#475b63] dark:text-[#bacdb0] hover:underline"
-                >
-                  ¡Regístrate aquí!
-                </a>
-              </p>
-            }
           />
         </div>
       </main>
