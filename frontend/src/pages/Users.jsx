@@ -153,7 +153,7 @@ const Users = () => {
           </div>
         </div>
 
-        <div className="overflow-auto rounded-lg shadow hidden md:block">
+        <div className="overflow-auto rounded-lg shadow md:block">
           <table className="w-full">
             <thead className="bg-gray-50 dark:bg-[#2e2c2f] border-b-2 border-gray-200 dark:border-[#212121] dark:text-[#fff]">
               <tr>
@@ -166,6 +166,9 @@ const Users = () => {
                 </th>
                 <th className="p-3 text-sm font-semibold tracking-wide text-left">
                   Correo Electrónico
+                </th>
+                <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                  Rol
                 </th>
               </tr>
             </thead>
@@ -198,6 +201,9 @@ const Users = () => {
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
                       {user.email}
+                    </td>
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap dark:text-[#fff]">
+                      {user.rol}
                     </td>
                   </tr>
                 );

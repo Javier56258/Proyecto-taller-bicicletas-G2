@@ -136,7 +136,9 @@ const RegisterPopup = ({ show, setShow, action }) => {
               }
             />
             {errors.nombreCompleto && (
-              <div className="error-message">{errors.nombreCompleto}</div>
+              <div className="error-message dark:text-red-400 visible">
+                {errors.nombreCompleto}
+              </div>
             )}
           </div>
 
@@ -150,7 +152,9 @@ const RegisterPopup = ({ show, setShow, action }) => {
               onChange={(e) => handleInputChange("email", e.target.value)}
             />
             {errors.email && (
-              <div className="error-message">{errors.email}</div>
+              <div className="error-message dark:text-red-400 visible">
+                {errors.email}
+              </div>
             )}
           </div>
 
@@ -164,7 +168,11 @@ const RegisterPopup = ({ show, setShow, action }) => {
               onChange={(e) => handleInputChange("rut", e.target.value)}
               maxLength="12"
             />
-            {errors.rut && <div className="error-message">{errors.rut}</div>}
+            {errors.rut && (
+              <div className="error-message dark:text-red-400 visible">
+                {errors.rut}
+              </div>
+            )}
           </div>
 
           <div className="container_inputs">
@@ -177,7 +185,9 @@ const RegisterPopup = ({ show, setShow, action }) => {
               onChange={(e) => handleInputChange("password", e.target.value)}
             />
             {errors.password && (
-              <div className="error-message">{errors.password}</div>
+              <div className="error-message dark:text-red-400 visible">
+                {errors.password}
+              </div>
             )}
           </div>
 
@@ -192,7 +202,11 @@ const RegisterPopup = ({ show, setShow, action }) => {
               <option value="admin">Administrador</option>
               <option value="user">Usuario</option>
             </select>
-            {errors.rol && <div className="error-message">{errors.rol}</div>}
+            {errors.rol && (
+              <div className="error-message dark:text-red-400 visible">
+                {errors.rol}
+              </div>
+            )}
           </div>
 
           <button

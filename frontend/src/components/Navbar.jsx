@@ -17,6 +17,8 @@ import { RiBookMarkedFill } from "react-icons/ri";
 import { FaTruck } from "react-icons/fa6";
 import { TbLogout, TbLogin } from "react-icons/tb";
 
+import { getProducts } from "@services/product.service.js";
+
 import { useAuth } from "@context/AuthContext.jsx";
 
 import NotifyProduct from "@components/NotifyProduct.jsx";

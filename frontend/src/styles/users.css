@@ -19,8 +19,6 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-
-
 .table-container {
   width: 90%;
   max-width: 1400px;
@@ -105,5 +103,11 @@
 
   .delete-user-button {
     margin-right: 35px;
+  }
+}
+
+@media (max-width: 560px) {
+  .button-container-user {
+    flex-direction: column;
   }
 }

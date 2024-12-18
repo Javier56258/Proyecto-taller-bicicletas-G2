@@ -6,6 +6,7 @@ body .form select {
   -moz-appearance: none;
   text-indent: 1px;
   text-overflow: "";
+  background-color: #fff !important;
 
   border: 3px solid #475b63;
   border-radius: 12px;
@@ -18,6 +19,11 @@ body .form select {
   background-image: url("../assets/ChevronDownIcon.svg");
   background-position: calc(100% - 15px) center;
   background-size: 20px 20px;
+}
+
+body .form select option {
+  background-color: #fff !important;
+  color: #1a1a1a;
 }
 @media (max-width: 480px) {
   .form {
@@ -356,11 +362,11 @@ body.dark .form label {
 
 body.dark .form input,
 body.dark .form select {
-  background-color: #1a1a1a; /* Fondo más oscuro */
+  background-color: #1a1a1a !important; /* Fondo más oscuro */
   color: #fff; /* Texto blanco */
 }
 body.dark .form select option {
-  background-color: #1a1a1a; /* Fondo más oscuro */
+  background-color: #1a1a1a !important; /* Fondo más oscuro */
   color: #fff; /* Texto blanco */
 }
 body.dark .form textarea {

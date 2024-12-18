@@ -163,8 +163,8 @@ const Reservas = () => {
               disabled={!selectedReserva}
               className={`group p-3 rounded-md mt-4 transition ${
                 !selectedReserva
-                  ? "hover-off dark:bg-gray-800 dark:text-gray-500" // Deshabilitado
-                  : "bg-white text-black border border-[#bacdb0] hover:bg-[#729b79] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#475b63]" // Habilitado
+                  ? "hover-off dark:bg-none dark:text-gray-500" // Deshabilitado
+                  : "bg-none text-black border border-[#bacdb0] hover:bg-[#bacdb0] dark:bg-none dark:text-gray-300 dark:hover:bg-[#bacdb0]" // Habilitado
               }`}
             >
               <img
@@ -182,8 +182,8 @@ const Reservas = () => {
               disabled={!selectedReserva}
               className={`group p-3 rounded-md mt-4 transition ${
                 !selectedReserva
-                  ? "hover-off dark:bg-gray-800 dark:text-gray-500" // Deshabilitado
-                  : "bg-white text-black border border-[#bacdb0] hover:bg-[#729b79] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#475b63]" // Habilitado
+                  ? "hover-off dark:bg-none dark:text-gray-500" // Deshabilitado
+                  : "bg-none text-black border border-[#bacdb0] hover:bg-[#bacdb0] dark:bg-none dark:text-gray-300 dark:hover:bg-[#bacdb0]" // Habilitado
               }`}
             >
               <img
@@ -202,7 +202,7 @@ const Reservas = () => {
         </div>
 
         {/* Tabla de reservas */}
-        <div className="overflow-auto rounded-lg shadow hidden md:block">
+        <div className="overflow-auto rounded-lg shadow md:block">
           <table className="w-full">
             <thead className="bg-gray-50 dark:bg-[#2e2c2f] border-b-2 border-gray-200 dark:border-[#212121] dark:text-[#fff]">
               <tr>

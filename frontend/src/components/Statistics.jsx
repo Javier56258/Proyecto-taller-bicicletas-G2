@@ -242,43 +242,66 @@ const Statistics = () => {
       </StatisticCard>
 
       <StatisticCard
-        title="Ganancias en intervalos de fechas"
-        className="bg-yellow-100 dark:bg-yellow-900"
+        title="Productos con menos stock"
+        className="bg-red-100 dark:bg-[#4f2121]"
       >
-        <div className="mt-4">
-          <label
-            htmlFor="startDate"
-            className="block text-sm font-medium text-gray-700 dark:invert"
-          >
-            Fecha de inicio:
-          </label>
-          <input
-            type="date"
-            id="startDate"
-            value={startDate}
-            onChange={handleStartDateChange}
-            className="text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
+        <div className="overflow-x-auto rounded-lg shadow-lg">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 bg-red-50 dark:bg-red-800">
+            <thead className="bg-red-200 dark:bg-[#401717]">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400 rounded-tl-lg"
+                >
+                  Nombre
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400 rounded-tr-lg"
+                >
+                  Stock
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-red-50 dark:bg-[#662222] divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg">
+              {leastStockProducts.map((product, index) => (
+                <tr
+                  key={product.id}
+                  className={
+                    index === leastStockProducts.length - 1
+                      ? "rounded-b-lg"
+                      : ""
+                  }
+                >
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                    {product.name}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    {product.stock === 0
+                      ? "Agotado"
+                      : `${product.stock} unidades`}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <div className="mt-4">
           <label
-            htmlFor="endDate"
+            htmlFor="limitLeastStockProducts"
             className="block text-sm font-medium text-gray-700 dark:invert"
           >
-            Fecha de fin:
+            Límite de productos:
           </label>
           <input
-            type="date"
-            id="endDate"
-            value={endDate}
-            onChange={handleEndDateChange}
-            className="text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            type="number"
+            id="limitLeastStockProducts"
+            value={limitLeastStockProducts}
+            onChange={handleLimitLeastStockProductsChange}
+            min="1"
+            onKeyDown={(e) => e.preventDefault()}
+            className="text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert w-16 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
-        </div>
-        <div className="mt-4">
-          <p className="text-lg font-medium text-gray-700 dark:text-gray-100">
-            Ganancias: {earnings || 0}
-          </p>
         </div>
       </StatisticCard>
 
@@ -515,7 +538,7 @@ const Statistics = () => {
         </div>
         <div className="mt-4">
           <p className="text-lg font-medium text-gray-700 dark:text-gray-100">
-            Ganancias: ${earnings || 0}
+            Ganancias: {earnings || 0}
           </p>
         </div>
       </StatisticCard>

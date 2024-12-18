@@ -74,7 +74,7 @@ export async function updateUserService(query, body) {
       nombreCompleto: body.nombreCompleto,
       rut: body.rut,
       email: body.email,
-      rol: body.rol,
+      rol: body.rol.toUpperCase(),
       updatedAt: new Date(),
     };
 

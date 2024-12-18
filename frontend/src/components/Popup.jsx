@@ -6,11 +6,10 @@ import { set } from "lodash";
 
 export default function Popup({ show, setShow, data, action }) {
   const userData = data && data.length > 0 ? data[0] : {};
-  console.log("Usuario a editar", userData);
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [email, setEmail] = useState("");
   const [rut, setRut] = useState("");
-  const [rol, setRol] = useState("");
+  const [rol, setRol] = useState("null");
   const [newPassword, setNewPassword] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -102,6 +101,9 @@ export default function Popup({ show, setShow, data, action }) {
 
     // Validación del rol
     if (!rol.trim()) {
+      if (rol === "Nulo") {
+        newErrors.rol = "Seleccione un rol.";
+      }
       newErrors.rol = "El rol es obligatorio.";
     }
 
@@ -220,6 +222,7 @@ export default function Popup({ show, setShow, data, action }) {
                 onChange={(e) => handleInputChange("rol", e.target.value)}
                 className="select-user !bg-[#fff] dark:!bg-[#1f1e20] dark:text-[#fff] !p-0"
               >
+                <option value="">Seleccione un rol</option>
                 <option value="administrador">Administrador</option>
                 <option value="usuario">Usuario</option>
               </select>
