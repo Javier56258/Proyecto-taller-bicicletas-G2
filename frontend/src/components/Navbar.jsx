@@ -1,60 +1,37 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from "@services/auth.service.js";
-import "@styles/navbar.css";
-import { useState, useEffect, useRef } from "react";
-import { FaSun, FaMoon } from "react-icons/fa"; // Importamos los íconos de react-icons
-import { useAuth } from '@context/AuthContext.jsx';
+import { useState, useEffect } from "react";
+import {
+  FaSun,
+  FaMoon,
+  FaBars,
+  FaTimes,
+  FaBicycle,
+  FaUser,
+  FaTools,
+} from "react-icons/fa";
+import { MdSell, MdOutlineAccessTimeFilled } from "react-icons/md";
+import { IoIosStats } from "react-icons/io";
+import { AiFillProduct, AiFillHome } from "react-icons/ai";
+import { RiBookMarkedFill } from "react-icons/ri";
+import { FaTruck } from "react-icons/fa6";
+import { TbLogout, TbLogin } from "react-icons/tb";
+
+import { useAuth } from "@context/AuthContext.jsx";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const user = JSON.parse(sessionStorage.getItem("usuario")) || "";
   const userRole = user?.rol;
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false); // Estado para el modo oscuro
-  const navbarRef = useRef(null);
-  const rootRef = useRef(null);
   const { isAuthenticated } = useAuth();
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
 
-  const handleLoginClick = () => {
-    navigate("/auth");
-  };
-
-  useEffect(() => {
-    const makeNavbarSticky = (entries) => {
-      const [entry] = entries;
-      if (!entry.isIntersecting) {
-        navbarRef.current.classList.add("sticky");
-      } else {
-        navbarRef.current.classList.remove("sticky");
-      }
-
-    };
-
-    const observer = new IntersectionObserver(makeNavbarSticky, {
-      root: null,
-      threshold: 0,
-    });
-
-    if (rootRef.current) {
-      observer.observe(rootRef.current);
-    }
-
-    // Al cargar, establecemos el modo oscuro en base al estado guardado
-    if (localStorage.getItem("darkMode") === "true") {
-      setDarkMode(true);
-      document.body.classList.add("dark");
-      document.documentElement.classList.add("dark"); // Añadir clase al <html>
-    }
-
-    return () => {
-      if (rootRef.current) {
-        observer.unobserve(rootRef.current);
-      }
-    };
-  }, []);
-
+  // Verificar el modo oscuro en el inicio
   useEffect(() => {
     // Al cambiar el estado de darkMode, actualizamos la clase global
     if (darkMode) {
@@ -68,222 +45,188 @@ const Navbar = () => {
     }
   }, [darkMode]);
 
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem("darkMode", newMode);
+  };
+
   const logoutSubmit = () => {
-    try {
-      if (isAuthenticated) {
-        logout();
-        //hacer refresh de la página
-        window.location.reload();
-        
-      }
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
+    if (isAuthenticated) {
+      logout();
+      navigate("/home");
+      window.location.reload();
     }
   };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  /*
-  const removeActiveClass = () => {
-    const activeLinks = document.querySelectorAll(".nav-menu ul li a.active");
-    activeLinks.forEach((link) => link.classList.remove("active"));
-  };
-  */
-
-
-  const addActiveClass = () => {
-    const links = document.querySelectorAll(".nav-menu ul li a");
-    links.forEach((link) => {
-      if (link.getAttribute("href") === location.pathname) {
-        link.classList.add("active");
-      }
-    });
-  };
-
   return (
-    <div ref={rootRef}>
-      <nav className="navbar dark:bg-[#2e2c2f]" ref={navbarRef}>
-        <div
-          className={`nav-menu dark:bg-[#2e2c2f] ${menuOpen ? "activado" : ""}`}
+    <header className="fixed top-0 left-0 w-full z-50 bg-[#475B63] dark:bg-[#2e2c2f] text-white p-4 flex justify-between items-center shadow-md">
+      {/* Logo */}
+      <div className="text-xl font-bold flex items-center">
+        <NavLink
+          to="/home"
+          className="block hover:text-gray-400 flex items-center"
         >
-          <ul className="dark:bg-[#2e2c2f]">
-            <li>
-              <NavLink
-                to="/home"
-                className={({ isActive }) => (isActive ? "active" : "")}
-                onClick={() => {
-                  setMenuOpen(false);
-                  addActiveClass();
-                }}
-              >
-                Inicio
-              </NavLink>
-            </li>
+          <FaBicycle className="mr-2" />
+          Taller de bicicletas
+        </NavLink>
+      </div>
 
-            {userRole === "administrador" && (
+      {/* Icono Hamburguesa */}
+      <button
+        className="text-2xl focus:outline-none"
+        onClick={toggleMenu}
+        aria-label="Toggle Menu"
+      >
+        {menuOpen ? <FaTimes /> : <FaBars />}
+      </button>
+
+      {/* Menú deslizable */}
+      <nav
+        className={`fixed top-0 right-0 h-full w-72 bg-[#475B63] dark:bg-[#2e2c2f] text-white z-50 shadow-lg transform transition-transform duration-300 ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{ marginTop: "60px" }}
+      >
+        <div className="flex justify-between items-center p-4">
+          <span className="text-2xl font-bold">Menú</span>
+        </div>
+
+        <ul className="flex flex-col space-y-4 p-4">
+          <li>
+            <NavLink
+              to="/home"
+              onClick={toggleMenu}
+              className="block hover:text-gray-400 flex items-center"
+            >
+              <AiFillHome className="mr-2" />
+              Inicio
+            </NavLink>
+          </li>
+          {userRole === "administrador" && (
+            <>
               <li>
                 <NavLink
                   to="/users"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
                 >
+                  <FaUser className="mr-2" />
                   Usuarios
                 </NavLink>
               </li>
-            )}
-            {(userRole === "administrador" || userRole === "usuario") && (
-              <li>
-                <NavLink
-                  to="/products"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
-                >
-                  Productos
-                </NavLink>
-              </li>
-            )}
-            {(userRole === "administrador" || userRole === "usuario") && (
-              <li>
-                <NavLink
-                  to="/ventas"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
-                >
-                  Ventas
-                </NavLink>
-              </li>
-            )}
-            {(userRole === "administrador") && (
               <li>
                 <NavLink
                   to="/proveedores"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
                 >
+                  <FaTruck className="mr-2" />
                   Proveedores
                 </NavLink>
               </li>
-            )}
-
-            {(userRole === "administrador" || userRole === "usuario") && (
-              <li>
-                <NavLink
-                  to="/servicios"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
-                >
-                  Servicios
-                </NavLink>
-              </li>
-            )}
-
-            {(userRole === "administrador" || userRole === "usuario") && (
-              <li>
-                <NavLink
-                  to="/reservas"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
-                >
-                  Reservas
-                </NavLink>
-              </li>
-            )}
-
-            {(userRole === "administrador") && (
               <li>
                 <NavLink
                   to="/horarios"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
                 >
+                  <MdOutlineAccessTimeFilled className="mr-2" />
                   Horarios
                 </NavLink>
               </li>
-            )}
-            
-            {(userRole === "administrador") && (
               <li>
                 <NavLink
                   to="/statistics"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    addActiveClass();
-                  }}
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
                 >
+                  <IoIosStats className="mr-2" />
                   Estadísticas
                 </NavLink>
               </li>
+            </>
+          )}
+          {(userRole === "administrador" || userRole === "usuario") && (
+            <>
+              <li>
+                <NavLink
+                  to="/servicios"
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
+                >
+                  <FaTools className="mr-2" />
+                  Servicios
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/products"
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
+                >
+                  <AiFillProduct className="mr-2" />
+                  Productos
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/ventas"
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
+                >
+                  <MdSell className="mr-2" />
+                  Ventas
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/reservas"
+                  onClick={toggleMenu}
+                  className="block hover:text-gray-400 flex items-center"
+                >
+                  <RiBookMarkedFill className="mr-2" />
+                  Reservas
+                </NavLink>
+              </li>
+            </>
+          )}
+          <li>
+            {isAuthenticated ? (
+              <button
+                onClick={logoutSubmit}
+                className="block hover:text-gray-400 flex items-center"
+              >
+                <TbLogout className="mr-2" />
+                Cerrar Sesión
+              </button>
+            ) : (
+              <NavLink
+                to="/auth"
+                onClick={toggleMenu}
+                className="block hover:text-gray-400 flex items-center"
+              >
+                <TbLogin className="mr-2" />
+                Iniciar Sesión
+              </NavLink>
             )}
+          </li>
+        </ul>
 
-            <li>
-              {isAuthenticated ? (
-                <NavLink
-                  to="/home"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    logoutSubmit();
-                    setMenuOpen(false);
-                  }}
-                >
-                  Cerrar Sesión
-                </NavLink>
-              ) : (
-                <NavLink
-                  to="/auth"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => {
-                    handleLoginClick();
-                    setMenuOpen(false);
-                  }}
-                >
-                  Iniciar Sesión
-                </NavLink>
-              )}
-            </li>
-            <button
-              onClick={() => setDarkMode(!darkMode)} // Cambiar entre modo oscuro y claro
-              className="p-3 mr-0 md:mr-6 bg-[#729B79] dark:bg-[#BACDB0] text-[#F3E8EE] dark:text-[#475B63] rounded-md transition"
-            >
-              {darkMode ? (
-                <FaSun className="w-5 h-5" /> // Ícono de sol para modo claro
-              ) : (
-                <FaMoon className="w-5 h-5" /> // Ícono de luna para modo oscuro
-              )}
-            </button>
-          </ul>
-        </div>
-
-        <div className="hamburger" onClick={toggleMenu}>
-          <span className="bar"></span>
-          <span className="bar"></span>
-          <span className="bar"></span>
+        {/* Botón Tema Oscuro/Claro */}
+        <div className="absolute bottom-20 left-0 w-full flex justify-center">
+          <button
+            onClick={toggleDarkMode}
+            className="flex items-center border-2 border-[#bacdb09e] space-x-2 px-4 py-2 rounded-lg bg-[#bacdb09e] hover:bg-[#475B63] dark:hover:bg-[#2e2c2f] transition"
+          >
+            {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon />}
+            <span>{darkMode ? "Modo Claro" : "Modo Oscuro"}</span>
+          </button>
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 
