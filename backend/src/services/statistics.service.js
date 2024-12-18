@@ -113,13 +113,12 @@ export async function getProveedoresWithMostSoldProducts(limit) {
 
 export async function getMostRequestedServices(limit) {
     const reservaRepository = AppDataSource.getRepository(Reserva);
-    const servicios = await reservaRepository
+    const motivos = await reservaRepository
         .createQueryBuilder("reserva")
-        .innerJoin("reserva.servicio", "servicio")
-        .select("servicio.nombre, COUNT(reserva.idreserva) AS totalSolicitudes")
-        .groupBy("servicio.nombre")
+        .select("reserva.motivo, COUNT(reserva.idreserva) AS totalSolicitudes")
+        .groupBy("reserva.motivo")
         .orderBy("totalSolicitudes", "DESC")
         .limit(limit)
         .getRawMany();
-    return servicios;
+    return motivos;
 }
