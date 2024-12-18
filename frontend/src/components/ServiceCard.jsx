@@ -1,4 +1,4 @@
-import React from "react";
+
 import updateIcon from "@assets/updateIcon.svg";
 import deleteIcon from "@assets/deleteIcon.svg";
 

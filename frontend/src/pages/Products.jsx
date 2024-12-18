@@ -8,6 +8,8 @@ import ProductpopUp from '@components/ProductpopUp.jsx';
 import PopupEditProduct from '../components/PopupEditProduct';
 import { showSuccessAlert, showErrorAlert, deleteDataAlert } from '@helpers/sweetAlert.js';
 import { createVenta } from '../services/venta.service';
+import { IoIosNotifications } from "react-icons/io";
+import NotifyProduct from '../components/notifyProduct.jsx';
 
 const Products = () => {
     const [productos, setProductos] = useState([]);
@@ -16,6 +18,7 @@ const Products = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [isReversed, setIsReversed] = useState(false);
+    const [notifyPopupOpen, setNotifyPopupOpen] = useState(false);
 
 
     useEffect(() => {
@@ -103,6 +106,11 @@ const Products = () => {
         }
     }
 
+    
+
+    
+
+
     const filteredProducts = productos.filter((product) =>
         product.name.toLowerCase().includes(filter.toLowerCase())
 
@@ -125,6 +133,12 @@ const Products = () => {
                 >
                     Crear Producto
                 </button>
+                
+                <button onClick={() => setNotifyPopupOpen(true)} className=' dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]'>
+                    <IoIosNotifications className='text-2xl dark:text-[#F3E8EE]'/>
+                </button>
+                    
+            
                 <div className='right-buttons'>
                     <input
                         type="text"
@@ -155,6 +169,12 @@ const Products = () => {
                 setShow={setIsEditPopupOpen}
                 producto={editingProducto}
                 action={handleSave}
+            />
+
+            <NotifyProduct
+                show={notifyPopupOpen}
+                setShow={setNotifyPopupOpen}
+                data={productos}
             />
 
 
