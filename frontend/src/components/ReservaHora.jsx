@@ -161,7 +161,7 @@ function CreateReserva() {
       <div className="home-reserva-card">
         <h1 className="home-reserva-title">Reserva tu hora</h1>
         <form onSubmit={handleSubmit}>
-          <div className="home-form-columns">
+          <div className="home-form-columns w-auto">
             <div className="home-form-column">
               <div className="home-form-group">
                 <label className="home-label" htmlFor="nombreReservador">
