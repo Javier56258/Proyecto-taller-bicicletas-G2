@@ -8,7 +8,7 @@ function NotifyProduct({ show, setShow, data }) {
     //mostrar productos sin stock
     const productosSinStock = data.filter(product => product.stock === 0);
     if (productosSinStock.length === 0) {
-        productosSinStock.push({ id: 0, name: "No hay productos sin stock" });
+        productosSinStock.push({ id: 0, name: "No hay productos agotados" });
     }
 
     //mostrar productos con pocas unidades
