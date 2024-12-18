@@ -32,7 +32,7 @@ export async function getUsersService() {
 
     if (!users || users.length === 0) return [null, "No hay usuarios"];
 
-    const usersData = users.map(({ password,...user  }) => user);
+    const usersData = users.map(({ password, ...user }) => user);
 
     return [usersData, null];
   } catch (error) {

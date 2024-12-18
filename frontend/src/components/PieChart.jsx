@@ -34,7 +34,7 @@ const PieChart = ({ data, labels }) => {
         plugins: {
             legend: {
                 labels: {
-                    color: 'rgba(255, 255, 255, 0.87)', // Color de las etiquetas en modo oscuro
+                    color: 'rgba(255, 255, 255, 0.87)', 
                 },
             },
         },

@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
-import PopupUser from '@components/Popup';
-import useDeleteUser from '@hooks/users/useDeleteUser';
-import useEditUser from '@hooks/users/useEditUser';
-import useGetUsers from '@hooks/users/useGetUsers';
+import PopupUser from '@components/Popup.jsx';
+import useDeleteUser from '@hooks/users/useDeleteUser.jsx';
+import useEditUser from '@hooks/users/useEditUser.jsx';
+import useUsers from '@hooks/users/useGetUsers.jsx';
 import UpdateIcon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
+import RegisterPopup from '@components/RegisterPopup.jsx';
 import '@styles/users.css';
 
 const Users = () => {
-    const { users, fetchUsers, setUsers } = useGetUsers();
+    const { users, fetchUsers, setUsers } = useUsers();
     const [filterRut, setFilterRut] = useState("");
     const [selectedUser, setSelectedUser] = useState(null);
+    const [isPopupRegisterOpen, setIsPopupRegisterOpen] = useState(false);
+
+    const loadUsers = async () => {
+        const usersData = await fetchUsers();
+        setUsers(usersData);
+    };
+
 
     const handleRutFilterChange = (e) => {
         setFilterRut(e.target.value);
@@ -33,6 +41,7 @@ const Users = () => {
 
     const { handleDelete: deleteFunction } = useDeleteUser(fetchUsers, setDataUser);
 
+    
     useEffect(() => {
         if (
             selectedUser &&
@@ -45,7 +54,7 @@ const Users = () => {
 
     const handleEditClick = () => {
         if (selectedUser) {
-            console.log("Usuario seleccionado para editar:", selectedUser);
+
             const userToEdit = users.find(user => user.rut === selectedUser.rut);
             if (userToEdit) {
                 setDataUser([userToEdit]);
@@ -77,6 +86,13 @@ const Users = () => {
         );
     };
 
+    const handleAddUserClick = () => {
+        setIsPopupRegisterOpen(true);
+    };
+    
+    
+    
+
     return (
         <div className="slide-down">
             <div className="main-content bg-none">
@@ -92,6 +108,12 @@ const Users = () => {
                             placeholder={"Filtrar por RUT"}
                             className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert mt-5"
                         />
+                        <button
+                            className="button"
+                            onClick={handleAddUserClick}
+                         >
+                        Añadir Usuario
+                        </button>
 
                         <button
                             onClick={handleEditClick}
@@ -196,6 +218,12 @@ const Users = () => {
                     data={dataUser}
                     action={handleUpdate}
                 />
+                <RegisterPopup 
+                    show={isPopupRegisterOpen} 
+                    setShow={setIsPopupRegisterOpen} 
+                    action={fetchUsers}
+                />
+
             </div>
         </div>
     );
