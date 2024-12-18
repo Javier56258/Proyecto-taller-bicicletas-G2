@@ -85,9 +85,14 @@ const Ventas = () => {
     setEndDate("");
   };
 
+  const formatTotal = (total) => {
+    //pasar a precio chileno
+    return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(total);
+  };
   
-  //formateo total a peso chileno
-  const total = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(ventas[0].total);
+
+
+
 
   return (
     <div className="slide-down">
@@ -155,7 +160,7 @@ const Ventas = () => {
                 <tr key={venta.id} className="bg-white dark:bg-[#1f1f1f] border-b dark:border-[#2e2c2f]">
                   <td className="p-3">{venta.nombreProducto}</td>
                   <td className="p-3">{venta.cantidad}</td>
-                  <td className="p-3">{total}</td>
+                  <td className="p-3">{formatTotal(venta.total)}</td>
                   <td className="p-3">{formatDate(venta.fecha)}</td>
                 </tr>
               ))}
