@@ -163,7 +163,7 @@ const ServiciosList = () => {
             className="search-input-table placeholder:text-[#475b63] dark:placeholder:text-black dark:bg-[#e8e9e8] dark:border-[#45324f] dark:invert"
           />
           <button
-            className="order-button dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
+            className="order-button hover:bg-[#fff] hover:text-[#475B63] dark:hover:bg-[#2e2c2f] dark:hover:text-white dark:text-[#2e2c2f]"
             onClick={() => setIsReversed(!isReversed)}
           >
             {isReversed ? "Orden: Más antiguo" : "Orden: Más reciente"}

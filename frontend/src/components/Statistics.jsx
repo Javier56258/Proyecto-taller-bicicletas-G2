@@ -25,6 +25,12 @@ const Statistics = () => {
     useState([]);
   const [mostSoldProducts, setMostSoldProducts] = useState([]);
   const [earnings, setEarnings] = useState([]);
+  //seteamos earnings a peso  chileno
+  const formatter = new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency: "CLP",
+  });
+
   const [mostRequestedServices, setMostRequestedServices] = useState([]);
 
   const [limitMostStockProducts, setLimitMostStockProducts] = useState(3);
@@ -89,7 +95,9 @@ const Statistics = () => {
 
       const earnings = await getEarningsByDateRange(startDate, endDate);
       const totalGanancias = earnings?.totalganancias ?? "0";
-      setEarnings(totalGanancias);
+      totalGanancias
+        ? setEarnings(formatter.format(totalGanancias))
+        : setEarnings(0);
     }
     fetchStatistics();
   }, [
@@ -530,7 +538,7 @@ const Statistics = () => {
         </div>
         <div className="mt-4">
           <p className="text-lg font-medium text-gray-700 dark:text-gray-100">
-            Ganancias: ${earnings || 0}
+            Ganancias: {earnings || 0}
           </p>
         </div>
       </StatisticCard>
@@ -568,7 +576,7 @@ const Statistics = () => {
                   }
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {service.nombre}
+                    {service.motivo}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                     {service.totalsolicitudes}

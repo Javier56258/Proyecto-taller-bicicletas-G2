@@ -72,30 +72,6 @@ const Home = () => {
         <Carousel /> {/* Aquí insertas el componente del carrusel */}
       </section>
 
-      {/* Horarios */}
-      <section>
-        <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mt-12 mb-6">
-          Horarios
-        </h2>
-        <div className="home-schedule">
-          {diasOrdenados.map(
-            (dia) =>
-              groupedHorarios[dia] && (
-                <div key={dia} className="home-day-group">
-                  <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
-                    {dia}
-                  </h3>
-                  <div className="home-services-grid">
-                    {groupedHorarios[dia].map((horario) => (
-                      <HorarioCardPublic key={horario.id} horario={horario} />
-                    ))}
-                  </div>
-                </div>
-              )
-          )}
-        </div>
-      </section>
-
       {/* Reserva Tu Hora */}
       <section>
         <ReservaHora />

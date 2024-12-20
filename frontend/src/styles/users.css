@@ -7,6 +7,18 @@
   width: 100%;
 }
 
+.create-button-user {
+  background-color: #bacdb0 !important;
+  color: white;
+  padding: 10px 20px;
+  border: 3px solid #bacdb0 !important;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
 .table-container {
   width: 90%;
   max-width: 1400px;
@@ -20,6 +32,13 @@
   width: 100%;
 }
 
+.button-container-user {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
 .title-table {
   color: #003366;
   margin-left: 70px;
@@ -29,10 +48,9 @@
   display: flex;
   gap: 10px;
   button {
-    background: rgba(255, 255, 255, 0.87);
+    background: none;
     border: #fff;
     cursor: pointer;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   }
 }
 
@@ -85,5 +103,11 @@
 
   .delete-user-button {
     margin-right: 35px;
+  }
+}
+
+@media (max-width: 560px) {
+  .button-container-user {
+    flex-direction: column;
   }
 }

@@ -103,8 +103,8 @@ export async function getProveedoresWithMostSoldProductsController(req, res) {
 export async function getMostRequestedServicesController(req, res) {
     try {
         const limit = parseInt(req.query.limit) || 3;
-        const servicios = await getMostRequestedServices(limit);
-        handleSuccess(res, 200, "Servicios más solicitados obtenidos", servicios);
+        const motivos = await getMostRequestedServices(limit);
+        handleSuccess(res, 200, "Servicios más solicitados obtenidos", motivos);
     } catch (error) {
         console.error("Error fetching most requested services:", error);
         return res.status(500).json({ message: "Error interno del servidor" });

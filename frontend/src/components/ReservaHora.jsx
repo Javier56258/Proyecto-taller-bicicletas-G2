@@ -161,101 +161,96 @@ function CreateReserva() {
       <div className="home-reserva-card">
         <h1 className="home-reserva-title">Reserva tu hora</h1>
         <form onSubmit={handleSubmit}>
-          <div className="home-form-columns w-auto">
-            <div className="home-form-column">
-              <div className="home-form-group">
-                <label className="home-label" htmlFor="nombreReservador">
-                  Nombre
-                </label>
-                <input
-                  id="nombre"
-                  name="nombreReservador"
-                  type="text"
-                  placeholder="Ingresa tu nombre"
-                  className="home-input"
-                  required
-                />
-              </div>
-              <div className="home-form-group">
-                <label className="home-label" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="text"
-                  placeholder="Ingresa tu email"
-                  className="home-input"
-                  required
-                />
-              </div>
-            </div>
+          <div className="pb-4">
+            <label className="home-label" htmlFor="nombreReservador">
+              Nombre
+            </label>
+            <input
+              id="nombre"
+              name="nombreReservador"
+              type="text"
+              placeholder="Ingresa tu nombre"
+              className="home-input"
+              required
+            />
+          </div>
+          <div className="pb-4">
+            <label className="home-label" htmlFor="email">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="text"
+              placeholder="Ingresa tu email"
+              className="home-input"
+              required
+            />
+          </div>
 
-            <div className="home-form-column">
-              <div className="home-form-group">
-                <label className="home-label" htmlFor="motivo">
-                  Servicio
-                </label>
-                <select
-                  id="motivo"
-                  name="motivo"
-                  className="home-input-select"
-                  required
-                  value={selectedServicio}
-                  onChange={handleSelectedChangeServicio}
-                >
-                  <option value="" disabled>
-                    {" "}
-                    Selecciona un servicio{" "}
-                  </option>
-                  {servicios.map((servicio) => (
-                    <option key={servicio.idServicio} value={servicio.nombre}>
-                      {servicio.nombre}
-                    </option>
-                  ))}
-                </select>
-                {selectedServicio === ""}
-              </div>
-              <div className="home-form-group">
-                <label className="home-label" htmlFor="fecha">
-                  Fecha
-                </label>
-                <input
-                  id="fecha"
-                  name="fecha"
-                  type="date"
-                  className="home-input"
-                  required
-                  value={selectedFecha}
-                  onChange={handleFechaChange}
-                />
-              </div>
-            </div>
-            <div className="home-form-column">
-              <div className="home-form-group">
-                <label className="home-label" htmlFor="hora">
-                  Hora
-                </label>
-                <select
-                  id="hora"
-                  name="hora"
-                  className="home-input-select"
-                  required
-                  value={selectedHorario}
-                  onChange={handleSelectedChangeHorario}
-                >
-                  <option value="" disabled>
-                    {" "}
-                    Selecciona un horario{" "}
-                  </option>
-                  {filteredHorarios.map((horario) => (
-                    <option key={horario.id} value={horario.hora}>
-                      {horario.hora}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+          <div className="pb-4">
+            <label className="home-label" htmlFor="motivo">
+              Servicio
+            </label>
+            <select
+              id="motivo"
+              name="motivo"
+              className="home-input-select"
+              required
+              value={selectedServicio}
+              onChange={handleSelectedChangeServicio}
+            >
+              <option value="" disabled>
+                {" "}
+                Selecciona un servicio{" "}
+              </option>
+              {servicios.map((servicio) => (
+                <option key={servicio.idServicio} value={servicio.nombre}>
+                  {servicio.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {selectedServicio === ""}
+
+          <div className="pb-4">
+            <label className="home-label" htmlFor="fecha">
+              Fecha
+            </label>
+            <input
+              id="fecha"
+              name="fecha"
+              type="date"
+              className="home-input"
+              required
+              value={selectedFecha}
+              onChange={handleFechaChange}
+            />
+          </div>
+
+          <div className="pb-4">
+            <label className="home-label" htmlFor="hora">
+              Hora
+            </label>
+            <select
+              id="hora"
+              name="hora"
+              className="home-input-select"
+              required
+              value={selectedHorario}
+              onChange={handleSelectedChangeHorario}
+            >
+              <option value="" disabled>
+                {" "}
+                Selecciona un horario{" "}
+              </option>
+              {filteredHorarios.map((horario) => (
+                <option key={horario.id} value={horario.hora}>
+                  {horario.hora}
+                </option>
+              ))}
+            </select>
           </div>
 
           <button type="submit" className="home-button">

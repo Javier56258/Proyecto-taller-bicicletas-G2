@@ -78,7 +78,7 @@ export async function registerService(user) {
     const newUser = userRepository.create({
       nombreCompleto,
       email,
-      rut,
+      rut: rut.toUpperCase(),
       password: await encryptPassword(user.password),
       rol: "usuario",
     });

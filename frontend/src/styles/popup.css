@@ -43,6 +43,17 @@
   padding: 20px;
 }
 
+.container_inputs-rol {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.container_inputs-rol select {
+  padding: 0 !important;
+}
+
 .container_inputs textarea {
   width: 100%;
   max-width: 100%;
