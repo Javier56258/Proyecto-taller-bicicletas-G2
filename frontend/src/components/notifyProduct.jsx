@@ -7,12 +7,6 @@ function NotifyProduct({ show, setShow, data }) {
   // Estado para controlar la transición
   const [isVisible, setIsVisible] = useState(false);
 
-<<<<<<< HEAD
-    //mostrar productos sin stock
-    const productosSinStock = data.filter(product => product.stock === 0);
-    if (productosSinStock.length === 0) {
-        productosSinStock.push({ id: 0, name: "No hay productos agotados" });
-=======
   // Filtrar productos sin stock y con pocas unidades
   const productosSinStock = data.filter((product) => product.stock === 0);
   if (productosSinStock.length === 0) {
@@ -35,7 +29,6 @@ function NotifyProduct({ show, setShow, data }) {
       setIsVisible(true); // Espera el tiempo de la animación antes de ocultarlo
     } else {
       setIsVisible(false); // Espera el tiempo de la animación antes de ocultarlo
->>>>>>> origin/main
     }
   }, [show]);
 
